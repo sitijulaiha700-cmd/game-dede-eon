@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Petualangan Kawaii Dede Eon ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+        body, html { width: 100%; height: 100%; overflow: hidden; font-family: "Quicksand", sans-serif; background: #a1c4fd; }
+        canvas { display: block; width: 100%; height: 100%; }
+
+        .modal-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(255, 182, 193, 0.6); backdrop-filter: blur(8px); 
+            display: flex; justify-content: center; align-items: center; 
+            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; 
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .dialog-card { 
+            background: #fff; width: 90%; max-width: 420px; border-radius: 28px; 
+            padding: 20px; text-align: center; box-shadow: 0 15px 35px rgba(232, 67, 147, 0.35); 
+            border: 5px solid #ff7675; max-height: 85vh; overflow-y: auto; 
+        }
+
+        .eon-img-box { 
+            width: 110px; height: 110px; margin: 0 auto 10px; border-radius: 50%; 
+            border: 4px solid #fd79a8; overflow: hidden; background: #ffeaa7; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12); 
+        }
+        .eon-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .dialog-title { font-family: "Fredoka One", cursive; color: #e84393; font-size: 1.3rem; margin-bottom: 6px; }
+        .dialog-text { 
+            color: #2d3436; font-size: 0.88rem; line-height: 1.4; margin-bottom: 12px; 
+            background: #fff0f6; padding: 10px; border-radius: 16px; font-weight: 700; border: 2px dashed #fd79a8; 
+        }
+
+        .input-label { font-weight: bold; color: #e84393; font-size: 0.82rem; text-align: left; margin: 6px 0 3px 4px; display: block; }
+        input[type="text"], textarea, select { 
+            width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #fd79a8; 
+            border-radius: 14px; font-family: "Quicksand", sans-serif; font-size: 0.88rem; outline: none; background: #fff; color: #333; 
+        }
+        textarea { resize: none; height: 70px; }
+
+        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .opt-btn { 
+            background: #ffeaa7; border: 2px solid #fdcb6e; padding: 8px; border-radius: 12px; 
+            font-weight: bold; font-size: 0.78rem; color: #d63031; cursor: pointer; transition: 0.2s; 
+        }
+        .opt-btn.selected { background: #fd79a8; color: #fff; border-color: #e84393; }
+
+        .btn-game { 
+            background: linear-gradient(135deg, #ff7675, #fd79a8); color: white; border: none; 
+            padding: 12px 24px; font-family: "Fredoka One", cursive; font-size: 1rem; 
+            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 0 #d63031; width: 100%; margin-top: 5px; 
+        }
+        .btn-game:active { transform: translateY(3px); box-shadow: 0 2px 0 #d63031; }
+
+        .controls { 
+            position: absolute; bottom: 45px; left: 0; width: 100%; display: flex; 
+            justify-content: space-between; padding: 0 24px; pointer-events: none; z-index: 1000; 
+        }
+        .btn-touch { 
+            pointer-events: auto; width: 62px; height: 62px; background: rgba(255, 255, 255, 0.94); 
+            border: 4px solid #fd79a8; border-radius: 50%; font-size: 1.5rem; display: flex; 
+            align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(0,0,0,0.15); color: #e84393; 
+        }
+        .btn-touch:active { background: #fd79a8; color: #fff; transform: scale(0.92); }
+
+        .game-header { 
+            position: absolute; top: 15px; left: 15px; background: rgba(255, 255, 255, 0.92); 
+            padding: 8px 16px; border-radius: 20px; font-weight: bold; color: #e84393; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 1000; font-size: 0.85rem; border: 2px solid #fd79a8; 
+        }
+    </style>
+</head>
+<body>
+    <div class="game-header" id="zone-tag">✨ Zona 1: Awan Pastel Dede Eon 🌸</div>
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="controls">
+        <div style="display:flex; gap:14px;">
+            <div class="btn-touch" id="btn-left">◀</div>
+            <div class="btn-touch" id="btn-right">▶</div>
+        </div>
+        <div class="btn-touch" id="btn-jump">🚀</div>
+    </div>
+
+    <!-- POS 1 -->
+    <div class="modal-overlay" id="modal-cp1">
+        <div class="dialog-card">
+            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKPFt6gKmcy2PAM9-fYjTVyg3rkK2sjO90QQhsLszmQbKGhwOwr7eHFoLT4efTN2xDsdkpXGmk6C8_42IF-WTBQQ_zJsW4s192aeB-yL_xgaMY1yANIi8c-LjFWmkKGPvCmkp4O-1EjI26O-IJWQezoPtaOM4pv1ruCjKH7xiLqsff7Snkxi63CtZz6QeG/s1024/leon.jpg"></div>
+            <div class="dialog-title">Pos 1: Salam Kenal Dede Eon! 🥛✨</div>
+            <div class="dialog-text">"Sambil Dede minum susu hangat, Dede mau kenalan dong... Tulis namamu dan apa mimpi terbesarmu?"</div>
+            
+            <span class="input-label">👤 Nama Kamu:</span>
+            <input type="text" id="input-nama" placeholder="Contoh: Budi Pemimpi Tangguh" />
+            
+            <span class="input-label">🌟 Mimpi / Cita-cita:</span>
+            <input type="text" id="input-mimpi" placeholder="Contoh: Pengusaha Sukses / Bahagiain Orang Tua" />
+
+            <span class="input-label">❓ Soal Tantangan 1: Kalau lelah, kamu butuh apa?</span>
+            <div class="option-grid">
+                <button class="opt-btn" onclick="selectOpt1(this, 'Susu Hangat 🥛')">Susu Hangat 🥛</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Pelukan Dede 🫂')">Pelukan Dede 🫂</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Tidur Nyenyak 😴')">Tidur Nyenyak 😴</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Lagu Favorit 🎵')">Lagu Favorit 🎵</button>
+            </div>
+
+            <button class="btn-game" onclick="submitCP1()">Lanjut ke Hutan Permen ▶</button>
+        </div>
+    </div>
+
+    <!-- POS 2 -->
+    <div class="modal-overlay" id="modal-cp2">
+        <div class="dialog-card">
+            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGR0Iqx68ZuG9I6cPyTDY-tyn8EoHzpxzFTOYqIkdnQmMf2qj39SXWP2ZlpMjCfcBdSWsxzGmQ6kDFhRyS4Krbiwz_CYt886pNFPbflyR6Jsb0RNzFkflE2wjEH8773fHf4XeMDv4lWPP-Za3KkNuWezMY2zHMZsGJuZrRHIQK67hYbgQ1Piz2g3c3Y6d/s821/leon%201.jpg"></div>
+            <div class="dialog-title">Pos 2: Tantangan Hati Dede Eon 🍭</div>
+            <div class="dialog-text">"Hebat banget sudah sampai Hutan Permen! Sebelum lanjut, Dede mau tahu keadaan hatimu hari ini..."</div>
+            
+            <span class="input-label">💖 Pilih Kekuatan Super Harapanmu:</span>
+            <div class="option-grid">
+                <button class="opt-btn" onclick="selectOpt2(this, 'Pantang Menyerah 🛡️')">Pantang Menyerah 🛡️</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Senyuman Hangat 😊')">Senyuman Hangat 😊</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Sayap Kebahagiaan 🕊️')">Sayap Kebahagiaan 🕊️</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Hati yang Kuat 💪')">Hati yang Kuat 💪</button>
+            </div>
+
+            <span class="input-label">📊 Perasaan Hatimu Hari Ini:</span>
+            <select id="input-mood">
+                <option value="✨ Cukup Baik & Semangat">✨ Cukup Baik & Semangat</option>
+                <option value="😴 Agak Lelah Tapi Bertahan">😴 Agak Lelah Tapi Bertahan</option>
+                <option value="🥺 Sedang Sedih / Banyak Beban">🥺 Sedang Sedih / Banyak Beban</option>
+                <option value="💖 Siap Meraih Masa Depan!">💖 Siap Meraih Masa Depan!</option>
+            </select>
+
+            <button class="btn-game" onclick="submitCP2()">Lanjut ke Jembatan Bintang ▶</button>
+        </div>
+    </div>
+
+    <!-- POS 3 -->
+    <div class="modal-overlay" id="modal-cp3">
+        <div class="dialog-card">
+            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGR0Iqx68ZuG9I6cPyTDY-tyn8EoHzpxzFTOYqIkdnQmMf2qj39SXWP2ZlpMjCfcBdSWsxzGmQ6kDFhRyS4Krbiwz_CYt886pNFPbflyR6Jsb0RNzFkflE2wjEH8773fHf4XeMDv4lWPP-Za3KkNuWezMY2zHMZsGJuZrRHIQK67hYbgQ1Piz2g3c3Y6d/s821/leon%201.jpg"></div>
+            <div class="dialog-title">Pos 3: Sesi Curhat Bareng Dede 🌌</div>
+            <div class="dialog-text">"Sini pegang tangan Dede... Di bawah langit malam ini, luapkan semua curhatan atau keluh kesahmu. Dede akan selalu mendengarkan!"</div>
+            
+            <textarea id="input-curhat" placeholder="Tuliskan curhatan atau isi hatimu di sini secara bebas... Rahasiamu aman bersama Dede Eon!"></textarea>
+
+            <button class="btn-game" onclick="submitCP3()">Kirim Curhat & Ke Puncak ▶</button>
+        </div>
+    </div>
+
+    <!-- FINISH -->
+    <div class="modal-overlay" id="modal-finish">
+        <div class="dialog-card">
+            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-3BqeSllkwuqLFkDsCj7OUaFhF45rbglPAA_12QTOqTrMbjIyLve8DdyO0P4kvbG4axKI5EpdKtwiu-SiGiiF1frfSwWyjnjNJFEP39_GRYfhYmuhh0E8sggpF8ZDilNlt1nu7Gias-Gn0k3kgB2NFnFPy3QDmER6AiNVTAkeDTko7-DEyRIPfut-j4UA/s1024/leon.jpg"></div>
+            <div class="dialog-title">🎉 TAMAT! KAMU HEBAT BANGEETT! 🎉</div>
+            <div class="dialog-text">"YAYYY! Selamat ya sudah menyelesaikan seluruh perjalanan! Ingat ya, kamu itu luar biasa dan mimpi-mimpimu pasti terwujud! ✨💖"</div>
+            
+            <div style="background: #e8f8f5; border: 2px dashed #2ecc71; padding: 10px; border-radius: 14px; margin-bottom: 10px; text-align: left; font-size: 0.82rem;">
+                <div style="font-weight:bold; color:#27ae60; text-align:center; font-size:0.9rem; margin-bottom:4px;">🏆 Sertifikat Pemimpi Tangguh</div>
+                <div id="cert-details">Loading sertifikat...</div>
+            </div>
+
+            <button class="btn-game" onclick="restartGame()">Petualangan Lagi 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQoOUIXjRLcRAR4VEBxehWr6bi043DRfYfGRWT0VSadgbIR7hm8a9H4eGaNUvh_Vwr/exec";
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resize(); window.addEventListener("resize", resize);
+
+        var player = { x: 60, y: 100, w: 42, h: 48, vx: 0, vy: 0, grounded: false, facing: "right" };
+        var gravity = 0.45, cameraX = 0, modalActive = false;
+        
+        var playerData = { 
+            nama: "", mimpi: "", pilihan1: "Susu Hangat 🥛", 
+            pilihan2: "Pantang Menyerah 🛡️", mood: "", curhat: "" 
+        };
+        
+        var cp1 = false, cp2 = false, cp3 = false, finish = false;
+        var keys = { left: false, right: false, up: false };
+
+        var particles = [];
+        var confetti = [];
+
+        function createParticles(x, y, count) {
+            for(var i = 0; i < count; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    size: Math.random() * 8 + 4,
+                    color: ["#fd79a8", "#ffeaa7", "#74b9ff", "#a29bfe"][Math.floor(Math.random() * 4)],
+                    life: 1
+                });
+            }
+        }
+
+        function createConfetti() {
+            for(var i = 0; i < 70; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    vx: (Math.random() - 0.5) * 3,
+                    vy: Math.random() * 3 + 2,
+                    size: Math.random() * 10 + 5,
+                    color: ["#ff7675", "#fd79a8", "#ffeaa7", "#55efc4", "#74b9ff"][Math.floor(Math.random() * 5)]
+                });
+            }
+        }
+
+        window.addEventListener("keydown", function(e) {
+            if(e.key === "ArrowLeft" || e.key === "a") keys.left = true;
+            if(e.key === "ArrowRight" || e.key === "d") keys.right = true;
+            if(e.key === "ArrowUp" || e.key === "w" || e.key === " ") keys.up = true;
+        });
+        window.addEventListener("keyup", function(e) {
+            if(e.key === "ArrowLeft" || e.key === "a") keys.left = false;
+            if(e.key === "ArrowRight" || e.key === "d") keys.right = false;
+            if(e.key === "ArrowUp" || e.key === "w" || e.key === " ") keys.up = false;
+        });
+
+        function bindT(id, k) {
+            var el = document.getElementById(id);
+            el.addEventListener("touchstart", function(e) { e.preventDefault(); keys[k] = true; });
+            el.addEventListener("touchend", function(e) { e.preventDefault(); keys[k] = false; });
+            el.addEventListener("mousedown", function() { keys[k] = true; });
+            el.addEventListener("mouseup", function() { keys[k] = false; });
+        }
+        bindT("btn-left", "left"); bindT("btn-right", "right"); bindT("btn-jump", "up");
+
+        var groundY = Math.min(380, window.innerHeight - 140);
+        var platforms = [
+            {x: 0, y: groundY, w: 550}, {x: 630, y: groundY - 40, w: 450},
+            {x: 1180, y: groundY, w: 500}, {x: 1750, y: groundY - 50, w: 450},
+            {x: 2300, y: groundY, w: 500}, {x: 2880, y: groundY - 40, w: 500},
+            {x: 3480, y: groundY, w: 800}
+        ];
+
+        function drawRect(x, y, w, h, r) {
+            ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath(); ctx.fill();
+        }
+
+        window.selectOpt1 = function(btn, val) {
+            var btns = btn.parentElement.querySelectorAll(".opt-btn");
+            btns.forEach(function(b) { b.classList.remove("selected"); });
+            btn.classList.add("selected");
+            playerData.pilihan1 = val;
+        };
+
+        window.selectOpt2 = function(btn, val) {
+            var btns = btn.parentElement.querySelectorAll(".opt-btn");
+            btns.forEach(function(b) { b.classList.remove("selected"); });
+            btn.classList.add("selected");
+            playerData.pilihan2 = val;
+        };
+
+        function update() {
+            if(modalActive) return;
+
+            if(keys.left) { player.vx = -4.5; player.facing = "left"; }
+            else if(keys.right) { player.vx = 4.5; player.facing = "right"; }
+            else player.vx *= 0.8;
+
+            if(keys.up && player.grounded) { 
+                player.vy = -11; 
+                player.grounded = false; 
+                createParticles(player.x + player.w/2, player.y + player.h, 8);
+            }
+
+            player.vy += gravity; player.x += player.vx; player.y += player.vy;
+
+            player.grounded = false;
+            for(var i = 0; i < platforms.length; i++) {
+                var p = platforms[i];
+                if(player.x + player.w > p.x && player.x < p.x + p.w && player.y + player.h >= p.y && player.y + player.h <= p.y + 20 && player.vy >= 0) {
+                    player.grounded = true; player.vy = 0; player.y = p.y - player.h;
+                }
+            }
+
+            if(player.y > canvas.height + 100) { player.x = Math.max(50, cameraX); player.y = 100; player.vy = 0; }
+
+            cameraX = player.x - canvas.width / 3.2; 
+            if(cameraX < 0) cameraX = 0;
+
+            var zoneTag = document.getElementById("zone-tag");
+            if(player.x < 1100) zoneTag.innerHTML = "✨ Zona 1: Awan Pastel Dede Eon 🌸";
+            else if(player.x < 2200) zoneTag.innerHTML = "🍭 Zona 2: Hutan Permen Sunset 🌇";
+            else if(player.x < 3300) zoneTag.innerHTML = "🌌 Zona 3: Jembatan Bintang Malam ✨";
+            else zoneTag.innerHTML = "🏰 Zona 4: Puncak Kebahagiaan 🏁";
+
+            if(!cp1 && player.x >= 500) { cp1 = true; openM("modal-cp1"); }
+            if(!cp2 && player.x >= 1650) { cp2 = true; openM("modal-cp2"); }
+            if(!cp3 && player.x >= 2750) { cp3 = true; openM("modal-cp3"); }
+            if(!finish && player.x >= 3700) { finish = true; triggerFinish(); }
+
+            for(var j = particles.length - 1; j >= 0; j--) {
+                var pt = particles[j];
+                pt.x += pt.vx; pt.y += pt.vy; pt.life -= 0.03;
+                if(pt.life <= 0) particles.splice(j, 1);
+            }
+
+            for(var k = 0; k < confetti.length; k++) {
+                var cf = confetti[k];
+                cf.y += cf.vy; cf.x += cf.vx;
+                if(cf.y > canvas.height) cf.y = -10;
+            }
+        }
+
+        function openM(id) { modalActive = true; document.getElementById(id).classList.add("active"); }
+        function closeM(id) { document.getElementById(id).classList.remove("active"); modalActive = false; }
+
+        window.submitCP1 = function() {
+            playerData.nama = document.getElementById("input-nama").value.trim() || "Teman Hebat";
+            playerData.mimpi = document.getElementById("input-mimpi").value.trim() || "Orang Bahagia & Sukses";
+            closeM("modal-cp1");
+        };
+
+        window.submitCP2 = function() {
+            playerData.mood = document.getElementById("input-mood").value;
+            closeM("modal-cp2");
+        };
+
+        window.submitCP3 = function() {
+            playerData.curhat = document.getElementById("input-curhat").value.trim() || "(Tidak ada curhatan, hanya ingin lewat saja)";
+            closeM("modal-cp3");
+
+            fetch(GOOGLE_SCRIPT_URL, { 
+                method: "POST", mode: "no-cors", 
+                headers: {"Content-Type": "application/json"}, 
+                body: JSON.stringify(playerData) 
+            });
+        };
+
+        function triggerFinish() {
+            createConfetti();
+            openM("modal-finish");
+            document.getElementById("cert-details").innerHTML = `
+                <b>Nama:</b> ${playerData.nama}<br>
+                <b>Mimpi:</b> ${playerData.mimpi}<br>
+                <b>Kekuatan Hati:</b> ${playerData.pilihan2}<br>
+                <b>Status:</b> Lulus Ujian Kehidupan & Didoakan Dede Eon! ✨
+            `;
+        }
+
+        window.restartGame = function() { player.x = 60; player.y = 100; cp1 = cp2 = cp3 = finish = false; confetti = []; closeM("modal-finish"); };
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
+            var bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            if(player.x < 1100) {
+                bgGrad.addColorStop(0, "#a1c4fd"); bgGrad.addColorStop(1, "#fbc2eb");
+            } else if(player.x < 2200) {
+                bgGrad.addColorStop(0, "#ff9a9e"); bgGrad.addColorStop(1, "#fecfef");
+            } else if(player.x < 3300) {
+                bgGrad.addColorStop(0, "#2c3e50"); bgGrad.addColorStop(1, "#000000");
+            } else {
+                bgGrad.addColorStop(0, "#ffeaa7"); bgGrad.addColorStop(1, "#fd79a8");
+            }
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save(); ctx.translate(-cameraX, 0);
+
+            for(var i = 0; i < platforms.length; i++) {
+                var p = platforms[i];
+                ctx.fillStyle = "#ffffff";
+                drawRect(p.x, p.y, p.w, 45, 20);
+            }
+
+            ctx.fillStyle = "#fd79a8"; ctx.fillRect(500, groundY - 120, 8, 80);
+            ctx.font = "bold 15px Quicksand"; ctx.fillText("🥛 POS 1: KENALAN", 450, groundY - 130);
+
+            ctx.fillRect(1650, groundY - 130, 8, 80); 
+            ctx.fillText("🍭 POS 2: TANTANGAN", 1600, groundY - 140);
+
+            ctx.fillRect(2750, groundY - 120, 8, 80); 
+            ctx.fillText("🌌 POS 3: CURHAT", 2710, groundY - 130);
+
+            ctx.fillStyle = "#ffeaa7"; ctx.fillRect(3700, groundY - 140, 12, 140); 
+            ctx.fillText("🏆 FINISH!", 3680, groundY - 150);
+
+            for(var m = 0; m < particles.length; m++) {
+                var pt = particles[m];
+                ctx.fillStyle = pt.color; ctx.globalAlpha = pt.life;
+                ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2); ctx.fill();
+                ctx.globalAlpha = 1.0;
+            }
+
+            ctx.fillStyle = "#ff7675"; drawRect(player.x, player.y, player.w, player.h, 16);
+            ctx.beginPath(); ctx.arc(player.x + 12, player.y - 6, 6, 0, Math.PI * 2); ctx.arc(player.x + player.w - 12, player.y - 6, 6, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#000"; var eyeOff = player.facing === "right" ? 22 : 10;
+            ctx.beginPath(); ctx.arc(player.x + eyeOff, player.y + 16, 3, 0, Math.PI * 2); ctx.arc(player.x + eyeOff + 8, player.y + 16, 3, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#fd79a8"; ctx.beginPath(); ctx.arc(player.x + eyeOff - 2, player.y + 22, 3, 0, Math.PI * 2); ctx.arc(player.x + eyeOff + 10, player.y + 22, 3, 0, Math.PI * 2); ctx.fill();
+
+            ctx.restore();
+
+            for(var n = 0; n < confetti.length; n++) {
+                var cf = confetti[n];
+                ctx.fillStyle = cf.color;
+                ctx.fillRect(cf.x, cf.y, cf.size, cf.size);
+            }
+        }
+
+        function loop() { update(); render(); requestAnimationFrame(loop); }
+        loop();
+    </script>
+</body>
+</html>
