@@ -10,83 +10,84 @@
         body, html { width: 100%; height: 100%; overflow: hidden; font-family: "Quicksand", sans-serif; background: #1a0826; }
         canvas { display: block; width: 100%; height: 100%; }
 
-        /* MODAL POPUP DESAIN KAWAII FORESTS */
+        /* MODAL POPUP DESAIN KAWAII */
         .modal-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(26, 8, 38, 0.75); backdrop-filter: blur(10px); 
+            background: rgba(26, 8, 38, 0.75); backdrop-filter: blur(12px); 
             display: flex; justify-content: center; align-items: center; 
             z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; 
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .dialog-card { 
-            background: #fff; width: 92%; max-width: 450px; border-radius: 30px; 
-            padding: 22px; text-align: center; box-shadow: 0 20px 45px rgba(255, 118, 117, 0.4); 
-            border: 5px solid #ff7675; max-height: 88vh; overflow-y: auto; 
-            animation: bouncePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            background: #ffffff; width: 92%; max-width: 440px; border-radius: 32px; 
+            padding: 24px; text-align: center; box-shadow: 0 20px 50px rgba(255, 107, 129, 0.45); 
+            border: 5px solid #ff758c; max-height: 88vh; overflow-y: auto; 
+            animation: bouncePop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
-        @keyframes bouncePop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes bouncePop { from { transform: scale(0.65) translateY(30px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 
         .eon-img-box { 
-            width: 115px; height: 115px; margin: 0 auto 10px; border-radius: 50%; 
-            border: 4px solid #fd79a8; overflow: hidden; background: #ffeaa7; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.18); 
+            width: 110px; height: 110px; margin: 0 auto 12px; border-radius: 50%; 
+            border: 5px solid #ff758c; overflow: hidden; background: #fff0f5; 
+            box-shadow: 0 8px 22px rgba(255, 117, 140, 0.35); 
         }
         .eon-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .dialog-title { font-family: "Fredoka One", cursive; color: #e84393; font-size: 1.35rem; margin-bottom: 6px; }
+        .dialog-title { font-family: "Fredoka One", cursive; color: #ff4757; font-size: 1.4rem; margin-bottom: 6px; }
         .dialog-text { 
-            color: #2d3436; font-size: 0.88rem; line-height: 1.45; margin-bottom: 12px; 
-            background: #fff0f6; padding: 12px; border-radius: 18px; font-weight: 700; border: 2px dashed #fd79a8; 
+            color: #2f3542; font-size: 0.9rem; line-height: 1.5; margin-bottom: 14px; 
+            background: #fff0f6; padding: 12px 16px; border-radius: 20px; font-weight: 700; border: 2px dashed #ff758c; 
         }
 
-        .input-label { font-weight: bold; color: #e84393; font-size: 0.85rem; text-align: left; margin: 8px 0 4px 4px; display: block; }
+        .input-label { font-weight: bold; color: #ff4757; font-size: 0.85rem; text-align: left; margin: 10px 0 4px 6px; display: block; }
         input[type="text"], textarea, select { 
-            width: 100%; padding: 11px; margin-bottom: 10px; border: 2px solid #fd79a8; 
-            border-radius: 14px; font-family: "Quicksand", sans-serif; font-size: 0.88rem; outline: none; background: #fff; color: #333; 
+            width: 100%; padding: 12px; margin-bottom: 12px; border: 2.5px solid #ff758c; 
+            border-radius: 16px; font-family: "Quicksand", sans-serif; font-size: 0.9rem; outline: none; background: #fff; color: #2f3542; 
         }
         textarea { resize: none; height: 110px; }
 
         .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .opt-btn { 
-            background: #ffeaa7; border: 2px solid #fdcb6e; padding: 10px; border-radius: 14px; 
-            font-weight: bold; font-size: 0.8rem; color: #d63031; cursor: pointer; transition: 0.2s; 
+            background: #ffeaa7; border: 2px solid #fdcb6e; padding: 11px; border-radius: 16px; 
+            font-weight: bold; font-size: 0.82rem; color: #d63031; cursor: pointer; transition: 0.2s; 
         }
-        .opt-btn.selected { background: #fd79a8; color: #fff; border-color: #e84393; }
+        .opt-btn.selected { background: #ff758c; color: #fff; border-color: #ff4757; transform: scale(1.02); }
 
         .btn-game { 
-            background: linear-gradient(135deg, #ff7675, #fd79a8); color: white; border: none; 
-            padding: 13px 26px; font-family: "Fredoka One", cursive; font-size: 1.05rem; 
-            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 0 #d63031; width: 100%; margin-top: 6px; 
+            background: linear-gradient(135deg, #ff758c, #ff4757); color: white; border: none; 
+            padding: 14px 28px; font-family: "Fredoka One", cursive; font-size: 1.1rem; 
+            border-radius: 50px; cursor: pointer; box-shadow: 0 6px 0 #d63031; width: 100%; margin-top: 8px; 
         }
-        .btn-game:active { transform: translateY(3px); box-shadow: 0 2px 0 #d63031; }
+        .btn-game:active { transform: translateY(4px); box-shadow: 0 2px 0 #d63031; }
 
+        /* KONTROL AMAN NAV HP */
         .controls { 
-            position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; 
+            position: absolute; bottom: 35px; left: 0; width: 100%; display: flex; 
             justify-content: space-between; padding: 0 24px; pointer-events: none; z-index: 1000; 
         }
         .btn-touch { 
-            pointer-events: auto; width: 64px; height: 64px; background: rgba(255, 255, 255, 0.92); 
-            border: 4px solid #fd79a8; border-radius: 50%; font-size: 1.6rem; display: flex; 
-            align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(0,0,0,0.2); color: #e84393; 
+            pointer-events: auto; width: 68px; height: 68px; background: rgba(255, 255, 255, 0.92); 
+            border: 4px solid #ff758c; border-radius: 50%; font-size: 1.7rem; display: flex; 
+            align-items: center; justify-content: center; box-shadow: 0 10px 22px rgba(0,0,0,0.25); color: #ff4757; 
         }
-        .btn-touch:active { background: #fd79a8; color: #fff; transform: scale(0.92); }
+        .btn-touch:active { background: #ff758c; color: #fff; transform: scale(0.92); }
 
         .game-header { 
             position: absolute; top: 15px; left: 15px; background: rgba(255, 255, 255, 0.92); 
-            padding: 8px 16px; border-radius: 20px; font-weight: bold; color: #e84393; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; font-size: 0.85rem; border: 2px solid #fd79a8; 
+            padding: 10px 18px; border-radius: 25px; font-weight: bold; color: #ff4757; 
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18); z-index: 1000; font-size: 0.88rem; border: 3px solid #ff758c; 
         }
 
-        .surprise-card { border-color: #ffeaa7 !important; background: #fffcf0 !important; }
+        .surprise-card { border-color: #ffeaa7 !important; background: #fffdf0 !important; }
     </style>
 </head>
 <body>
-    <div class="game-header" id="zone-tag">🌳 Gerbang Hutan Bisikan Awan ✨</div>
+    <div class="game-header" id="zone-tag">🌳 Zona 1: Gerbang Hutan Bisikan Awan ✨</div>
     <canvas id="gameCanvas"></canvas>
 
     <div class="controls">
-        <div style="display:flex; gap:14px;">
+        <div style="display:flex; gap:16px;">
             <div class="btn-touch" id="btn-left">◀</div>
             <div class="btn-touch" id="btn-right">▶</div>
         </div>
@@ -98,7 +99,7 @@
         <div class="dialog-card">
             <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKPFt6gKmcy2PAM9-fYjTVyg3rkK2sjO90QQhsLszmQbKGhwOwr7eHFoLT4efTN2xDsdkpXGmk6C8_42IF-WTBQQ_zJsW4s192aeB-yL_xgaMY1yANIi8c-LjFWmkKGPvCmkp4O-1EjI26O-IJWQezoPtaOM4pv1ruCjKH7xiLqsff7Snkxi63CtZz6QeG/s1024/leon.jpg"></div>
             <div class="dialog-title">Pos 1: Gerbang Hutan Ajaib 🌲✨</div>
-            <div class="dialog-text">"Halo Penjelajah! Sebelum memasuki hutan ajaib ini, Leon mau kenalan dulu dong..."</div>
+            <div class="dialog-text">"Halo Penjelajah Imut! Sebelum masuk lebih dalam ke hutan ajaib, Leon mau kenalan dulu dong..."</div>
             
             <span class="input-label">👤 Nama / Panggilan Kamu:</span>
             <input type="text" id="input-nama" placeholder="Contoh: Sahabat Leon" />
@@ -108,10 +109,10 @@
 
             <span class="input-label">🧩 Teka-teki #1: Apa yang kalau dibagi tidak akan berkurang, malah makin bertambah?</span>
             <div class="option-grid">
-                <button class="opt-btn" onclick="selectOpt1(this, 'Kebahagiaan & Kasih Sayang')">Kasih Sayang 💖</button>
-                <button class="opt-btn" onclick="selectOpt1(this, 'Uang Kertas')">Uang Kertas 💵</button>
-                <button class="opt-btn" onclick="selectOpt1(this, 'Kue Ulang Tahun')">Kue Ulang Tahun 🍰</button>
-                <button class="opt-btn" onclick="selectOpt1(this, 'Buku Pelajaran')">Buku Pelajaran 📚</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Kasih Sayang 💖')">Kasih Sayang 💖</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Uang Kertas 💵')">Uang Kertas 💵</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Kue Ulang Tahun 🍰')">Kue Ulang Tahun 🍰</button>
+                <button class="opt-btn" onclick="selectOpt1(this, 'Buku Pelajaran 📚')">Buku Pelajaran 📚</button>
             </div>
 
             <button class="btn-game" onclick="submitCP1()">Mulai Penjelajahan Hutan ▶</button>
@@ -133,14 +134,14 @@
         <div class="dialog-card">
             <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGR0Iqx68ZuG9I6cPyTDY-tyn8EoHzpxzFTOYqIkdnQmMf2qj39SXWP2ZlpMjCfcBdSWsxzGmQ6kDFhRyS4Krbiwz_CYt886pNFPbflyR6Jsb0RNzFkflE2wjEH8773fHf4XeMDv4lWPP-Za3KkNuWezMY2zHMZsGJuZrRHIQK67hYbgQ1Piz2g3c3Y6d/s821/leon%201.jpg"></div>
             <div class="dialog-title">Pos 2: Danau Cermin Jiwa 🌊🔮</div>
-            <div class="dialog-text">"Air danau ini sangat jernih sampai bisa memantulkan isi hatimu. Yuk jawab teka-teki dan milih elemen pelindungmu!"</div>
+            <div class="dialog-text">"Air danau ini sangat jernih sampai bisa memantulkan isi hatimu. Jawab teka-teki & milih kondisi hatimu ya!"</div>
             
             <span class="input-label">🧩 Teka-teki #2: Saat kamu sedang lelah atau sedih, mana senjata terbaikmu?</span>
             <div class="option-grid">
-                <button class="opt-btn" onclick="selectOpt2(this, 'Mencari Tempat Curhat Hangat')">Curhat Hangat 🗣️</button>
-                <button class="opt-btn" onclick="selectOpt2(this, 'Istirahat & Minum Susu')">Istirahat Sejenak 🥛</button>
-                <button class="opt-btn" onclick="selectOpt2(this, 'Mendengarkan Musik Favorit')">Dengar Musik 🎵</button>
-                <button class="opt-btn" onclick="selectOpt2(this, 'Nangis Sebentar Lalu Bangkit')">Nangis & Bangkit 💧</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Curhat Hangat 🗣️')">Curhat Hangat 🗣️</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Istirahat Sejenak 🥛')">Istirahat Sejenak 🥛</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Dengar Musik 🎵')">Dengar Musik 🎵</button>
+                <button class="opt-btn" onclick="selectOpt2(this, 'Nangis & Bangkit 💧')">Nangis & Bangkit 💧</button>
             </div>
 
             <span class="input-label">📊 Gimana Kondisi Perasaan Hatimu Hari Ini?</span>
@@ -151,7 +152,7 @@
                 <option value="💖 Butuh Pelukan & Motivasi">💖 Butuh Pelukan & Motivasi</option>
             </select>
 
-            <button class="btn-game" onclick="submitCP2()">Lanjut Menuju Goa Curhat ▶</button>
+            <button class="btn-game" onclick="submitCP2()">Lanjut Menuju Pohon Curhat ▶</button>
         </div>
     </div>
 
@@ -185,8 +186,8 @@
             <div class="dialog-title">👑 SELESAI! KAMU PENJELAJAH TANGGUH! 👑</div>
             <div class="dialog-text">"SELAMATTT! Kamu telah menyelesaikan seluruh perjalanan Hutan Ajaib! Terimakasih sudah bertahan sampai sejauh ini ya!"</div>
             
-            <div style="background: #e8f8f5; border: 2px dashed #2ecc71; padding: 12px; border-radius: 16px; margin-bottom: 12px; text-align: left; font-size: 0.82rem; color: #2d3436;">
-                <div style="font-weight:bold; color:#27ae60; text-align:center; font-size:0.95rem; margin-bottom:6px;">🏆 Sertifikat Sahabat Sejati Leon</div>
+            <div style="background: #e8f8f5; border: 2.5px dashed #2ecc71; padding: 14px; border-radius: 18px; margin-bottom: 14px; text-align: left; font-size: 0.85rem; color: #2d3436;">
+                <div style="font-weight:bold; color:#27ae60; text-align:center; font-size:1rem; margin-bottom:6px;">🏆 Sertifikat Sahabat Sejati Leon</div>
                 <div id="cert-details">Menerbitkan sertifikat...</div>
             </div>
 
@@ -195,7 +196,6 @@
     </div>
 
     <script>
-        // GOOGLE APPS SCRIPT URL HAS BEEN UPDATED HERE:
         var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3wcM-wQy1Jq_oDgMxCsZwdu5olDeAzwpdKOQlBZO73i6L9il-XukY9_OmBI24noe5_w/exec";
         var canvas = document.getElementById("gameCanvas");
         var ctx = canvas.getContext("2d");
@@ -203,8 +203,13 @@
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resize(); window.addEventListener("resize", resize);
 
-        var player = { x: 60, y: 100, w: 42, h: 48, vx: 0, vy: 0, grounded: false, facing: "right" };
-        var gravity = 0.42, cameraX = 0, modalActive = false;
+        var player = { 
+            x: 80, y: 100, w: 46, h: 52, vx: 0, vy: 0, 
+            grounded: false, facing: "right", blinkTimer: 0, 
+            animFrame: 0, squishX: 1, squishY: 1 
+        };
+
+        var gravity = 0.44, cameraX = 0, modalActive = false;
         
         var playerData = { 
             nama: "", mimpi: "", pilihan1: "Kasih Sayang 💖", 
@@ -215,18 +220,37 @@
         var surprise1 = false, surprise2 = false;
         var keys = { left: false, right: false, up: false };
 
-        var particles = [];
-        var confetti = [];
-        var fireflies = [];
+        var particles = [], confetti = [], fireflies = [], clouds = [], backgroundTrees = [];
 
-        for(var f = 0; f < 35; f++) {
+        // AWAN CUTE DENGAN EKSPRESI WAJAH
+        for(var c = 0; c < 18; c++) {
+            clouds.push({
+                x: Math.random() * 6000,
+                y: Math.random() * 180 + 30,
+                scale: Math.random() * 0.5 + 0.7,
+                speed: Math.random() * 0.3 + 0.1,
+                face: Math.random() > 0.5 ? "^◡^" : "u_u"
+            });
+        }
+
+        // KUNANG-KUNANG GLOWING
+        for(var f = 0; f < 45; f++) {
             fireflies.push({
                 x: Math.random() * 6000,
-                y: Math.random() * 500,
+                y: Math.random() * 550,
                 size: Math.random() * 4 + 2,
-                vy: (Math.random() - 0.5) * 0.8,
-                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.6,
+                vx: (Math.random() - 0.5) * 0.6,
                 alpha: Math.random()
+            });
+        }
+
+        // POHON-POHON BACKGROUND
+        for(var bt = 0; bt < 30; bt++) {
+            backgroundTrees.push({
+                x: bt * 200 + Math.random() * 80,
+                scale: Math.random() * 0.4 + 0.7,
+                type: Math.floor(Math.random() * 3)
             });
         }
 
@@ -234,23 +258,23 @@
             for(var i = 0; i < count; i++) {
                 particles.push({
                     x: x, y: y,
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: (Math.random() - 0.5) * 4,
-                    size: Math.random() * 8 + 3,
-                    color: ["#fd79a8", "#ffeaa7", "#55efc4", "#a29bfe"][Math.floor(Math.random() * 4)],
+                    vx: (Math.random() - 0.5) * 5,
+                    vy: (Math.random() - 0.5) * 5,
+                    size: Math.random() * 7 + 3,
+                    color: ["#ff758c", "#ffeaa7", "#55efc4", "#a29bfe", "#fd79a8"][Math.floor(Math.random() * 5)],
                     life: 1
                 });
             }
         }
 
         function createConfetti() {
-            for(var i = 0; i < 90; i++) {
+            for(var i = 0; i < 110; i++) {
                 confetti.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
-                    vx: (Math.random() - 0.5) * 3,
-                    vy: Math.random() * 3 + 2,
-                    size: Math.random() * 10 + 5,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: Math.random() * 3 + 2.5,
+                    size: Math.random() * 9 + 5,
                     color: ["#ff7675", "#fd79a8", "#ffeaa7", "#55efc4", "#74b9ff"][Math.floor(Math.random() * 5)]
                 });
             }
@@ -276,21 +300,13 @@
         }
         bindT("btn-left", "left"); bindT("btn-right", "right"); bindT("btn-jump", "up");
 
-        var groundY = Math.min(380, window.innerHeight - 140);
+        var groundY = Math.min(390, window.innerHeight - 150);
         var platforms = [
-            {x: 0, y: groundY, w: 650}, {x: 750, y: groundY - 35, w: 550},
-            {x: 1400, y: groundY, w: 600}, {x: 2100, y: groundY - 45, w: 550},
-            {x: 2750, y: groundY, w: 600}, {x: 3450, y: groundY - 40, w: 600},
-            {x: 4150, y: groundY, w: 900}
+            {x: 0, y: groundY, w: 700}, {x: 820, y: groundY - 40, w: 550},
+            {x: 1480, y: groundY, w: 650}, {x: 2220, y: groundY - 50, w: 580},
+            {x: 2900, y: groundY, w: 650}, {x: 3650, y: groundY - 45, w: 650},
+            {x: 4400, y: groundY, w: 1000}
         ];
-
-        function drawRect(x, y, w, h, r) {
-            ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
-            ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
-            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
-            ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r);
-            ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath(); ctx.fill();
-        }
 
         window.selectOpt1 = function(btn, val) {
             var btns = btn.parentElement.querySelectorAll(".opt-btn");
@@ -309,47 +325,58 @@
         function update() {
             if(modalActive) return;
 
-            if(keys.left) { player.vx = -4.2; player.facing = "left"; }
-            else if(keys.right) { player.vx = 4.2; player.facing = "right"; }
+            player.animFrame += 0.15;
+            player.blinkTimer += 1;
+            if(player.blinkTimer > 180) player.blinkTimer = 0;
+
+            if(keys.left) { player.vx = -4.5; player.facing = "left"; }
+            else if(keys.right) { player.vx = 4.5; player.facing = "right"; }
             else player.vx *= 0.8;
 
             if(keys.up && player.grounded) { 
-                player.vy = -10.8; 
+                player.vy = -11.5; 
                 player.grounded = false; 
-                createParticles(player.x + player.w/2, player.y + player.h, 7);
+                player.squishX = 0.75; player.squishY = 1.3;
+                createParticles(player.x + player.w/2, player.y + player.h, 8);
             }
+
+            player.squishX += (1 - player.squishX) * 0.15;
+            player.squishY += (1 - player.squishY) * 0.15;
 
             player.vy += gravity; player.x += player.vx; player.y += player.vy;
 
             player.grounded = false;
             for(var i = 0; i < platforms.length; i++) {
                 var p = platforms[i];
-                if(player.x + player.w > p.x && player.x < p.x + p.w && player.y + player.h >= p.y && player.y + player.h <= p.y + 20 && player.vy >= 0) {
+                if(player.x + player.w > p.x && player.x < p.x + p.w && player.y + player.h >= p.y && player.y + player.h <= p.y + 22 && player.vy >= 0) {
+                    if(!player.grounded && player.vy > 3) {
+                        player.squishX = 1.25; player.squishY = 0.75;
+                    }
                     player.grounded = true; player.vy = 0; player.y = p.y - player.h;
                 }
             }
 
-            if(player.y > canvas.height + 100) { player.x = Math.max(50, cameraX); player.y = 100; player.vy = 0; }
+            if(player.y > canvas.height + 120) { player.x = Math.max(60, cameraX); player.y = 100; player.vy = 0; }
 
             cameraX = player.x - canvas.width / 3.2; 
             if(cameraX < 0) cameraX = 0;
 
             var zoneTag = document.getElementById("zone-tag");
-            if(player.x < 1300) zoneTag.innerHTML = "🌳 Zona 1: Gerbang Hutan Bisikan Awan ✨";
-            else if(player.x < 2600) zoneTag.innerHTML = "🌊 Zona 2: Danau Cermin Jiwa 🔮";
-            else if(player.x < 3900) zoneTag.innerHTML = "📜 Zona 3: Pohon Curhat Berbisik 🍃";
+            if(player.x < 1400) zoneTag.innerHTML = "🌳 Zona 1: Gerbang Hutan Bisikan Awan ✨";
+            else if(player.x < 2800) zoneTag.innerHTML = "🌊 Zona 2: Danau Cermin Jiwa 🔮";
+            else if(player.x < 4200) zoneTag.innerHTML = "📜 Zona 3: Pohon Curhat Berbisik 🍃";
             else zoneTag.innerHTML = "👑 Zona 4: Puncak Pohon Kehidupan 🏆";
 
-            if(!cp1 && player.x >= 550) { cp1 = true; openM("modal-cp1"); }
-            if(!surprise1 && player.x >= 1200) { surprise1 = true; openM("modal-surprise1"); }
-            if(!cp2 && player.x >= 2000) { cp2 = true; openM("modal-cp2"); }
-            if(!surprise2 && player.x >= 2800) { surprise2 = true; openM("modal-surprise2"); }
-            if(!cp3 && player.x >= 3600) { cp3 = true; openM("modal-cp3"); }
-            if(!finish && player.x >= 4550) { finish = true; triggerFinish(); }
+            if(!cp1 && player.x >= 600) { cp1 = true; openM("modal-cp1"); }
+            if(!surprise1 && player.x >= 1300) { surprise1 = true; openM("modal-surprise1"); }
+            if(!cp2 && player.x >= 2100) { cp2 = true; openM("modal-cp2"); }
+            if(!surprise2 && player.x >= 2900) { surprise2 = true; openM("modal-surprise2"); }
+            if(!cp3 && player.x >= 3800) { cp3 = true; openM("modal-cp3"); }
+            if(!finish && player.x >= 4750) { finish = true; triggerFinish(); }
 
             for(var j = particles.length - 1; j >= 0; j--) {
                 var pt = particles[j];
-                pt.x += pt.vx; pt.y += pt.vy; pt.life -= 0.03;
+                pt.x += pt.vx; pt.y += pt.vy; pt.life -= 0.035;
                 if(pt.life <= 0) particles.splice(j, 1);
             }
 
@@ -357,6 +384,11 @@
                 var cf = confetti[k];
                 cf.y += cf.vy; cf.x += cf.vx;
                 if(cf.y > canvas.height) cf.y = -10;
+            }
+
+            for(var cld of clouds) {
+                cld.x += cld.speed;
+                if(cld.x > 6000) cld.x = -150;
             }
 
             for(var ff of fireflies) {
@@ -403,55 +435,129 @@
         }
 
         window.restartGame = function() { 
-            player.x = 60; player.y = 100; 
+            player.x = 80; player.y = 100; 
             cp1 = cp2 = cp3 = finish = surprise1 = surprise2 = false; 
             confetti = []; closeM("modal-finish"); 
         };
 
+        // RENDERING GRAFIK LUCU & DETAIL (CHIBI CHARACTER & HUTAN AJAIB)
         function render() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); 
 
+            // LANGIT GRADIENT TWILIGHT AJAIB
             var bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            if(player.x < 1300) {
-                bgGrad.addColorStop(0, "#1a0826"); bgGrad.addColorStop(1, "#3d1e6d");
-            } else if(player.x < 2600) {
-                bgGrad.addColorStop(0, "#0b2b30"); bgGrad.addColorStop(1, "#185a66");
-            } else if(player.x < 3900) {
-                bgGrad.addColorStop(0, "#2a1b4e"); bgGrad.addColorStop(1, "#633974");
+            if(player.x < 1400) {
+                bgGrad.addColorStop(0, "#1d0c33"); bgGrad.addColorStop(0.6, "#4a1942"); bgGrad.addColorStop(1, "#682c59");
+            } else if(player.x < 2800) {
+                bgGrad.addColorStop(0, "#082032"); bgGrad.addColorStop(0.6, "#144272"); bgGrad.addColorStop(1, "#205295");
+            } else if(player.x < 4200) {
+                bgGrad.addColorStop(0, "#231123"); bgGrad.addColorStop(0.6, "#522546"); bgGrad.addColorStop(1, "#88304e");
             } else {
-                bgGrad.addColorStop(0, "#4a154b"); bgGrad.addColorStop(1, "#f39c12");
+                bgGrad.addColorStop(0, "#3a0007"); bgGrad.addColorStop(0.6, "#8e0e00"); bgGrad.addColorStop(1, "#1f1c2c");
             }
-            ctx.fillStyle = bgGrad;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.save(); ctx.translate(-cameraX, 0);
 
+            // GUNUNG/BUKIT PARALLAX BELAKANG
+            for(var h = 0; h < 12; h++) {
+                ctx.fillStyle = "rgba(255, 117, 140, 0.12)";
+                ctx.beginPath();
+                ctx.arc(h * 500, groundY + 120, 320, Math.PI, 0);
+                ctx.fill();
+            }
+
+            // AWAN PASTEL BERWAJAH LUCU
+            for(var cld of clouds) {
+                ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+                var cx = cld.x, cy = cld.y, s = cld.scale;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 25 * s, 0, Math.PI * 2);
+                ctx.arc(cx + 20 * s, cy - 12 * s, 30 * s, 0, Math.PI * 2);
+                ctx.arc(cx + 45 * s, cy, 22 * s, 0, Math.PI * 2);
+                ctx.fill();
+
+                // MATA & SENYUM AWAN
+                ctx.fillStyle = "#ff758c";
+                ctx.font = (12 * s) + "px Fredoka One";
+                ctx.fillText(cld.face, cx + 12 * s, cy - 2 * s);
+            }
+
+            // POHON-POHON AJAIB DI BACKGROUND
+            for(var bt of backgroundTrees) {
+                var tx = bt.x, ty = groundY, ts = bt.scale;
+                // Batang Pohon
+                ctx.fillStyle = "#3d1e3d";
+                ctx.fillRect(tx - 12 * ts, ty - 90 * ts, 24 * ts, 90 * ts);
+                // Dedaunan Pastel
+                ctx.fillStyle = bt.type === 0 ? "#ff8fa3" : (bt.type === 1 ? "#a29bfe" : "#ffbe76");
+                ctx.beginPath();
+                ctx.arc(tx, ty - 120 * ts, 45 * ts, 0, Math.PI * 2);
+                ctx.arc(tx - 25 * ts, ty - 95 * ts, 35 * ts, 0, Math.PI * 2);
+                ctx.arc(tx + 25 * ts, ty - 95 * ts, 35 * ts, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // KUNANG-KUNANG GLOWING
             for(var ff of fireflies) {
-                ctx.fillStyle = "#ffeaa7"; ctx.globalAlpha = Math.sin(Date.now() * 0.003 + ff.alpha) * 0.5 + 0.5;
+                ctx.fillStyle = "#ffeaa7"; ctx.globalAlpha = Math.sin(Date.now() * 0.003 + ff.alpha) * 0.6 + 0.4;
                 ctx.beginPath(); ctx.arc(ff.x, ff.y, ff.size, 0, Math.PI * 2); ctx.fill();
                 ctx.globalAlpha = 1.0;
             }
 
+            // PIJAKAN RUMPUT & SULUR BANYAK DETAIL
             for(var i = 0; i < platforms.length; i++) {
                 var p = platforms[i];
-                ctx.fillStyle = "#2d132c";
-                drawRect(p.x, p.y, p.w, 50, 18);
-                ctx.fillStyle = "#ff7675";
-                drawRect(p.x, p.y, p.w, 12, 6);
+                
+                // Pijakan Tanah
+                ctx.fillStyle = "#3a1c3d";
+                ctx.beginPath(); ctx.roundRect(p.x, p.y, p.w, 80, 18); ctx.fill();
+
+                // Lapisan Rumput Atas
+                ctx.fillStyle = "#ff758c";
+                ctx.beginPath(); ctx.roundRect(p.x, p.y, p.w, 16, [12, 12, 4, 4]); ctx.fill();
+
+                // Detil Rumput Menonjol
+                ctx.fillStyle = "#ff8fa3";
+                for(var gx = p.x + 15; gx < p.x + p.w - 15; gx += 25) {
+                    ctx.beginPath();
+                    ctx.arc(gx, p.y, 6, 0, Math.PI * 2); ctx.fill();
+                }
+
+                // Bunga-bunga Kecil
+                for(var fx = p.x + 30; fx < p.x + p.w - 30; fx += 80) {
+                    ctx.fillStyle = "#ffeaa7"; ctx.beginPath(); ctx.arc(fx, p.y - 4, 4, 0, Math.PI * 2); ctx.fill();
+                    ctx.fillStyle = "#ff4757"; ctx.beginPath(); ctx.arc(fx, p.y - 4, 1.8, 0, Math.PI * 2); ctx.fill();
+                }
             }
 
-            ctx.fillStyle = "#fd79a8"; ctx.fillRect(550, groundY - 120, 8, 80);
-            ctx.font = "bold 15px Quicksand"; ctx.fillText("🌲 POS 1: MASUK", 500, groundY - 130);
+            // POS / CHECKPOINT DENGAN TAMPILAN MUSHROOM HOUSE
+            function drawPosHouse(x, y, label, icon) {
+                // Rumah Jamur
+                ctx.fillStyle = "#ffeaa7"; ctx.fillRect(x - 14, y - 45, 28, 45); // Batang
+                ctx.fillStyle = "#ff4757"; ctx.beginPath(); ctx.arc(x, y - 45, 30, Math.PI, 0); ctx.fill(); // Topi
+                ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(x - 12, y - 56, 5, 0, Math.PI*2); ctx.arc(x + 10, y - 62, 4, 0, Math.PI*2); ctx.fill();
 
-            ctx.fillRect(2000, groundY - 130, 8, 80); 
-            ctx.fillText("🌊 POS 2: DANAU", 1950, groundY - 140);
+                // Papan Tanda Glowing
+                ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+                ctx.beginPath(); ctx.roundRect(x - 55, y - 110, 110, 32, 12); ctx.fill();
+                ctx.strokeStyle = "#ff758c"; ctx.lineWidth = 2.5; ctx.stroke();
 
-            ctx.fillRect(3600, groundY - 120, 8, 80); 
-            ctx.fillText("📜 POS 3: CURHAT", 3550, groundY - 130);
+                ctx.fillStyle = "#ff4757"; ctx.font = "bold 13px Quicksand";
+                ctx.textAlign = "center"; ctx.fillText(icon + " " + label, x, y - 89);
+            }
 
-            ctx.fillStyle = "#ffeaa7"; ctx.fillRect(4550, groundY - 150, 12, 150); 
-            ctx.fillText("👑 FINISH!", 4530, groundY - 160);
+            drawPosHouse(600, groundY - 40, "POS 1: GERBANG", "🌲");
+            drawPosHouse(2100, groundY - 50, "POS 2: DANAU", "🌊");
+            drawPosHouse(3800, groundY - 45, "POS 3: CURHAT", "📜");
 
+            // ISTANA / PINTU FINISH
+            ctx.fillStyle = "#ffeaa7"; ctx.fillRect(4750, groundY - 140, 16, 140);
+            ctx.fillStyle = "#ff758c"; ctx.beginPath(); ctx.arc(4758, groundY - 140, 25, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "#ffffff"; ctx.font = "bold 16px Fredoka One"; ctx.textAlign = "center";
+            ctx.fillText("👑 FINISH!", 4758, groundY - 150);
+
+            // PARTIKEL JUMP
             for(var m = 0; m < particles.length; m++) {
                 var pt = particles[m];
                 ctx.fillStyle = pt.color; ctx.globalAlpha = pt.life;
@@ -459,18 +565,64 @@
                 ctx.globalAlpha = 1.0;
             }
 
-            ctx.fillStyle = "#ff7675"; drawRect(player.x, player.y, player.w, player.h, 16);
-            ctx.beginPath(); ctx.arc(player.x + 12, player.y - 6, 6, 0, Math.PI * 2); ctx.arc(player.x + player.w - 12, player.y - 6, 6, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "#000"; var eyeOff = player.facing === "right" ? 22 : 10;
-            ctx.beginPath(); ctx.arc(player.x + eyeOff, player.y + 16, 3, 0, Math.PI * 2); ctx.arc(player.x + eyeOff + 8, player.y + 16, 3, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "#fd79a8"; ctx.beginPath(); ctx.arc(player.x + eyeOff - 2, player.y + 22, 3, 0, Math.PI * 2); ctx.arc(player.x + eyeOff + 10, player.y + 22, 3, 0, Math.PI * 2); ctx.fill();
+            // KARAKTER UTAMA: DEDE EON (CHIBI BUNNY-CAT SQUISHY)
+            ctx.save();
+            var px = player.x + player.w / 2;
+            var py = player.y + player.h;
+            ctx.translate(px, py);
+            ctx.scale(player.squishX * (player.facing === "left" ? -1 : 1), player.squishY);
+
+            // Badan Bulat Pink Gradient
+            var bodyGrad = ctx.createLinearGradient(0, -player.h, 0, 0);
+            bodyGrad.addColorStop(0, "#ffb7c5"); bodyGrad.addColorStop(1, "#ff758c");
+            ctx.fillStyle = bodyGrad;
+            ctx.beginPath(); ctx.arc(0, -22, 22, 0, Math.PI * 2); ctx.fill();
+
+            // Telinga Kelinci/Kucing Bouncing
+            var earEarOff = Math.sin(player.animFrame) * 3;
+            ctx.fillStyle = "#ff758c";
+            // Telinga Kiri
+            ctx.beginPath(); ctx.ellipse(-10, -42 + earEarOff, 7, 18, -0.15, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#ffd1dc"; ctx.beginPath(); ctx.ellipse(-10, -42 + earEarOff, 4, 12, -0.15, 0, Math.PI * 2); ctx.fill();
+            // Telinga Kanan
+            ctx.fillStyle = "#ff758c";
+            ctx.beginPath(); ctx.ellipse(10, -42 - earEarOff, 7, 18, 0.15, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#ffd1dc"; ctx.beginPath(); ctx.ellipse(10, -42 - earEarOff, 4, 12, 0.15, 0, Math.PI * 2); ctx.fill();
+
+            // Pipi Merona (Blush)
+            ctx.fillStyle = "rgba(255, 71, 87, 0.45)";
+            ctx.beginPath(); ctx.arc(-13, -18, 5, 0, Math.PI * 2); ctx.arc(13, -18, 5, 0, Math.PI * 2); ctx.fill();
+
+            // Mata Imut Berkedip
+            ctx.fillStyle = "#2f3542";
+            if(player.blinkTimer > 172) {
+                // Berkedip
+                ctx.lineWidth = 2.5; ctx.strokeStyle = "#2f3542";
+                ctx.beginPath(); ctx.arc(-7, -23, 4, 0.1, Math.PI); ctx.stroke();
+                ctx.beginPath(); ctx.arc(7, -23, 4, 0.1, Math.PI); ctx.stroke();
+            } else {
+                // Mata Besar Binar
+                ctx.beginPath(); ctx.arc(-7, -23, 4.5, 0, Math.PI * 2); ctx.arc(7, -23, 4.5, 0, Math.PI * 2); ctx.fill();
+                // Bintang/Shine Mata
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath(); ctx.arc(-8.5, -25, 1.8, 0, Math.PI * 2); ctx.arc(5.5, -25, 1.8, 0, Math.PI * 2); ctx.fill();
+            }
+
+            // Mulut Kucing Imut (ω)
+            ctx.strokeStyle = "#2f3542"; ctx.lineWidth = 1.8;
+            ctx.beginPath(); ctx.arc(-2, -16, 2.5, 0, Math.PI); ctx.stroke();
+            ctx.beginPath(); ctx.arc(2, -16, 2.5, 0, Math.PI); ctx.stroke();
+
+            // Kaki/Paws Kecil
+            ctx.fillStyle = "#ff4757";
+            ctx.beginPath(); ctx.arc(-10, -2, 5, 0, Math.PI * 2); ctx.arc(10, -2, 5, 0, Math.PI * 2); ctx.fill();
 
             ctx.restore();
+            ctx.restore();
 
+            // KONFETI SELESAI
             for(var n = 0; n < confetti.length; n++) {
-                var cf = confetti[n];
-                ctx.fillStyle = cf.color;
-                ctx.fillRect(cf.x, cf.y, cf.size, cf.size);
+                var cf = confetti[n]; ctx.fillStyle = cf.color; ctx.fillRect(cf.x, cf.y, cf.size, cf.size);
             }
         }
 
