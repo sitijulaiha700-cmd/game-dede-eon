@@ -3,558 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Petualangan Hutan Ajaib Dede Eon & Leon ✨</title>
+    <title>Virtual Pet Dede Eon & Leon ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
-        body, html { width: 100%; height: 100%; overflow: hidden; font-family: "Quicksand", sans-serif; background: #180826; color: #333; }
+        body, html { width: 100%; height: 100%; overflow: hidden; font-family: "Quicksand", sans-serif; background: #1a0826; color: #2f3542; }
 
-        /* CANVAS BACKGROUND */
         #bgCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-        /* UI CONTAINER */
-        .game-wrapper { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; pointer-events: none; }
+        .container { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 16px; }
 
-        /* TOP NAV BAR */
-        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; pointer-events: auto; }
-        .zone-chip { background: rgba(255, 255, 255, 0.92); padding: 10px 18px; border-radius: 25px; font-weight: 700; color: #ff4757; border: 3px solid #ff758c; box-shadow: 0 8px 20px rgba(0,0,0,0.25); font-size: 0.85rem; }
-        .audio-btn { background: #ffeaa7; border: 3px solid #fdcb6e; padding: 9px 16px; border-radius: 25px; font-weight: 700; color: #d63031; cursor: pointer; font-size: 0.85rem; box-shadow: 0 6px 15px rgba(0,0,0,0.2); transition: 0.2s; }
-        .audio-btn:active { transform: scale(0.92); }
+        /* AUTH CARD */
+        .auth-card { background: #ffffff; width: 100%; max-width: 400px; border-radius: 28px; padding: 24px; text-align: center; border: 4px solid #ff758c; box-shadow: 0 15px 35px rgba(255, 117, 140, 0.4); animation: popup 0.3s ease; }
+        @keyframes popup { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* CHAPTER STAGES */
-        .stage-box { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); width: 92%; max-width: 460px; text-align: center; pointer-events: auto; }
-        
-        /* DEDE EON CHARACTER */
-        .eon-box { position: relative; width: 160px; height: 160px; margin: 0 auto 10px; cursor: pointer; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .eon-box:active { transform: scale(0.88); }
-        .accessory-overlay { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); font-size: 2.2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); pointer-events: none; }
+        .auth-title { font-family: "Fredoka One", cursive; color: #ff4757; font-size: 1.6rem; margin-bottom: 8px; }
+        .auth-desc { font-size: 0.85rem; color: #57606f; margin-bottom: 16px; font-weight: 700; }
 
-        /* DRESS UP SELECTOR */
-        .dressup-grid { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
-        .item-btn { background: #ffffff; border: 2.5px solid #ff758c; padding: 8px 14px; border-radius: 20px; font-size: 1.3rem; cursor: pointer; box-shadow: 0 5px 12px rgba(0,0,0,0.15); transition: 0.2s; }
-        .item-btn:active, .item-btn.selected { background: #ff758c; border-color: #ff4757; transform: scale(1.1); }
+        .input-group { text-align: left; margin-bottom: 12px; }
+        .input-group label { font-size: 0.8rem; font-weight: 700; color: #ff4757; margin-left: 4px; margin-bottom: 4px; display: block; }
+        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 11px 14px; border: 2.5px solid #ff758c; border-radius: 16px; font-family: "Quicksand", sans-serif; font-size: 0.9rem; outline: none; background: #fff; }
 
-        /* PROGRESS BARS */
-        .bar-container { width: 230px; background: rgba(255,255,255,0.9); border: 3px solid #ff758c; border-radius: 20px; padding: 5px; margin: 12px auto 0; box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
-        .bar-fill { height: 15px; background: linear-gradient(90deg, #ff758c, #ff4757); border-radius: 12px; width: 0%; transition: width 0.35s ease; }
-        .bar-text { font-size: 0.8rem; font-weight: 700; color: #ff4757; margin-top: 4px; }
+        .btn-auth { background: linear-gradient(135deg, #ff758c, #ff4757); color: #fff; border: none; padding: 12px; font-family: "Fredoka One", cursive; font-size: 1.05rem; border-radius: 30px; cursor: pointer; width: 100%; margin-top: 8px; box-shadow: 0 5px 0 #d63031; transition: 0.2s; }
+        .btn-auth:active { transform: translateY(3px); box-shadow: 0 2px 0 #d63031; }
 
-        /* CARDS DECK MINI GAME */
-        .cards-deck { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .magic-card { background: linear-gradient(135deg, #a29bfe, #6c5ce7); border: 3.5px solid #ffffff; border-radius: 20px; padding: 18px 10px; color: white; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 10px 22px rgba(108, 92, 231, 0.4); transition: 0.3s; }
-        .magic-card:active { transform: scale(0.95); }
-        .magic-card.opened { background: #ffffff; color: #2d3436; border-color: #ff758c; }
+        .auth-link { margin-top: 12px; font-size: 0.82rem; color: #ff4757; font-weight: 700; cursor: pointer; text-decoration: underline; display: inline-block; }
 
-        /* CRAFTING POT MINI GAME */
-        .pot-container { width: 140px; height: 140px; margin: 0 auto; position: relative; cursor: pointer; }
-        .pot-item-btn { background: #ffeaa7; border: 2px solid #fdcb6e; padding: 8px 14px; border-radius: 18px; font-weight: 700; color: #d63031; cursor: pointer; font-size: 0.82rem; margin: 4px; display: inline-block; }
-        .pot-item-btn.added { background: #ff758c; color: white; border-color: #ff4757; opacity: 0.6; pointer-events: none; }
+        /* MAIN GAME CARD */
+        .game-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); width: 100%; max-width: 440px; height: 92vh; max-height: 720px; border-radius: 32px; border: 4px solid #ff758c; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between; padding: 16px; overflow: hidden; }
 
-        /* BUTTONS */
-        .btn-primary { background: linear-gradient(135deg, #ff758c, #ff4757); color: white; border: none; padding: 14px 30px; font-family: "Fredoka One", cursive; font-size: 1.1rem; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 71, 87, 0.45); border: 3px solid #fff; transition: 0.2s; pointer-events: auto; }
-        .btn-primary:active { transform: translateY(4px); }
+        /* TOP USER BAR */
+        .user-header { display: flex; justify-content: space-between; align-items: center; background: #fff0f5; padding: 8px 14px; border-radius: 20px; border: 2px solid #ff758c; }
+        .user-info { font-weight: 700; font-size: 0.85rem; color: #ff4757; }
+        .lvl-badge { background: #ff758c; color: white; padding: 3px 10px; border-radius: 12px; font-family: "Fredoka One", cursive; font-size: 0.8rem; margin-left: 6px; }
+        .btn-logout { background: #ffeaa7; border: 2px solid #fdcb6e; color: #d63031; padding: 5px 12px; border-radius: 14px; font-weight: 700; font-size: 0.75rem; cursor: pointer; }
 
-        /* MODAL DIALOGS */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(24, 8, 38, 0.82); backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        /* STATS BARS */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+        .stat-box { background: #fff; border: 2px solid #ff758c; border-radius: 14px; padding: 6px; text-align: center; }
+        .stat-label { font-size: 0.72rem; font-weight: 700; color: #ff4757; margin-bottom: 2px; }
+        .stat-bar { height: 10px; background: #ffeaa7; border-radius: 8px; overflow: hidden; }
+        .stat-fill { height: 100%; background: linear-gradient(90deg, #ff758c, #ff4757); width: 100%; transition: width 0.3s; }
 
-        .dialog-card { background: #ffffff; width: 92%; max-width: 440px; border-radius: 32px; padding: 24px; text-align: center; box-shadow: 0 20px 50px rgba(255, 107, 129, 0.45); border: 5px solid #ff758c; max-height: 88vh; overflow-y: auto; animation: bouncePop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes bouncePop { from { transform: scale(0.65) translateY(30px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        /* PET CANVAS / STAGE */
+        .pet-stage { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        .pet-avatar { width: 150px; height: 150px; position: relative; cursor: pointer; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .pet-avatar:active { transform: scale(0.88); }
+        .pet-acc { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); font-size: 2.2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); pointer-events: none; }
 
-        .eon-img-box { width: 110px; height: 110px; margin: 0 auto 12px; border-radius: 50%; border: 5px solid #ff758c; overflow: hidden; background: #fff0f5; box-shadow: 0 8px 22px rgba(255, 117, 140, 0.35); }
-        .eon-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .xp-container { width: 80%; background: #fff; border: 2px solid #a29bfe; border-radius: 12px; padding: 4px 8px; margin-top: 10px; text-align: center; }
+        .xp-bar { height: 8px; background: #dfe6e9; border-radius: 6px; overflow: hidden; }
+        .xp-fill { height: 100%; background: linear-gradient(90deg, #a29bfe, #6c5ce7); width: 0%; transition: width 0.3s; }
+        .xp-text { font-size: 0.7rem; font-weight: 700; color: #6c5ce7; margin-top: 2px; }
 
-        .dialog-title { font-family: "Fredoka One", cursive; color: #ff4757; font-size: 1.35rem; margin-bottom: 6px; }
-        .dialog-text { color: #2f3542; font-size: 0.88rem; line-height: 1.5; margin-bottom: 14px; background: #fff0f6; padding: 12px 16px; border-radius: 20px; font-weight: 700; border: 2px dashed #ff758c; }
+        /* NAV TABS */
+        .nav-tabs { display: flex; justify-content: space-around; background: #fff; border: 2.5px solid #ff758c; border-radius: 20px; padding: 6px; margin-top: 8px; }
+        .tab-btn { background: transparent; border: none; font-size: 1.3rem; padding: 6px 12px; border-radius: 14px; cursor: pointer; transition: 0.2s; }
+        .tab-btn.active { background: #ff758c; transform: scale(1.1); }
 
-        .input-label { font-weight: 700; color: #ff4757; font-size: 0.85rem; text-align: left; margin: 10px 0 4px 6px; display: block; }
-        input[type="text"], textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 2.5px solid #ff758c; border-radius: 16px; font-family: "Quicksand", sans-serif; font-size: 0.9rem; outline: none; background: #fff; color: #2f3542; }
-        textarea { resize: none; height: 120px; }
+        /* ACTION PANELS */
+        .panel-area { background: #fff0f5; border: 2px solid #ff758c; border-radius: 20px; padding: 12px; margin-top: 8px; min-height: 120px; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .btn-act { background: #ffffff; border: 2px solid #ff758c; padding: 10px; border-radius: 14px; font-weight: 700; font-size: 0.8rem; color: #ff4757; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .btn-act:active { transform: scale(0.95); background: #ff758c; color: #fff; }
 
-        .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-        .opt-btn { background: #ffeaa7; border: 2px solid #fdcb6e; padding: 11px; border-radius: 16px; font-weight: 700; font-size: 0.82rem; color: #d63031; cursor: pointer; transition: 0.2s; }
-        .opt-btn.selected { background: #ff758c; color: #fff; border-color: #ff4757; transform: scale(1.02); }
+        /* CURHAT JOURNAL LIST */
+        .curhat-box { max-height: 110px; overflow-y: auto; text-align: left; font-size: 0.8rem; }
+        .curhat-item { background: #fff; border: 1.5px solid #ff758c; border-radius: 12px; padding: 8px; margin-bottom: 6px; }
+        .curhat-date { font-size: 0.68rem; color: #a4b0be; font-weight: 700; }
+        .curhat-msg { color: #2f3542; margin: 2px 0 4px; font-weight: 700; }
+        .curhat-reply { background: #e8f8f5; border: 1px dashed #2ecc71; color: #27ae60; padding: 6px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; }
 
-        .btn-modal { background: linear-gradient(135deg, #ff758c, #ff4757); color: white; border: none; padding: 14px 28px; font-family: "Fredoka One", cursive; font-size: 1.05rem; border-radius: 50px; cursor: pointer; box-shadow: 0 6px 0 #d63031; width: 100%; margin-top: 8px; }
-        .btn-modal:active { transform: translateY(4px); box-shadow: 0 2px 0 #d63031; }
-
-        /* BUBBLE POP-IT */
-        .bubble-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 8; pointer-events: none; }
-        .pop-bubble { position: absolute; background: rgba(255, 117, 140, 0.9); border: 3px solid #ffffff; color: white; font-weight: 700; padding: 14px 22px; border-radius: 30px; font-size: 0.88rem; cursor: pointer; pointer-events: auto; box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4); animation: floatUp 4s infinite ease-in-out; }
-        @keyframes floatUp { 0%, 100% { transform: translateY(0px) rotate(-3deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 1.1rem; flex-direction: column; gap: 10px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #fff; border-top-color: #ff758c; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <canvas id="bgCanvas"></canvas>
 
-    <!-- BUBBLE AREA -->
-    <div class="bubble-container" id="bubbleArea"></div>
-
-    <div class="game-wrapper">
-        <!-- TOP NAVBAR -->
-        <div class="top-bar">
-            <div class="zone-chip" id="zoneTag">🌸 Bab 1: Ruang Rawat & Dandani Dede Eon ✨</div>
-            <button class="audio-btn" id="audioToggle" onclick="toggleAudio()">🎵 Musik: ON</button>
-        </div>
-
-        <!-- STAGE 1: CARE & DRESS-UP -->
-        <div class="stage-box" id="stage1">
-            <div class="eon-box" onclick="patDedeEon(event)">
-                <div class="accessory-overlay" id="eonAcc">👑</div>
-                <svg viewBox="0 0 120 120" width="100%" height="100%">
-                    <defs>
-                        <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#ffb7c5"/>
-                            <stop offset="100%" stop-color="#ff758c"/>
-                        </linearGradient>
-                    </defs>
-                    <ellipse cx="40" cy="25" rx="12" ry="25" fill="#ff758c" transform="rotate(-15 40 25)"/>
-                    <ellipse cx="40" cy="25" rx="6" ry="16" fill="#ffd1dc" transform="rotate(-15 40 25)"/>
-                    <ellipse cx="80" cy="25" rx="12" ry="25" fill="#ff758c" transform="rotate(15 80 25)"/>
-                    <ellipse cx="80" cy="25" rx="6" ry="16" fill="#ffd1dc" transform="rotate(15 80 25)"/>
-                    <circle cx="60" cy="65" r="42" fill="url(#bodyG)"/>
-                    <circle cx="35" cy="70" r="8" fill="#ff4757" opacity="0.35"/>
-                    <circle cx="85" cy="70" r="8" fill="#ff4757" opacity="0.35"/>
-                    <circle cx="45" cy="60" r="6" fill="#2f3542"/>
-                    <circle cx="75" cy="60" r="6" fill="#2f3542"/>
-                    <circle cx="43" cy="58" r="2.5" fill="#ffffff"/>
-                    <circle cx="73" cy="58" r="2.5" fill="#ffffff"/>
-                    <path d="M 52 70 Q 56 75 60 70 Q 64 75 68 70" fill="none" stroke="#2f3542" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="42" cy="98" r="9" fill="#ff4757"/>
-                    <circle cx="78" cy="98" r="9" fill="#ff4757"/>
-                </svg>
-            </div>
-
-            <div style="color:white; font-weight:bold; text-shadow:0 2px 4px rgba(0,0,0,0.5); font-size:0.9rem;">Pilih Aksesoris Lucu Dede Eon:</div>
-            <div class="dressup-grid">
-                <button class="item-btn selected" onclick="changeAcc(this, '👑')">👑</button>
-                <button class="item-btn" onclick="changeAcc(this, '🎀')">🎀</button>
-                <button class="item-btn" onclick="changeAcc(this, '👓')">👓</button>
-                <button class="item-btn" onclick="changeAcc(this, '🍄')">🍄</button>
-                <button class="item-btn" onclick="changeAcc(this, '🌸')">🌸</button>
-            </div>
-
-            <div class="bar-container">
-                <div class="bar-fill" id="loveFill"></div>
-                <div class="bar-text" id="loveText">Usap Dede Eon (0/5) 💖</div>
-            </div>
-        </div>
-
-        <!-- STAGE 2: MAGIC CARDS -->
-        <div class="stage-box" id="stage2" style="display:none;">
-            <div style="color:white; font-size:1.1rem; font-weight:bold; text-shadow:0 2px 6px rgba(0,0,0,0.5); margin-bottom:10px;">
-                🔮 Buka 2 Kartu Motivasi Rahasia Dede Eon!
-            </div>
-            <div class="cards-deck">
-                <div class="magic-card" onclick="flipCard(this, 'Kartu Ketulusan 💖', 'Perasaanmu itu valid. Jangan takut buat merasa lelah ya!')">🎴 Kartu #1</div>
-                <div class="magic-card" onclick="flipCard(this, 'Kartu Keberanian 🦁', 'Kamu sudah melangkah jauh banget, Leon bangga sama kamu!')">🎴 Kartu #2</div>
-                <div class="magic-card" onclick="flipCard(this, 'Kartu Ketenangan 🍃', 'Napas pelan-pelan... Segala hal sulit pasti akan berlalu.')">🎴 Kartu #3</div>
-                <div class="magic-card" onclick="flipCard(this, 'Kartu Kebahagiaan 🌟', 'Ada hal indah yang sedang menunggumu di depan sana!')">🎴 Kartu #4</div>
-            </div>
-        </div>
-
-        <!-- STAGE 4: CRAFTING POT -->
-        <div class="stage-box" id="stage4" style="display:none;">
-            <div style="color:white; font-size:1rem; font-weight:bold; text-shadow:0 2px 6px rgba(0,0,0,0.5); margin-bottom:8px;">
-                🧪 Racik Ramuan Semangat Abadi Bareng Dede Eon!
-            </div>
-            <div class="pot-container" onclick="stirPot(event)">
-                <svg viewBox="0 0 100 100" width="100%" height="100%">
-                    <path d="M 20 40 Q 15 80 50 85 Q 85 80 80 40 Z" fill="#341f97" stroke="#5f27cd" stroke-width="3"/>
-                    <ellipse cx="50" cy="40" rx="30" ry="8" fill="#ffeaa7"/>
-                    <ellipse cx="50" cy="40" rx="25" ry="6" fill="#ff758c"/>
-                </svg>
-            </div>
-            <div style="margin-top:10px;">
-                <div class="pot-item-btn" id="ing1" onclick="addIngredient('ing1', 'Kelopak Senyum 😊')">+ Kelopak Senyum 😊</div>
-                <div class="pot-item-btn" id="ing2" onclick="addIngredient('ing2', 'Air Ketenangan 🌊')">+ Air Ketenangan 🌊</div>
-                <div class="pot-item-btn" id="ing3" onclick="addIngredient('ing3', 'Bintang Harapan 🌟')">+ Bintang Harapan 🌟</div>
-            </div>
-            <div class="bar-container" style="margin-top:10px;">
-                <div class="bar-fill" id="potFill"></div>
-                <div class="bar-text" id="potText">Kumpulkan Bahan (0/3) 🧪</div>
-            </div>
-        </div>
-
-        <!-- BOTTOM ACTION -->
-        <div style="text-align:center; pointer-events:auto; margin-bottom:20px;">
-            <button class="btn-primary" id="mainActionBtn" onclick="handleMainAction()">Elus Dede Eon 🐾✨</button>
-        </div>
+    <div class="loading-overlay" id="loading" style="display:none;">
+        <div class="spinner"></div>
+        <div id="loadingText">Menghubungkan ke Server...</div>
     </div>
 
-    <!-- POS 1 MODAL -->
-    <div class="modal-overlay" id="modal-cp1">
-        <div class="dialog-card">
-            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKPFt6gKmcy2PAM9-fYjTVyg3rkK2sjO90QQhsLszmQbKGhwOwr7eHFoLT4efTN2xDsdkpXGmk6C8_42IF-WTBQQ_zJsW4s192aeB-yL_xgaMY1yANIi8c-LjFWmkKGPvCmkp4O-1EjI26O-IJWQezoPtaOM4pv1ruCjKH7xiLqsff7Snkxi63CtZz6QeG/s1024/leon.jpg"></div>
-            <div class="dialog-title">Pos 1: Gerbang Hutan Ajaib 🌲✨</div>
-            <div class="dialog-text">"Uwahhh Dede Eon seneng banget dihias & dielus! Sebelum masuk lebih jauh, kenalan dulu yuk sama Leon..."</div>
-            
-            <span class="input-label">👤 Nama / Panggilan Kamu:</span>
-            <input type="text" id="input-nama" placeholder="Contoh: Sahabat Leon" />
-            
-            <span class="input-label">🌟 Cita-cita / Impian Terbesarmu:</span>
-            <input type="text" id="input-mimpi" placeholder="Contoh: Sukses & Bahagiakan Orang Tua" />
+    <div class="container">
+        <!-- FORM LOGIN -->
+        <div class="auth-card" id="cardLogin">
+            <div class="auth-title">Virtual Pet Dede Eon 🐾</div>
+            <div class="auth-desc">Masuk untuk merawat Dede Eon & curhat ke Leon!</div>
+            <div class="input-group">
+                <label>Username:</label>
+                <input type="text" id="loginUser" placeholder="Masukkan username..." />
+            </div>
+            <div class="input-group">
+                <label>Password:</label>
+                <input type="password" id="loginPass" placeholder="Masukkan password..." />
+            </div>
+            <button class="btn-auth" onclick="doLogin()">MASUK GAME ▶</button>
+            <br>
+            <span class="auth-link" onclick="showAuth('cardRegister')">Belum punya akun? Daftar di sini</span><br>
+            <span class="auth-link" onclick="showAuth('cardForgot')" style="color:#74b9ff;">Lupa Password?</span>
+        </div>
 
-            <span class="input-label">🧩 Teka-teki #1: Apa yang kalau dibagi tidak akan berkurang, malah makin bertambah?</span>
-            <div class="option-grid">
-                <button class="opt-btn" onclick="selectOpt1(this, 'Kasih Sayang 💖')">Kasih Sayang 💖</button>
-                <button class="opt-btn" onclick="selectOpt1(this, 'Uang Kertas 💵')">Uang Kertas 💵</button>
-                <button class="opt-btn" onclick="selectOpt1(this, 'Kue Ulang Tahun 🍰')">Kue Ulang Tahun 🍰</button>
-                <button class="opt-btn" onclick="selectOpt1(this, 'Buku Pelajaran 📚')">Buku Pelajaran 📚</button>
+        <!-- FORM REGISTER -->
+        <div class="auth-card" id="cardRegister" style="display:none;">
+            <div class="auth-title">Daftar Akun Baru 🌟</div>
+            <div class="auth-desc">Buat akun untuk simpan status Dede Eon secara permanen</div>
+            <div class="input-group">
+                <label>Username Baru:</label>
+                <input type="text" id="regUser" placeholder="Contoh: SahabatLeon" />
+            </div>
+            <div class="input-group">
+                <label>Password:</label>
+                <input type="password" id="regPass" placeholder="Password kamu..." />
+            </div>
+            <div class="input-group">
+                <label>Pertanyaan Keamanan (Lupa Password):</label>
+                <select id="regQ">
+                    <option value="Apa nama hewan peliharaan pertamamu?">Apa nama hewan peliharaan pertamamu?</option>
+                    <option value="Apa nama makanan favoritmu?">Apa nama makanan favoritmu?</option>
+                    <option value="Siapa nama sahabat kecilmu?">Siapa nama sahabat kecilmu?</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Jawaban Pertanyaan Keamanan:</label>
+                <input type="text" id="regA" placeholder="Jawaban kamu..." />
+            </div>
+            <button class="btn-auth" onclick="doRegister()">DAFTAR AKUN ✨</button>
+            <br>
+            <span class="auth-link" onclick="showAuth('cardLogin')">Sudah punya akun? Login di sini</span>
+        </div>
+
+        <!-- FORM LUPA PASSWORD -->
+        <div class="auth-card" id="cardForgot" style="display:none;">
+            <div class="auth-title">Reset Password 🔑</div>
+            <div class="auth-desc">Jawab pertanyaan keamanan untuk mengganti password</div>
+            <div class="input-group">
+                <label>Username Kamu:</label>
+                <input type="text" id="forgotUser" placeholder="Username..." />
+            </div>
+            <div class="input-group">
+                <label>Jawaban Pertanyaan Keamanan:</label>
+                <input type="text" id="forgotA" placeholder="Jawaban saat daftar..." />
+            </div>
+            <div class="input-group">
+                <label>Password Baru:</label>
+                <input type="password" id="forgotNewPass" placeholder="Masukkan password baru..." />
+            </div>
+            <button class="btn-auth" onclick="doResetPassword()">GANTI PASSWORD 🔄</button>
+            <br>
+            <span class="auth-link" onclick="showAuth('cardLogin')">Kembali ke Login</span>
+        </div>
+
+        <!-- MAIN GAME PANEL -->
+        <div class="game-card" id="cardGame" style="display:none;">
+            <!-- HEADER USER -->
+            <div class="user-header">
+                <div class="user-info">
+                    <span id="txtUser">User</span>
+                    <span class="lvl-badge" id="txtLvl">Lvl 1</span>
+                </div>
+                <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
             </div>
 
-            <button class="btn-modal" onclick="submitCP1()">Lanjut Ke Kartu Rahasia ▶</button>
-        </div>
-    </div>
-
-    <!-- KEJUTAN DADAKAN 1 -->
-    <div class="modal-overlay" id="modal-surprise1">
-        <div class="dialog-card" style="background:#fffdf0; border-color:#ffeaa7;">
-            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGR0Iqx68ZuG9I6cPyTDY-tyn8EoHzpxzFTOYqIkdnQmMf2qj39SXWP2ZlpMjCfcBdSWsxzGmQ6kDFhRyS4Krbiwz_CYt886pNFPbflyR6Jsb0RNzFkflE2wjEH8773fHf4XeMDv4lWPP-Za3KkNuWezMY2zHMZsGJuZrRHIQK67hYbgQ1Piz2g3c3Y6d/s821/leon%201.jpg"></div>
-            <div class="dialog-title">🎉 BOOO! PESAN KEJUTAN LEON! 🌟</div>
-            <div class="dialog-text">"Leon melompat dari dahan pohon permen cuma mau bilang: **Kamu itu hebat banget dan bernilai! Jangan lupa buat senyum hari ini ya!** 😁✨"</div>
-            <button class="btn-modal" onclick="startZone3()">Makasih Leon! Lanjut Basmi Penat 🚀</button>
-        </div>
-    </div>
-
-    <!-- POS 2 MODAL -->
-    <div class="modal-overlay" id="modal-cp2">
-        <div class="dialog-card">
-            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGR0Iqx68ZuG9I6cPyTDY-tyn8EoHzpxzFTOYqIkdnQmMf2qj39SXWP2ZlpMjCfcBdSWsxzGmQ6kDFhRyS4Krbiwz_CYt886pNFPbflyR6Jsb0RNzFkflE2wjEH8773fHf4XeMDv4lWPP-Za3KkNuWezMY2zHMZsGJuZrRHIQK67hYbgQ1Piz2g3c3Y6d/s821/leon%201.jpg"></div>
-            <div class="dialog-title">Pos 2: Danau Cermin Jiwa 🌊🔮</div>
-            <div class="dialog-text">"Semua monster penatmu sudah bersih! Sekarang jawab teka-teki & milih kondisi hatimu ya..."</div>
-            
-            <span class="input-label">🧩 Teka-teki #2: Saat kamu sedang lelah atau sedih, mana senjata terbaikmu?</span>
-            <div class="option-grid">
-                <button class="opt-btn" onclick="selectOpt2(this, 'Curhat Hangat 🗣️')">Curhat Hangat 🗣️</button>
-                <button class="opt-btn" onclick="selectOpt2(this, 'Istirahat Sejenak 🥛')">Istirahat Sejenak 🥛</button>
-                <button class="opt-btn" onclick="selectOpt2(this, 'Dengar Musik 🎵')">Dengar Musik 🎵</button>
-                <button class="opt-btn" onclick="selectOpt2(this, 'Nangis & Bangkit 💧')">Nangis & Bangkit 💧</button>
+            <!-- STATS BARS -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">🍕 Lapar</div>
+                    <div class="stat-bar"><div class="stat-fill" id="barLapar"></div></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">🥤 Haus</div>
+                    <div class="stat-bar"><div class="stat-fill" id="barHaus"></div></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">😴 Energi</div>
+                    <div class="stat-bar"><div class="stat-fill" id="barEnergi"></div></div>
+                </div>
             </div>
 
-            <span class="input-label">📊 Gimana Kondisi Perasaan Hatimu Hari Ini?</span>
-            <select id="input-mood">
-                <option value="✨ Lagi Bahagia & Semangat">✨ Lagi Bahagia & Semangat</option>
-                <option value="😴 Agak Lelah Cuma Bertahan">😴 Agak Lelah Cuma Bertahan</option>
-                <option value="🥺 Sedang Banyak Beban & Sedih">🥺 Sedang Banyak Beban & Sedih</option>
-                <option value="💖 Butuh Pelukan & Motivasi">💖 Butuh Pelukan & Motivasi</option>
-            </select>
+            <!-- PET STAGE -->
+            <div class="pet-stage">
+                <div class="pet-avatar" onclick="tapPet(event)">
+                    <div class="pet-acc" id="petAcc">👑</div>
+                    <svg viewBox="0 0 120 120" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ffb7c5"/>
+                                <stop offset="100%" stop-color="#ff758c"/>
+                            </linearGradient>
+                        </defs>
+                        <ellipse cx="40" cy="25" rx="12" ry="25" fill="#ff758c" transform="rotate(-15 40 25)"/>
+                        <ellipse cx="40" cy="25" rx="6" ry="16" fill="#ffd1dc" transform="rotate(-15 40 25)"/>
+                        <ellipse cx="80" cy="25" rx="12" ry="25" fill="#ff758c" transform="rotate(15 80 25)"/>
+                        <ellipse cx="80" cy="25" rx="6" ry="16" fill="#ffd1dc" transform="rotate(15 80 25)"/>
+                        <circle cx="60" cy="65" r="42" fill="url(#bodyG)"/>
+                        <circle cx="35" cy="70" r="8" fill="#ff4757" opacity="0.35"/>
+                        <circle cx="85" cy="70" r="8" fill="#ff4757" opacity="0.35"/>
+                        <circle cx="45" cy="60" r="6" fill="#2f3542"/>
+                        <circle cx="75" cy="60" r="6" fill="#2f3542"/>
+                        <circle cx="43" cy="58" r="2.5" fill="#ffffff"/>
+                        <circle cx="73" cy="58" r="2.5" fill="#ffffff"/>
+                        <path d="M 52 70 Q 56 75 60 70 Q 64 75 68 70" fill="none" stroke="#2f3542" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="42" cy="98" r="9" fill="#ff4757"/>
+                        <circle cx="78" cy="98" r="9" fill="#ff4757"/>
+                    </svg>
+                </div>
 
-            <button class="btn-modal" onclick="submitCP2()">Lanjut Meracik Ramuan ▶</button>
-        </div>
-    </div>
-
-    <!-- KEJUTAN DADAKAN 2 -->
-    <div class="modal-overlay" id="modal-surprise2">
-        <div class="dialog-card" style="background:#fffdf0; border-color:#ffeaa7;">
-            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKPFt6gKmcy2PAM9-fYjTVyg3rkK2sjO90QQhsLszmQbKGhwOwr7eHFoLT4efTN2xDsdkpXGmk6C8_42IF-WTBQQ_zJsW4s192aeB-yL_xgaMY1yANIi8c-LjFWmkKGPvCmkp4O-1EjI26O-IJWQezoPtaOM4pv1ruCjKH7xiLqsff7Snkxi63CtZz6QeG/s1024/leon.jpg"></div>
-            <div class="dialog-title">🎁 PING! PELUKAN HANGAT DARI LEON! 🧸</div>
-            <div class="dialog-text">"Ramuan Semangatmu berhasil dibuat! *Ingat ya: Tidak apa-apa untuk merasa capek. Kamu tidak harus selalu sempurna!* Hugs! 🫂💗"</div>
-            <button class="btn-modal" onclick="startZone5()">Ke Ruang Curhat Berbisik 📜</button>
-        </div>
-    </div>
-
-    <!-- POS 3 MODAL -->
-    <div class="modal-overlay" id="modal-cp3">
-        <div class="dialog-card">
-            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGR0Iqx68ZuG9I6cPyTDY-tyn8EoHzpxzFTOYqIkdnQmMf2qj39SXWP2ZlpMjCfcBdSWsxzGmQ6kDFhRyS4Krbiwz_CYt886pNFPbflyR6Jsb0RNzFkflE2wjEH8773fHf4XeMDv4lWPP-Za3KkNuWezMY2zHMZsGJuZrRHIQK67hYbgQ1Piz2g3c3Y6d/s821/leon%201.jpg"></div>
-            <div class="dialog-title">Pos 3: Pohon Curhat Berbisik 📜🍃</div>
-            <div class="dialog-text">"Sini duduk dekat Leon... Tuliskan semua unek-unek, masalah, curhatan panjang, atau harapanmu di sini. Leon bakalan simpan rahasiamu rapi-rapi!"</div>
-            
-            <textarea id="input-curhat" placeholder="Tulis curhatanmu sepanjang mungkin di sini... Luapkan semua keluh kesahmu, Leon siap mendengarkan sepenuhnya! 💖"></textarea>
-
-            <button class="btn-modal" onclick="submitCP3()">Kirim Curhatan ke Leon & Ke Puncak ▶</button>
-        </div>
-    </div>
-
-    <!-- FINISH MODAL -->
-    <div class="modal-overlay" id="modal-finish">
-        <div class="dialog-card">
-            <div class="eon-img-box"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-3BqeSllkwuqLFkDsCj7OUaFhF45rbglPAA_12QTOqTrMbjIyLve8DdyO0P4kvbG4axKI5EpdKtwiu-SiGiiF1frfSwWyjnjNJFEP39_GRYfhYmuhh0E8sggpF8ZDilNlt1nu7Gias-Gn0k3kgB2NFnFPy3QDmER6AiNVTAkeDTko7-DEyRIPfut-j4UA/s1024/leon.jpg"></div>
-            <div class="dialog-title">👑 SELESAI! KAMU PENJELAJAH TANGGUH! 👑</div>
-            <div class="dialog-text">"SELAMATTT! Kamu telah menyelesaikan seluruh petualangan Hutan Ajaib! Terimakasih sudah bertahan sampai sejauh ini ya!"</div>
-            
-            <div style="background: #e8f8f5; border: 2.5px dashed #2ecc71; padding: 14px; border-radius: 18px; margin-bottom: 14px; text-align: left; font-size: 0.85rem; color: #2d3436;">
-                <div style="font-weight:bold; color:#27ae60; text-align:center; font-size:1rem; margin-bottom:6px;">🏆 Sertifikat Sahabat Sejati Leon</div>
-                <div id="cert-details">Menerbitkan sertifikat...</div>
+                <div class="xp-container">
+                    <div class="xp-bar"><div class="xp-fill" id="barXP"></div></div>
+                    <div class="xp-text" id="txtXP">XP: 0 / 100</div>
+                </div>
             </div>
 
-            <button class="btn-modal" onclick="restartGame()">Jelajahi Hutan Lagi 🔄</button>
+            <!-- ACTION PANEL (SWAPPABLE CONTENT) -->
+            <div class="panel-area" id="panelArea">
+                <!-- DEFAULT DAPUR -->
+                <div id="panelDapur" class="action-grid">
+                    <button class="btn-act" onclick="feedPet('makanan')">🍕 Makan Pizza (+25)</button>
+                    <button class="btn-act" onclick="feedPet('minuman')">🥤 Minum Boba (+25)</button>
+                    <button class="btn-act" onclick="feedPet('kue')">🍰 Makan Kue (+40)</button>
+                    <button class="btn-act" onclick="feedPet('susu')">🥛 Minum Susu (+40)</button>
+                </div>
+
+                <!-- KAMAR TIDUR -->
+                <div id="panelTidur" class="action-grid" style="display:none;">
+                    <button class="btn-act" style="grid-column: span 2;" onclick="sleepPet()">🛌 Tidur Siang (+50 Energi)</button>
+                </div>
+
+                <!-- LEMARI BAJU -->
+                <div id="panelBaju" class="action-grid" style="display:none;">
+                    <button class="btn-act" onclick="setAcc('👑')">👑 Mahkota</button>
+                    <button class="btn-act" onclick="setAcc('🎀')">🎀 Pita Pink</button>
+                    <button class="btn-act" onclick="setAcc('👓')">👓 Kacamata</button>
+                    <button class="btn-act" onclick="setAcc('🍄')">🍄 Topi Jamur</button>
+                </div>
+
+                <!-- RUANG CURHAT -->
+                <div id="panelCurhat" style="display:none;">
+                    <div class="input-group" style="margin-bottom:6px;">
+                        <textarea id="txtCurhatInput" style="height:55px;" placeholder="Tulis curhatan rahasiamu ke Leon di sini..."></textarea>
+                    </div>
+                    <button class="btn-act" style="width:100%; margin-bottom:8px;" onclick="sendCurhat()">💌 Kirim Curhat ke Leon</button>
+                    <div class="curhat-box" id="curhatListDisplay">
+                        <!-- HISTORI CURHAT & BALASAN -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- NAV TABS -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('panelDapur', this)">🍲</button>
+                <button class="tab-btn" onclick="switchTab('panelTidur', this)">🛌</button>
+                <button class="tab-btn" onclick="switchTab('panelBaju', this)">🎀</button>
+                <button class="tab-btn" onclick="switchTab('panelCurhat', this)">📜</button>
+            </div>
         </div>
     </div>
 
     <script>
-        var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3wcM-wQy1Jq_oDgMxCsZwdu5olDeAzwpdKOQlBZO73i6L9il-XukY9_OmBI24noe5_w/exec";
+        var API_URL = "https://script.google.com/macros/s/AKfycbxG5gNgXGjn6twQfl-g21TpOHzvw4MUGnn1PG9jR7i-CtwfitdD82sigenjTr8Ab60fbA/exec";
 
-        // AUDIO SYNTHESIZER
-        var audioCtx = null, audioEnabled = true;
+        // STATE
+        var currentUser = null;
+        var petData = { level: 1, xp: 0, lapar: 100, haus: 100, energi: 100, pakaian: "👑" };
+        var curhatHistory = [];
 
-        function initAudio() {
-            if(!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                startBGM();
-            }
+        function showLoading(msg) {
+            document.getElementById("loadingText").innerText = msg || "Loading...";
+            document.getElementById("loading").style.display = "flex";
+        }
+        function hideLoading() { document.getElementById("loading").style.display = "none"; }
+
+        function showAuth(id) {
+            document.getElementById("cardLogin").style.display = "none";
+            document.getElementById("cardRegister").style.display = "none";
+            document.getElementById("cardForgot").style.display = "none";
+            document.getElementById(id).style.display = "block";
         }
 
-        function playSound(freq, type, duration) {
-            if(!audioEnabled || !audioCtx) return;
-            try {
-                var osc = audioCtx.createOscillator();
-                var gain = audioCtx.createGain();
-                osc.type = type || "sine";
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + duration);
-            } catch(e){}
+        // API CALL HELPER
+        function apiPost(data, callback) {
+            showLoading("Menghubungkan ke Server...");
+            fetch(API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(res => {
+                hideLoading();
+                callback(res);
+            })
+            .catch(err => {
+                hideLoading();
+                alert("Gagal terhubung ke server: " + err);
+            });
         }
 
-        function playPop() { playSound(650, "sine", 0.12); }
-        function playSparkle() { playSound(950, "triangle", 0.25); }
-        function playWin() { 
-            setTimeout(() => playSound(523, "sine", 0.2), 0);
-            setTimeout(() => playSound(659, "sine", 0.2), 150);
-            setTimeout(() => playSound(783, "sine", 0.4), 300);
+        // AUTH ACTIONS
+        function doRegister() {
+            var u = document.getElementById("regUser").value.trim();
+            var p = document.getElementById("regPass").value.trim();
+            var q = document.getElementById("regQ").value;
+            var a = document.getElementById("regA").value.trim();
+
+            if(!u || !p || !a) return alert("Harap isi semua kolom pendaftaran!");
+
+            apiPost({ action: "register", username: u, password: p, securityQuestion: q, securityAnswer: a }, function(res) {
+                alert(res.message);
+                if(res.status === "success") showAuth("cardLogin");
+            });
         }
 
-        function startBGM() {
-            if(!audioCtx) return;
-            var notes = [261, 329, 392, 523, 392, 329]; var step = 0;
-            setInterval(function() {
-                if(audioEnabled && audioCtx) {
-                    playSound(notes[step % notes.length], "sine", 0.4); step++;
+        function doLogin() {
+            var u = document.getElementById("loginUser").value.trim();
+            var p = document.getElementById("loginPass").value.trim();
+
+            if(!u || !p) return alert("Isi username & password!");
+
+            apiPost({ action: "login", username: u, password: p }, function(res) {
+                if(res.status === "success") {
+                    currentUser = u;
+                    petData = res.petData;
+                    curhatHistory = res.curhatList || [];
+                    initGameUI();
+                } else {
+                    alert(res.message);
                 }
-            }, 650);
+            });
         }
 
-        function toggleAudio() {
-            initAudio(); audioEnabled = !audioEnabled;
-            document.getElementById("audioToggle").innerHTML = audioEnabled ? "🎵 Musik: ON" : "🔇 Musik: OFF";
+        function doResetPassword() {
+            var u = document.getElementById("forgotUser").value.trim();
+            var a = document.getElementById("forgotA").value.trim();
+            var np = document.getElementById("forgotNewPass").value.trim();
+
+            if(!u || !a || !np) return alert("Harap isi semua kolom reset password!");
+
+            apiPost({ action: "forgot_password", username: u, securityAnswer: a, newPassword: np }, function(res) {
+                alert(res.message);
+                if(res.status === "success") showAuth("cardLogin");
+            });
         }
 
-        // CANVAS PARTICLES & BG
+        function doLogout() {
+            savePetState();
+            currentUser = null;
+            document.getElementById("cardGame").style.display = "none";
+            showAuth("cardLogin");
+        }
+
+        // GAME UI INIT
+        function initGameUI() {
+            document.getElementById("cardLogin").style.display = "none";
+            document.getElementById("cardGame").style.display = "flex";
+
+            document.getElementById("txtUser").innerText = currentUser;
+            document.getElementById("petAcc").innerText = petData.pakaian || "👑";
+
+            updateStatsDisplay();
+            renderCurhatList();
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById("txtLvl").innerText = "Lvl " + petData.level;
+            document.getElementById("barLapar").style.width = petData.lapar + "%";
+            document.getElementById("barHaus").style.width = petData.haus + "%";
+            document.getElementById("barEnergi").style.width = petData.energi + "%";
+
+            var xpPct = Math.min(100, (petData.xp / (petData.level * 100)) * 100);
+            document.getElementById("barXP").style.width = xpPct + "%";
+            document.getElementById("txtXP").innerText = "XP: " + petData.xp + " / " + (petData.level * 100);
+        }
+
+        function savePetState() {
+            if(!currentUser) return;
+            fetch(API_URL, {
+                method: "POST", mode: "no-cors",
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify({
+                    action: "save_pet",
+                    username: currentUser,
+                    level: petData.level,
+                    xp: petData.xp,
+                    lapar: petData.lapar,
+                    haus: petData.haus,
+                    energi: petData.energi,
+                    pakaian: petData.pakaian
+                })
+            });
+        }
+
+        // GAMEPLAY MECHANICS
+        function tapPet(e) {
+            addXP(10);
+            petData.energi = Math.max(0, petData.energi - 2);
+            updateStatsDisplay();
+            savePetState();
+        }
+
+        function addXP(amount) {
+            petData.xp += amount;
+            var needed = petData.level * 100;
+            if(petData.xp >= needed) {
+                petData.level++;
+                petData.xp -= needed;
+                alert("🎉 SELAMAT! Dede Eon Naik ke Level " + petData.level + "! 🌟");
+            }
+            updateStatsDisplay();
+        }
+
+        function feedPet(type) {
+            if(type === 'makanan') petData.lapar = Math.min(100, petData.lapar + 25);
+            if(type === 'minuman') petData.haus = Math.min(100, petData.haus + 25);
+            if(type === 'kue') petData.lapar = Math.min(100, petData.lapar + 40);
+            if(type === 'susu') petData.haus = Math.min(100, petData.haus + 40);
+
+            addXP(15);
+            savePetState();
+        }
+
+        function sleepPet() {
+            petData.energi = 100;
+            addXP(20);
+            alert("😴 Dede Eon sudah selesai tidur! Energi kembali 100%!");
+            savePetState();
+        }
+
+        function setAcc(acc) {
+            petData.pakaian = acc;
+            document.getElementById("petAcc").innerText = acc;
+            savePetState();
+        }
+
+        function switchTab(panelId, btn) {
+            document.getElementById("panelDapur").style.display = "none";
+            document.getElementById("panelTidur").style.display = "none";
+            document.getElementById("panelBaju").style.display = "none";
+            document.getElementById("panelCurhat").style.display = "none";
+
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            document.getElementById(panelId).style.display = (panelId === 'panelCurhat') ? "block" : "grid";
+        }
+
+        function sendCurhat() {
+            var txt = document.getElementById("txtCurhatInput").value.trim();
+            if(!txt) return alert("Tuliskan curhatanmu terlebih dahulu!");
+
+            apiPost({ action: "send_curhat", username: currentUser, pesanCurhat: txt }, function(res) {
+                alert(res.message);
+                if(res.status === "success") {
+                    document.getElementById("txtCurhatInput").value = "";
+                    curhatHistory = res.curhatList || [];
+                    renderCurhatList();
+                }
+            });
+        }
+
+        function renderCurhatList() {
+            var box = document.getElementById("curhatListDisplay");
+            if(curhatHistory.length === 0) {
+                box.innerHTML = "<div style='color:#a4b0be; text-align:center;'>Belum ada curhatan tersimpan.</div>";
+                return;
+            }
+            var html = "";
+            for(var i = curhatHistory.length - 1; i >= 0; i--) {
+                var c = curhatHistory[i];
+                html += `
+                    <div class="curhat-item">
+                        <div class="curhat-date">📅 ${c.tanggal}</div>
+                        <div class="curhat-msg">💬 ${c.pesan}</div>
+                        <div class="curhat-reply">🦁 Balasan Leon: ${c.balasan}</div>
+                    </div>
+                `;
+            }
+            box.innerHTML = html;
+        }
+
+        // CANVAS BACKGROUND
         var canvas = document.getElementById("bgCanvas");
         var ctx = canvas.getContext("2d");
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resize(); window.addEventListener("resize", resize);
 
-        var particles = [], fireflies = [];
-        for(var f=0; f<35; f++) {
-            fireflies.push({
-                x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight,
-                r: Math.random()*3+2, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5, alpha: Math.random()
-            });
-        }
-
-        function createSparkles(x, y, count) {
-            initAudio();
-            for(var i=0; i<count; i++) {
-                particles.push({
-                    x: x, y: y, vx: (Math.random()-0.5)*6, vy: (Math.random()-0.5)*6,
-                    size: Math.random()*10+4, color: ["#ff758c","#ffeaa7","#55efc4","#a29bfe","#ffffff"][Math.floor(Math.random()*5)],
-                    life: 1, shape: Math.random()>0.5 ? "heart":"circle"
-                });
-            }
-        }
-
-        window.addEventListener("pointerdown", function(e) { createSparkles(e.clientX, e.clientY, 8); playPop(); });
-
-        // GAME LOGIC
-        var currentStage = 1;
-        var loveCount = 0;
-        var openedCards = 0;
-        var remainingBubbles = 6;
-        var potIngredients = 0;
-        var chosenAcc = "👑";
-
-        var playerData = { nama: "", mimpi: "", pilihan1: "Kasih Sayang 💖", pilihan2: "Curhat Hangat 🗣️", mood: "", curhat: "", aksesoris: "👑" };
-
-        function changeAcc(btn, acc) {
-            document.querySelectorAll(".item-btn").forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected");
-            document.getElementById("eonAcc").innerText = acc;
-            chosenAcc = acc;
-            playerData.aksesoris = acc;
-            playSparkle();
-        }
-
-        function patDedeEon(e) {
-            e.stopPropagation(); createSparkles(e.clientX, e.clientY, 15); playSparkle();
-            incrementLove();
-        }
-
-        function incrementLove() {
-            if(currentStage !== 1) return;
-            loveCount++;
-            var pct = Math.min(100, (loveCount / 5) * 100);
-            document.getElementById("loveFill").style.width = pct + "%";
-            document.getElementById("loveText").innerText = "Usap Dede Eon (" + loveCount + "/5) 💖";
-
-            if(loveCount >= 5) {
-                setTimeout(() => openM("modal-cp1"), 300);
-            }
-        }
-
-        function handleMainAction() {
-            if(currentStage === 1) {
-                var rect = document.getElementById("stage1").getBoundingClientRect();
-                createSparkles(rect.left + rect.width/2, rect.top + rect.height/2, 18);
-                playSparkle(); incrementLove();
-            }
-        }
-
-        function openM(id) { document.getElementById(id).classList.add("active"); }
-        function closeM(id) { document.getElementById(id).classList.remove("active"); }
-
-        window.selectOpt1 = function(btn, val) {
-            document.querySelectorAll("#modal-cp1 .opt-btn").forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected"); playerData.pilihan1 = val;
-        };
-
-        window.selectOpt2 = function(btn, val) {
-            document.querySelectorAll("#modal-cp2 .opt-btn").forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected"); playerData.pilihan2 = val;
-        };
-
-        function submitCP1() {
-            playerData.nama = document.getElementById("input-nama").value.trim() || "Penjelajah Tangguh";
-            playerData.mimpi = document.getElementById("input-mimpi").value.trim() || "Orang Bahagia & Sukses";
-            closeM("modal-cp1");
-            startStage2();
-        }
-
-        function startStage2() {
-            currentStage = 2;
-            document.getElementById("stage1").style.display = "none";
-            document.getElementById("stage2").style.display = "block";
-            document.getElementById("mainActionBtn").style.display = "none";
-            document.getElementById("zoneTag").innerHTML = "🔮 Bab 2: Kartu Motivasi Rahasia Dede Eon ✨";
-        }
-
-        function flipCard(card, title, msg) {
-            if(card.classList.contains("opened")) return;
-            card.classList.add("opened");
-            card.innerHTML = "<b>" + title + "</b><br>" + msg;
-            openedCards++; playSparkle();
-            if(openedCards >= 2) {
-                setTimeout(() => openM("modal-surprise1"), 800);
-            }
-        }
-
-        function startZone3() {
-            closeM("modal-surprise1");
-            currentStage = 3;
-            document.getElementById("stage2").style.display = "none";
-            document.getElementById("zoneTag").innerHTML = "🌊 Bab 3: Hancurkan Gelembung Penat 🫧";
-            spawnBubbles();
-        }
-
-        function spawnBubbles() {
-            var area = document.getElementById("bubbleArea"); area.innerHTML = "";
-            var texts = ["Overthinking 💭", "Capek Batin 😴", "Sedih & Cemas 🥺", "Insecure 💔", "Takut Gagal 🌧️", "Ekspektasi Orang 🎒"];
-            
-            texts.forEach(function(txt, i) {
-                var b = document.createElement("div");
-                b.className = "pop-bubble"; b.innerText = txt;
-                b.style.left = (12 + Math.random() * 65) + "%";
-                b.style.top = (18 + i * 11) + "%";
-                b.onclick = function(e) {
-                    e.stopPropagation(); createSparkles(e.clientX, e.clientY, 20); playSparkle();
-                    b.remove(); remainingBubbles--;
-                    if(remainingBubbles <= 0) {
-                        setTimeout(() => openM("modal-cp2"), 500);
-                    }
-                };
-                area.appendChild(b);
-            });
-        }
-
-        function submitCP2() {
-            playerData.mood = document.getElementById("input-mood").value;
-            closeM("modal-cp2");
-            startStage4();
-        }
-
-        function startStage4() {
-            currentStage = 4;
-            document.getElementById("stage4").style.display = "block";
-            document.getElementById("zoneTag").innerHTML = "🧪 Bab 4: Meracik Ramuan Semangat 🌟";
-        }
-
-        function addIngredient(id, name) {
-            var btn = document.getElementById(id);
-            btn.classList.add("added");
-            potIngredients++; playSparkle();
-            var pct = Math.min(100, (potIngredients / 3) * 100);
-            document.getElementById("potFill").style.width = pct + "%";
-            document.getElementById("potText").innerText = "Kumpulkan Bahan (" + potIngredients + "/3) 🧪";
-            if(potIngredients >= 3) {
-                setTimeout(() => openM("modal-surprise2"), 600);
-            }
-        }
-
-        function stirPot(e) {
-            e.stopPropagation(); createSparkles(e.clientX, e.clientY, 15); playSparkle();
-        }
-
-        function startZone5() {
-            closeM("modal-surprise2");
-            currentStage = 5;
-            document.getElementById("stage4").style.display = "none";
-            document.getElementById("zoneTag").innerHTML = "📜 Bab 5: Pohon Curhat Berbisik 🍃";
-            openM("modal-cp3");
-        }
-
-        function submitCP3() {
-            playerData.curhat = document.getElementById("input-curhat").value.trim() || "(Pemain memilih untuk tidak mengetik curhatan panjang)";
-            closeM("modal-cp3");
-
-            fetch(GOOGLE_SCRIPT_URL, { 
-                method: "POST", mode: "no-cors", 
-                headers: {"Content-Type": "application/json"}, 
-                body: JSON.stringify(playerData) 
-            });
-
-            playWin(); openM("modal-finish");
-            document.getElementById("cert-details").innerHTML = `
-                <b>Nama:</b> ${playerData.nama}<br>
-                <b>Mimpi Utama:</b> ${playerData.mimpi}<br>
-                <b>Aksesoris Pilihan:</b> ${playerData.aksesoris}<br>
-                <b>Kondisi Hati:</b> ${playerData.mood}<br>
-                <b>Pesan Leon:</b> Kamu sosok yang hebat & selalu didoakan Leon! ✨
-            `;
-        }
-
-        function restartGame() { location.reload(); }
-
         function render() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             var grad = ctx.createLinearGradient(0,0,0,canvas.height);
-            grad.addColorStop(0, "#180826"); grad.addColorStop(1, "#4a1942");
+            grad.addColorStop(0, "#1a0826"); grad.addColorStop(1, "#4a1942");
             ctx.fillStyle = grad; ctx.fillRect(0,0,canvas.width,canvas.height);
-
-            for(var ff of fireflies) {
-                ff.x += ff.vx; ff.y += ff.vy;
-                if(ff.x < 0 || ff.x > canvas.width) ff.vx *= -1;
-                if(ff.y < 0 || ff.y > canvas.height) ff.vy *= -1;
-                ctx.fillStyle = "#ffeaa7";
-                ctx.globalAlpha = Math.sin(Date.now() * 0.003 + ff.alpha) * 0.5 + 0.5;
-                ctx.beginPath(); ctx.arc(ff.x, ff.y, ff.r, 0, Math.PI*2); ctx.fill();
-                ctx.globalAlpha = 1.0;
-            }
-
-            for(var j = particles.length - 1; j >= 0; j--) {
-                var p = particles[j]; p.x += p.vx; p.y += p.vy; p.life -= 0.025;
-                if(p.life <= 0) { particles.splice(j, 1); continue; }
-                ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
-                if(p.shape === "heart") {
-                    ctx.font = (p.size * 1.5) + "px Quicksand"; ctx.fillText("💖", p.x, p.y);
-                } else {
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
-                }
-                ctx.globalAlpha = 1.0;
-            }
             requestAnimationFrame(render);
         }
         render();
