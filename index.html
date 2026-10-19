@@ -65,9 +65,9 @@
         .util-btn { width: 40px; height: 40px; background: #fff; border: 3px solid #2f3542; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; box-shadow: 0 4px 0 #2f3542; cursor: pointer; transition: 0.1s; }
         .util-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #2f3542; }
 
-        /* PET AVATAR & MULTI-ACCESSORY OVERLAYS */
-        .pet-container { position: relative; z-index: 6; display: flex; flex-direction: column; align-items: center; cursor: pointer; margin-top: 35px; }
-        .pet-avatar { width: 155px; height: 155px; position: relative; transition: transform 0.15s ease; animation: petBobbing 3s ease-in-out infinite; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
+        /* PET AVATAR & PRECISION ACCESSORY POSITIONS */
+        .pet-container { position: relative; z-index: 6; display: flex; flex-direction: column; align-items: center; cursor: pointer; margin-top: 25px; }
+        .pet-avatar { width: 160px; height: 160px; position: relative; transition: transform 0.15s ease; animation: petBobbing 3s ease-in-out infinite; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
         @keyframes petBobbing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         
         .pet-avatar.happy { animation: petJump 0.5s ease; }
@@ -76,13 +76,13 @@
         .pet-avatar.eating { animation: petMunch 0.4s ease 3; }
         @keyframes petMunch { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08, 0.92); } }
 
-        /* ACCESSORY POSITIONS */
-        .acc-layer { position: absolute; pointer-events: none; z-index: 7; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        .pet-hat { top: -8px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; }
-        .pet-glasses { top: 38px; left: 50%; transform: translateX(-50%); font-size: 2.2rem; }
-        .pet-clothes { bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 2.6rem; z-index: 8; }
-        .pet-earring { top: 22px; right: 12px; font-size: 1.2rem; }
-        .pet-facial { top: 62px; left: 50%; transform: translateX(-50%); font-size: 2rem; z-index: 8; }
+        /* ACCURATE LAYER OVERLAYS */
+        .acc-layer { position: absolute; pointer-events: none; transform: translateX(-50%); left: 50%; text-align: center; line-height: 1; }
+        .pet-hat { top: -14px; font-size: 2.8rem; z-index: 9; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.2)); }
+        .pet-glasses { top: 46px; font-size: 2.2rem; z-index: 8; }
+        .pet-clothes { top: 92px; font-size: 2.3rem; z-index: 7; }
+        .pet-earring { top: 32px; left: auto; right: 18px; transform: none; font-size: 1.2rem; z-index: 9; }
+        .pet-facial { top: 68px; font-size: 1.8rem; z-index: 8; }
 
         .dirt-spot { position: absolute; font-size: 1.3rem; opacity: 0.85; pointer-events: none; z-index: 8; }
 
@@ -121,12 +121,12 @@
         /* CURHAT CHAT UI (USER & ADMIN CONTACT VIEW) */
         .curhat-shelf-box { grid-column: span 4; display: flex; flex-direction: column; gap: 4px; text-align: left; height: 100px; }
         .curhat-admin-layout { display: flex; gap: 6px; height: 100%; }
-        .admin-contact-list { width: 35%; background: #fff; border: 1.5px solid #2f3542; border-radius: 10px; overflow-y: auto; padding: 2px; }
-        .contact-item { padding: 4px 6px; font-size: 0.65rem; font-weight: bold; border-bottom: 1px solid #eee; cursor: pointer; border-radius: 6px; }
+        .admin-contact-list { width: 38%; background: #fff; border: 1.5px solid #2f3542; border-radius: 10px; overflow-y: auto; padding: 2px; }
+        .contact-item { padding: 4px 6px; font-size: 0.65rem; font-weight: bold; border-bottom: 1px solid #eee; cursor: pointer; border-radius: 6px; word-break: break-all; }
         .contact-item:hover, .contact-item.active { background: #ff758c; color: #fff; }
         .admin-chat-area { flex: 1; display: flex; flex-direction: column; gap: 4px; height: 100%; }
         .curhat-history-box { flex: 1; background: #fff; border: 1.5px solid #2f3542; border-radius: 10px; padding: 4px; overflow-y: auto; font-size: 0.7rem; }
-        .chat-bubble { margin-bottom: 4px; padding: 4px 6px; border-radius: 8px; max-width: 90%; font-size: 0.68rem; }
+        .chat-bubble { margin-bottom: 4px; padding: 4px 6px; border-radius: 8px; max-width: 90%; font-size: 0.68rem; line-height: 1.2; }
         .chat-bubble.user { background: #ffeaa7; align-self: flex-end; margin-left: auto; border: 1px solid #f39c12; }
         .chat-bubble.admin { background: #d4edda; align-self: flex-start; border: 1px solid #28a745; }
 
@@ -168,7 +168,7 @@
             <div class="auth-desc">Masuk untuk merawat Dede Eon & curhat ke Leon!</div>
             <div class="input-group">
                 <label>Username:</label>
-                <input type="text" id="loginUser" placeholder="Masukkan username (isi 'admin' utk admin)" />
+                <input type="text" id="loginUser" placeholder="Username (misal: leonarshaka)" />
             </div>
             <div class="input-group">
                 <label>Password:</label>
@@ -280,15 +280,15 @@
                 <!-- DRAGGABLE SPONGE -->
                 <div class="drag-sponge" id="dragSponge" style="display:none; bottom:60px; right:30px;">🧽</div>
 
-                <!-- PET CHARACTER AREA WITH MULTI ACCESSORIES -->
+                <!-- PET CHARACTER AREA WITH PRECISE OVERLAY ACCESSORIES -->
                 <div class="pet-container" id="petContainer">
                     <div class="pet-avatar" id="petAvatar" onclick="petDedeEon(event)">
                         <!-- ACCESSORY OVERLAYS -->
                         <div class="acc-layer pet-hat" id="accHat">👑</div>
                         <div class="acc-layer pet-glasses" id="accGlasses"></div>
+                        <div class="acc-layer pet-facial" id="accFacial"></div>
                         <div class="acc-layer pet-clothes" id="accClothes"></div>
                         <div class="acc-layer pet-earring" id="accEarring"></div>
-                        <div class="acc-layer pet-facial" id="accFacial"></div>
 
                         <div class="dirt-spot" id="dirtSpot" style="display:none; top:40px; left:20px;">🟤</div>
                         <svg viewBox="0 0 120 120" width="100%" height="100%">
@@ -378,6 +378,7 @@
         var audioCtx = null;
         var currentRoomIndex = 0;
         var shopCatIndex = 'hats';
+        var autoRefreshTimer = null;
 
         var rooms = [
             { title: "🍽️ Dapur", key: "dapur", class: "room-dapur" },
@@ -387,6 +388,12 @@
             { title: "👛 Toko / Shop", key: "toko", class: "room-toko" },
             { title: "📜 Ruang Curhat", key: "curhat", class: "room-curhat" }
         ];
+
+        function checkIsAdmin(user) {
+            if(!user) return false;
+            var u = user.toLowerCase().trim();
+            return u === 'leonarshaka' || u === 'admin';
+        }
 
         function notify(title, msg, icon) {
             var container = document.getElementById("toastContainer");
@@ -421,16 +428,16 @@
             document.getElementById(id).style.display = "block";
         }
 
-        function apiPost(data, callback) {
-            showLoading("Menghubungkan ke Server...");
+        function apiPost(data, callback, quiet) {
+            if(!quiet) showLoading("Menghubungkan ke Server...");
             fetch(API_URL, {
                 method: "POST", mode: "cors",
                 headers: { "Content-Type": "text/plain" },
                 body: JSON.stringify(data)
             })
             .then(res => res.json())
-            .then(res => { hideLoading(); callback(res); })
-            .catch(err => { hideLoading(); notify("Error", "Gagal terhubung: " + err, "❌"); });
+            .then(res => { if(!quiet) hideLoading(); if(callback) callback(res); })
+            .catch(err => { if(!quiet) { hideLoading(); notify("Error", "Gagal terhubung: " + err, "❌"); } });
         }
 
         function doRegister() {
@@ -477,6 +484,7 @@
 
         function doLogout() {
             savePetState();
+            if(autoRefreshTimer) clearInterval(autoRefreshTimer);
             currentUser = null;
             document.getElementById("cardGame").style.display = "none";
             showAuth("cardLogin");
@@ -584,6 +592,8 @@
             var sponge = document.getElementById("dragSponge");
             sponge.style.display = (r.key === 'mandi') ? "block" : "none";
 
+            if(autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
+
             var shelf = document.getElementById("itemShelf");
             shelf.innerHTML = "";
 
@@ -609,8 +619,18 @@
             } else if(r.key === 'toko') {
                 renderShopShelf();
             } else if(r.key === 'curhat') {
-                renderCurhatUI();
+                fetchCurhatLive();
+                autoRefreshTimer = setInterval(fetchCurhatLive, 5000);
             }
+        }
+
+        function fetchCurhatLive() {
+            apiPost({ action: "login", username: currentUser, password: "" }, function(res) {
+                if(res && res.curhatList) {
+                    curhatHistory = res.curhatList;
+                    renderCurhatUI();
+                }
+            }, true);
         }
 
         /* EXPANDED SHOP & ACCESSORIES */
@@ -696,7 +716,7 @@
         function renderCurhatUI() {
             var shelf = document.getElementById("itemShelf");
 
-            if(currentUser === 'admin') {
+            if(checkIsAdmin(currentUser)) {
                 // ADMIN VIEW: CONTACT LIST + DIRECT CHAT THREAD
                 var contacts = [...new Set(curhatHistory.map(c => c.username || c.user || 'User1'))];
                 if(!selectedContact && contacts.length > 0) selectedContact = contacts[0];
@@ -771,7 +791,7 @@
             apiPost({ action: "send_curhat", username: currentUser, pesanCurhat: txt }, function(res) {
                 notify("Curhat Terkirim", "Pesan dikirim ke Admin Leon!", "🦁");
                 if(input) input.value = "";
-                renderCurhatUI();
+                fetchCurhatLive();
             });
         }
 
@@ -790,7 +810,7 @@
             apiPost({ action: "reply_curhat", targetUser: selectedContact, balasanAdmin: txt }, function(res) {
                 notify("Dibalas", "Balasan berhasil dikirim ke " + selectedContact, "💬");
                 if(input) input.value = "";
-                renderCurhatUI();
+                fetchCurhatLive();
             });
         }
 
