@@ -1,4 +1,4 @@
-updated_code = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@ updated_code = """<!DOCTYPE html>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
         
-        /* STRICT DVH FIX FOR ALL MOBILE BROWSERS (NO MORE OVERFLOW/CUT OFF) */
+        /* STRICT DVH FIX FOR ALL MOBILE BROWSERS */
         html, body { 
             width: 100%; 
             height: 100%; 
@@ -175,7 +175,7 @@ updated_code = """<!DOCTYPE html>
         .shop-cat-btn { background: #fff; border: 1px solid #2f3542; border-radius: 5px; padding: 2px 4px; font-size: 0.58rem; font-weight: bold; cursor: pointer; white-space: nowrap; }
         .shop-cat-btn.active { background: #ff758c; color: #fff; }
 
-        /* CURHAT CHAT UI (INSTANT FULL VIEW) */
+        /* CURHAT CHAT UI */
         .curhat-shelf-box { grid-column: span 4; display: flex; flex-direction: column; gap: 2px; text-align: left; height: 64px; width: 100%; }
         .curhat-admin-layout { display: flex; gap: 3px; height: 100%; }
         .admin-contact-list { width: 38%; background: #fff; border: 1.5px solid #2f3542; border-radius: 6px; overflow-y: auto; padding: 2px; }
@@ -1166,9 +1166,3 @@ updated_code = """<!DOCTYPE html>
     </script>
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(updated_code)
-
-print("Applied strict DVH layout fix and optimized element sizing for mobile Blogger frames.")
