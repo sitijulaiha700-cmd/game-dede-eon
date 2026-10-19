@@ -33,18 +33,21 @@
         .pet-name-tag { cursor: pointer; text-decoration: underline; color: #ffeaa7; margin-right: 4px; display: flex; align-items: center; gap: 2px; }
         .coin-pill { background: #f1c40f; color: #2c3e50; padding: 2px 10px; border-radius: 12px; border: 2px solid #f39c12; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
 
-        /* MAIN PET ROOM STAGE WITH DYNAMIC ROOM BACKGROUNDS */
+        /* MAIN PET ROOM STAGE WITH MOY-STYLE VISUAL DECORATIONS */
         .room-stage { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; transition: background 0.4s ease; }
         
-        /* ROOM STYLES */
-        .room-dapur { background: radial-gradient(circle, #fff5e6 20%, #ffe0b2 100%); }
-        .room-tidur { background: radial-gradient(circle, #2c3e50 20%, #000000 100%); }
+        /* ROOM BACKGROUNDS & MOY-STYLE ELEMENTS */
+        .room-dapur { background: radial-gradient(circle, #fff3e0 20%, #ffe0b2 100%); }
+        .room-tidur { background: radial-gradient(circle, #2b3a4a 20%, #141d26 100%); }
         .room-mandi { background: radial-gradient(circle, #e0f7fa 20%, #80deea 100%); }
         .room-klinik { background: radial-gradient(circle, #e8f5e9 20%, #a5d6a7 100%); }
         .room-toko { background: radial-gradient(circle, #fce4ec 20%, #f8bbd0 100%); }
         .room-curhat { background: radial-gradient(circle, #f3e5f5 20%, #e1bee7 100%); }
 
-        .room-floor { position: absolute; bottom: 0; left: 0; width: 100%; height: 32%; background: #e67e22; border-top: 4px solid #d35400; z-index: 2; transition: background 0.4s ease, border-color 0.4s ease; }
+        .room-decor { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 2; display: none; }
+
+        /* ROOM FLOORS */
+        .room-floor { position: absolute; bottom: 0; left: 0; width: 100%; height: 32%; background: #e67e22; border-top: 4px solid #d35400; z-index: 3; transition: background 0.4s ease, border-color 0.4s ease; }
         .room-dapur .room-floor { background: #d35400; border-color: #a04000; }
         .room-tidur .room-floor { background: #1a252f; border-color: #11171d; }
         .room-mandi .room-floor { background: #00838f; border-color: #006064; }
@@ -82,7 +85,7 @@
         .drag-sponge { position: absolute; font-size: 2.8rem; cursor: grab; z-index: 25; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3)); touch-action: none; }
         .drag-sponge:active { cursor: grabbing; scale: 1.1; }
 
-        /* FLOATING EATING FOOD & ZZZ */
+        /* FLOATING ITEMS & ANIMATIONS */
         .flying-item { position: absolute; font-size: 2.2rem; pointer-events: none; z-index: 20; transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .zzz-item { position: absolute; font-size: 1.5rem; pointer-events: none; z-index: 20; animation: floatZzz 1.5s linear infinite; }
         @keyframes floatZzz { 0% { opacity: 1; transform: translateY(0) scale(0.8); } 100% { opacity: 0; transform: translateY(-50px) scale(1.3); } }
@@ -117,10 +120,22 @@
         .curhat-shelf-box { grid-column: span 4; display: flex; flex-direction: column; gap: 4px; text-align: left; max-height: 95px; overflow-y: auto; }
         .curhat-item { background: #fff; border: 1.5px solid #2f3542; border-radius: 8px; padding: 5px; font-size: 0.7rem; }
 
-        /* OVERLAYS & MODALS */
-        .minigame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(4px); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; padding: 16px; }
+        /* MODERN TOAST & POPUP NOTIFICATION SYSTEM */
+        .toast-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 6px; width: 88%; max-width: 320px; pointer-events: none; }
+        .toast-box { background: rgba(44, 62, 80, 0.92); backdrop-filter: blur(8px); border: 2px solid #34495e; color: #fff; padding: 10px 14px; border-radius: 18px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); animation: slideDown 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: auto; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .toast-icon { font-size: 1.4rem; }
+        .toast-title { font-family: "Fredoka One", cursive; color: #ffeaa7; font-size: 0.88rem; margin-bottom: 1px; }
+
+        /* OVERLAYS & MINI-GAME MODALS */
+        .minigame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(4px); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; padding: 16px; text-align: center; }
         .mg-item { position: absolute; font-size: 2.2rem; cursor: pointer; animation: fall 2.2s linear forwards; }
         @keyframes fall { from { top: 0; } to { top: 85%; } }
+
+        /* MEMORY CARD MINI-GAME GRID */
+        .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; width: 100%; max-width: 280px; }
+        .mem-card { width: 100%; height: 58px; background: #34495e; border: 2px solid #f1c40f; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; }
+        .mem-card.flipped { background: #fff; transform: rotateY(180deg); }
 
         .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 1rem; flex-direction: column; gap: 8px; }
         .spinner { width: 36px; height: 36px; border: 4px solid #fff; border-top-color: #ff758c; border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -134,6 +149,9 @@
         <div class="spinner"></div>
         <div id="loadingText">Menghubungkan ke Server...</div>
     </div>
+
+    <!-- MODERN TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <div class="container">
         <!-- FORM LOGIN -->
@@ -217,8 +235,45 @@
                 </div>
             </div>
 
-            <!-- MAIN ROOM STAGE WITH ROOM-SPECIFIC BACKGROUNDS -->
+            <!-- MAIN ROOM STAGE WITH MOY-STYLE VISUAL DECORATIONS -->
             <div class="room-stage room-dapur" id="roomStage">
+                <!-- MOY-STYLE ROOM DECORATIONS LAYER -->
+                <div class="room-decor" id="decorDapur" style="display:block;">
+                    <span style="position:absolute; top:12px; right:20px; font-size:3.5rem;">🧊</span>
+                    <span style="position:absolute; top:20px; left:25px; font-size:2.8rem;">🍳</span>
+                    <span style="position:absolute; bottom:30%; left:50%; transform:translateX(-50%); font-size:4rem; opacity:0.85;">🪑</span>
+                </div>
+
+                <div class="room-decor" id="decorTidur">
+                    <span style="position:absolute; top:15px; left:20px; font-size:3rem;">🖼️</span>
+                    <span style="position:absolute; top:15px; right:20px; font-size:3rem;">🌙</span>
+                    <span style="position:absolute; bottom:30%; right:15px; font-size:2.8rem;">🛋️</span>
+                </div>
+
+                <div class="room-decor" id="decorMandi">
+                    <span style="position:absolute; top:15px; left:20px; font-size:3rem;">🪞</span>
+                    <span style="position:absolute; top:15px; right:20px; font-size:3.2rem;">🚿</span>
+                    <span style="position:absolute; bottom:30%; left:15px; font-size:3.5rem;">🛁</span>
+                </div>
+
+                <div class="room-decor" id="decorKlinik">
+                    <span style="position:absolute; top:15px; left:20px; font-size:3.2rem;">🩺</span>
+                    <span style="position:absolute; top:15px; right:20px; font-size:3.2rem;">🏥</span>
+                    <span style="position:absolute; bottom:30%; right:20px; font-size:3.2rem;">🧪</span>
+                </div>
+
+                <div class="room-decor" id="decorToko">
+                    <span style="position:absolute; top:10px; left:50%; transform:translateX(-50%); font-size:2rem; background:#ff4757; color:#fff; padding:2px 10px; border-radius:12px; font-family:'Fredoka One';">BOUTIQUE 🛍️</span>
+                    <span style="position:absolute; top:45px; left:20px; font-size:3rem;">👔</span>
+                    <span style="position:absolute; top:45px; right:20px; font-size:3rem;">👗</span>
+                </div>
+
+                <div class="room-decor" id="decorCurhat">
+                    <span style="position:absolute; top:15px; left:20px; font-size:3rem;">🪴</span>
+                    <span style="position:absolute; top:15px; right:20px; font-size:3rem;">💡</span>
+                    <span style="position:absolute; bottom:30%; left:50%; transform:translateX(-50%); font-size:3.8rem;">🛋️</span>
+                </div>
+
                 <!-- LEFT STATS METERS -->
                 <div class="left-stats">
                     <div class="stat-icon-btn" onclick="switchRoom(0)">
@@ -308,13 +363,31 @@
                 </div>
             </div>
 
-            <!-- MINI GAME OVERLAY -->
+            <!-- MINI GAME SELECTION & OVERLAYS -->
+            <div class="minigame-overlay" id="miniGameSelect" style="display:none;">
+                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:8px;">🎮 Pilih Mini-Game 🎮</h3>
+                <p style="font-size:0.75rem; margin-bottom:12px; color:#dfe6e9;">Mainkan game untuk kumpulkan koin & XP!</p>
+                <div style="display:flex; flex-direction:column; gap:8px; width:100%; max-width:240px;">
+                    <button class="btn-auth" onclick="startCatchGame()">⭐ Tangkap Bintang</button>
+                    <button class="btn-auth" style="background:linear-gradient(135deg, #00b894, #00bec4);" onclick="startMemoryGame()">🃏 Kartu Memori</button>
+                    <button class="btn-auth" style="background:#6c5ce7;" onclick="closeMiniGameSelect()">Batal</button>
+                </div>
+            </div>
+
+            <!-- CATCH STAR MINI GAME -->
             <div class="minigame-overlay" id="miniGameArea" style="display:none;">
-                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:4px;" id="mgTitle">🎮 Mini-Game 🎮</h3>
-                <p style="font-size:0.75rem; margin-bottom:8px;" id="mgDesc">Tangkap item untuk dapat koin!</p>
+                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:4px;" id="mgTitle">⭐ Tangkap Bintang ⭐</h3>
                 <div style="font-weight:700; font-size:1rem;" id="mgScore">Koin Ditangkap: 0</div>
                 <div style="font-size:0.75rem; color:#ff758c; margin-bottom:10px;" id="mgTimer">Sisa Waktu: 15s</div>
-                <button class="btn-auth" style="width:120px; padding:6px; font-size:0.85rem;" onclick="closeMiniGame()">Keluar</button>
+                <button class="btn-auth" style="width:120px; padding:6px; font-size:0.85rem;" onclick="closeCatchGame()">Keluar</button>
+            </div>
+
+            <!-- MEMORY CARD MINI GAME -->
+            <div class="minigame-overlay" id="memoryGameArea" style="display:none;">
+                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:4px;">🃏 Kartu Memori 🃏</h3>
+                <p style="font-size:0.75rem; color:#dfe6e9;">Cari pasangan emoji yang sama!</p>
+                <div class="card-grid" id="cardGrid"></div>
+                <button class="btn-auth" style="width:120px; padding:6px; font-size:0.85rem;" onclick="closeMemoryGame()">Keluar</button>
             </div>
         </div>
     </div>
@@ -331,13 +404,34 @@
         var shopCatIndex = 'hats';
 
         var rooms = [
-            { title: "🍽️ Dapur", key: "dapur", class: "room-dapur" },
-            { title: "🛌 Kamar Tidur", key: "tidur", class: "room-tidur" },
-            { title: "🧼 Kamar Mandi", key: "mandi", class: "room-mandi" },
-            { title: "➕ Lab Klinik", key: "klinik", class: "room-klinik" },
-            { title: "👛 Toko / Shop", key: "toko", class: "room-toko" },
-            { title: "📜 Ruang Curhat", key: "curhat", class: "room-curhat" }
+            { title: "🍽️ Dapur", key: "dapur", class: "room-dapur", decorId: "decorDapur" },
+            { title: "🛌 Kamar Tidur", key: "tidur", class: "room-tidur", decorId: "decorTidur" },
+            { title: "🧼 Kamar Mandi", key: "mandi", class: "room-mandi", decorId: "decorMandi" },
+            { title: "➕ Lab Klinik", key: "klinik", class: "room-klinik", decorId: "decorKlinik" },
+            { title: "👛 Toko / Shop", key: "toko", class: "room-toko", decorId: "decorToko" },
+            { title: "📜 Ruang Curhat", key: "curhat", class: "room-curhat", decorId: "decorCurhat" }
         ];
+
+        /* MODERN TOAST NOTIFICATION ENGINE */
+        function notify(title, msg, icon) {
+            var container = document.getElementById("toastContainer");
+            var toast = document.createElement("div");
+            toast.className = "toast-box";
+            toast.innerHTML = `
+                <div class="toast-icon">${icon || '✨'}</div>
+                <div>
+                    <div class="toast-title">${title}</div>
+                    <div>${msg}</div>
+                </div>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-15px)';
+                toast.style.transition = '0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
 
         function showLoading(msg) {
             document.getElementById("loadingText").innerText = msg || "Loading...";
@@ -361,7 +455,7 @@
             })
             .then(res => res.json())
             .then(res => { hideLoading(); callback(res); })
-            .catch(err => { hideLoading(); alert("Gagal terhubung: " + err); });
+            .catch(err => { hideLoading(); notify("Error", "Gagal terhubung: " + err, "❌"); });
         }
 
         function doRegister() {
@@ -369,10 +463,10 @@
             var p = document.getElementById("regPass").value.trim();
             var q = document.getElementById("regQ").value;
             var a = document.getElementById("regA").value.trim();
-            if(!u || !p || !a) return alert("Harap isi semua kolom!");
+            if(!u || !p || !a) return notify("Peringatan", "Harap isi semua kolom!", "⚠️");
 
             apiPost({ action: "register", username: u, password: p, securityQuestion: q, securityAnswer: a }, function(res) {
-                alert(res.message);
+                notify("Registrasi", res.message, res.status === "success" ? "🎉" : "⚠️");
                 if(res.status === "success") showAuth("cardLogin");
             });
         }
@@ -380,7 +474,7 @@
         function doLogin() {
             var u = document.getElementById("loginUser").value.trim();
             var p = document.getElementById("loginPass").value.trim();
-            if(!u || !p) return alert("Isi username & password!");
+            if(!u || !p) return notify("Peringatan", "Isi username & password!", "⚠️");
 
             apiPost({ action: "login", username: u, password: p }, function(res) {
                 if(res.status === "success") {
@@ -391,7 +485,8 @@
                     if(petData.sehat === undefined) petData.sehat = 100;
                     curhatHistory = res.curhatList || [];
                     initGameUI();
-                } else alert(res.message);
+                    notify("Selamat Datang!", "Login berhasil! Halo " + u, "👋");
+                } else notify("Gagal Login", res.message, "❌");
             });
         }
 
@@ -399,10 +494,10 @@
             var u = document.getElementById("forgotUser").value.trim();
             var a = document.getElementById("forgotA").value.trim();
             var np = document.getElementById("forgotNewPass").value.trim();
-            if(!u || !a || !np) return alert("Harap isi semua kolom!");
+            if(!u || !a || !np) return notify("Peringatan", "Harap isi semua kolom!", "⚠️");
 
             apiPost({ action: "forgot_password", username: u, securityAnswer: a, newPassword: np }, function(res) {
-                alert(res.message);
+                notify("Reset Password", res.message, res.status === "success" ? "🔑" : "⚠️");
                 if(res.status === "success") showAuth("cardLogin");
             });
         }
@@ -412,6 +507,7 @@
             currentUser = null;
             document.getElementById("cardGame").style.display = "none";
             showAuth("cardLogin");
+            notify("Logout", "Sampai jumpa lagi!", "🚪");
         }
 
         function editPetName() {
@@ -419,6 +515,7 @@
             if(newName && newName.trim() !== "") {
                 petData.nama = newName.trim();
                 document.getElementById("txtPetName").innerText = petData.nama;
+                notify("Nama Diperbarui", "Nama pet sekarang " + petData.nama, "✏️");
                 savePetState();
             }
         }
@@ -498,7 +595,7 @@
             });
         }
 
-        /* ROOM NAVIGATION & DYNAMIC ROOM BACKGROUNDS */
+        /* ROOM NAVIGATION & MOY-STYLE DECORATION SWITCHER */
         function prevRoom() {
             currentRoomIndex = (currentRoomIndex - 1 + rooms.length) % rooms.length;
             switchRoom(currentRoomIndex);
@@ -514,11 +611,16 @@
             var r = rooms[idx];
             document.getElementById("roomTitle").innerText = r.title;
 
-            // SET ROOM SPECIFIC BACKGROUND CSS CLASS
+            // SET ROOM BACKGROUND CLASS
             var stage = document.getElementById("roomStage");
             stage.className = "room-stage " + r.class;
 
-            // TOGGLE DRAGGABLE SPONGE IN BATHROOM ONLY
+            // HIDE ALL DECORATIONS, SHOW CURRENT ROOM DECOR
+            document.querySelectorAll(".room-decor").forEach(d => d.style.display = "none");
+            var activeDecor = document.getElementById(r.decorId);
+            if(activeDecor) activeDecor.style.display = "block";
+
+            // TOGGLE SPONGE IN BATHROOM
             var sponge = document.getElementById("dragSponge");
             sponge.style.display = (r.key === 'mandi') ? "block" : "none";
 
@@ -535,11 +637,11 @@
             } else if(r.key === 'tidur') {
                 shelf.innerHTML = `
                     <div class="shelf-item" style="grid-column: span 2;" onclick="animateSleep()"><span class="shelf-icon">🛌</span>Tidur Nyenyak</div>
-                    <div class="shelf-item" style="grid-column: span 2;" onclick="startMiniGame('stars')"><span class="shelf-icon">🎮</span>Mini-Game</div>
+                    <div class="shelf-item" style="grid-column: span 2;" onclick="openMiniGameSelect()"><span class="shelf-icon">🎮</span>Pilih Game</div>
                 `;
             } else if(r.key === 'mandi') {
                 shelf.innerHTML = `
-                    <div class="shelf-item" style="grid-column: span 4;" onclick="alert('Geser/Seret spons🧽 di layar ke arah pet untuk mengusap & memandikannya!')"><span class="shelf-icon">🧽</span>Seret Spons ke Pet!</div>
+                    <div class="shelf-item" style="grid-column: span 4;" onclick="notify('Petunjuk Mandi', 'Seret spons🧽 ke pet untuk mengusap & memandikannya!', '🧼')"><span class="shelf-icon">🧽</span>Seret Spons ke Pet!</div>
                 `;
             } else if(r.key === 'klinik') {
                 shelf.innerHTML = `
@@ -562,7 +664,6 @@
             }
         }
 
-        /* EXTENDED ITEM SHOP CATEGORIES */
         function renderShopShelf() {
             var shelf = document.getElementById("itemShelf");
             shelf.innerHTML = `
@@ -597,34 +698,29 @@
             }
         }
 
-        function switchShopCat(cat) {
-            shopCatIndex = cat;
-            renderShopShelf();
-        }
+        function switchShopCat(cat) { shopCatIndex = cat; renderShopShelf(); }
 
         function buyAcc(icon, cost) {
-            if(petData.koin < cost) return alert("Koin kamu tidak cukup!");
+            if(petData.koin < cost) return notify("Koin Kurang", "Koin kamu tidak cukup!", "🪙");
             petData.koin -= cost;
             petData.pakaian = icon;
             document.getElementById("petAcc").innerText = icon;
-            alert("🎉 Berhasil membeli " + icon + "!");
-            updateStatsDisplay();
-            savePetState();
+            notify("Berhasil Beli", "Membeli aksesoris " + icon, "🛍️");
+            updateStatsDisplay(); savePetState();
         }
 
         function buyColor(hex, cost) {
-            if(petData.koin < cost) return alert("Koin kamu tidak cukup!");
+            if(petData.koin < cost) return notify("Koin Kurang", "Koin kamu tidak cukup!", "🪙");
             petData.koin -= cost;
             petData.warnaPet = hex;
             applyPetColor(hex);
-            alert("🎨 Berhasil mengubah warna pet!");
-            updateStatsDisplay();
-            savePetState();
+            notify("Warna Baru", "Pet kamu berubah warna!", "🎨");
+            updateStatsDisplay(); savePetState();
         }
 
-        /* REALISTIC EATING ANIMATION */
+        /* EATING & SLEEPING ANIMATIONS */
         function animateFeed(foodIcon, cost, fill) {
-            if(petData.koin < cost) return alert("Koin kamu tidak cukup!");
+            if(petData.koin < cost) return notify("Koin Kurang", "Koin kamu tidak cukup!", "🪙");
             petData.koin -= cost;
 
             var stage = document.getElementById("roomStage");
@@ -632,8 +728,7 @@
             var item = document.createElement("div");
             item.className = "flying-item";
             item.innerText = foodIcon;
-            item.style.left = "45%";
-            item.style.bottom = "80px";
+            item.style.left = "45%"; item.style.bottom = "80px";
             stage.appendChild(item);
 
             playSound('munch');
@@ -652,7 +747,6 @@
             }, 700);
         }
 
-        /* REALISTIC SLEEPING ANIMATION */
         function animateSleep() {
             var eyes = document.getElementById("petEyes");
             var sleepEyes = document.getElementById("petEyesSleep");
@@ -662,14 +756,11 @@
             sleepEyes.style.display = "block";
             playSound('snore');
 
-            // SPAWN FLOATING ZZZ
             for(var i=0; i<4; i++) {
                 setTimeout(() => {
                     var zzz = document.createElement("div");
-                    zzz.className = "zzz-item";
-                    zzz.innerText = "💤";
-                    zzz.style.left = (Math.random() * 30 + 40) + "%";
-                    zzz.style.bottom = "160px";
+                    zzz.className = "zzz-item"; zzz.innerText = "💤";
+                    zzz.style.left = (Math.random() * 30 + 40) + "%"; zzz.style.bottom = "160px";
                     stage.appendChild(zzz);
                     setTimeout(() => zzz.remove(), 1500);
                 }, i * 400);
@@ -680,20 +771,17 @@
                 sleepEyes.style.display = "none";
                 petData.energi = 100;
                 addXP(20);
-                alert("😴 " + (petData.nama || "Pet") + " sudah bangun & energi kembali 100%!");
+                notify("Bangun Tidur", (petData.nama || "Pet") + " selesai tidur & energi 100%!", "😴");
                 savePetState();
             }, 2000);
         }
 
-        /* INTERACTIVE DRAG & RUB BATHING MECHANIC */
+        /* DRAGGABLE SPONGE */
         function initDraggableSponge() {
             var sponge = document.getElementById("dragSponge");
             var isDragging = false;
 
-            function onStart(e) {
-                isDragging = true;
-            }
-
+            function onStart(e) { isDragging = true; }
             function onMove(e) {
                 if(!isDragging) return;
                 var clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -701,16 +789,13 @@
 
                 sponge.style.left = (clientX - 25) + "px";
                 sponge.style.top = (clientY - 25) + "px";
-                sponge.style.bottom = "auto";
-                sponge.style.right = "auto";
+                sponge.style.bottom = "auto"; sponge.style.right = "auto";
 
-                // CHECK OVERLAP WITH PET
                 var petRect = document.getElementById("petAvatar").getBoundingClientRect();
                 if(clientX >= petRect.left && clientX <= petRect.right && clientY >= petRect.top && clientY <= petRect.bottom) {
                     rubPetClean(clientX, clientY);
                 }
             }
-
             function onEnd() { isDragging = false; }
 
             sponge.addEventListener("mousedown", onStart);
@@ -729,11 +814,9 @@
                 petData.bersih = Math.min(100, (petData.bersih || 100) + 5);
                 updateStatsDisplay();
 
-                // SPAWN BUBBLE AT TOUCH SPOT
                 var stage = document.getElementById("roomStage");
                 var b = document.createElement("div");
-                b.className = "soap-bubble";
-                b.innerText = "🫧";
+                b.className = "soap-bubble"; b.innerText = "🫧";
                 b.style.left = (x - stage.getBoundingClientRect().left - 10) + "px";
                 b.style.top = (y - stage.getBoundingClientRect().top - 10) + "px";
                 stage.appendChild(b);
@@ -747,20 +830,18 @@
         function spawnPoop() {
             var area = document.getElementById("poopArea");
             var poop = document.createElement("div");
-            poop.className = "poop-item";
-            poop.innerText = "💩";
-            poop.style.left = (Math.random() * 60 + 20) + "%";
-            poop.style.bottom = (Math.random() * 15 + 8) + "%";
+            poop.className = "poop-item"; poop.innerText = "💩";
+            poop.style.left = (Math.random() * 60 + 20) + "%"; poop.style.bottom = (Math.random() * 15 + 8) + "%";
             poop.onclick = function() {
                 playSound('clean');
                 petData.koin += 2;
-                updateStatsDisplay();
-                poop.remove();
+                notify("Bersih!", "Mendapatkan +2 🪙 koin!", "💩");
+                updateStatsDisplay(); poop.remove();
             };
             area.appendChild(poop);
         }
 
-        /* SOUND SFX ENGINE */
+        /* SOUND ENGINE */
         function getAudioCtx() {
             if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             return audioCtx;
@@ -769,37 +850,28 @@
         function playSound(type) {
             try {
                 var ctx = getAudioCtx();
-                var osc = ctx.createOscillator();
-                var gain = ctx.createGain();
+                var osc = ctx.createOscillator(); var gain = ctx.createGain();
                 osc.connect(gain); gain.connect(ctx.destination);
 
                 if(type === 'pet') {
-                    osc.type = "sine";
-                    osc.frequency.setValueAtTime(450, ctx.currentTime);
+                    osc.type = "sine"; osc.frequency.setValueAtTime(450, ctx.currentTime);
                     osc.frequency.exponentialRampToValueAtTime(950, ctx.currentTime + 0.12);
-                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
                     osc.start(); osc.stop(ctx.currentTime + 0.12);
                 } else if(type === 'clean') {
-                    osc.type = "triangle";
-                    osc.frequency.setValueAtTime(300, ctx.currentTime);
+                    osc.type = "triangle"; osc.frequency.setValueAtTime(300, ctx.currentTime);
                     osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.1);
-                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
                     osc.start(); osc.stop(ctx.currentTime + 0.1);
                 } else if(type === 'munch') {
-                    osc.type = "square";
-                    osc.frequency.setValueAtTime(200, ctx.currentTime);
+                    osc.type = "square"; osc.frequency.setValueAtTime(200, ctx.currentTime);
                     osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.15);
-                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
                     osc.start(); osc.stop(ctx.currentTime + 0.15);
                 } else if(type === 'snore') {
-                    osc.type = "sine";
-                    osc.frequency.setValueAtTime(150, ctx.currentTime);
+                    osc.type = "sine"; osc.frequency.setValueAtTime(150, ctx.currentTime);
                     osc.frequency.exponentialRampToValueAtTime(250, ctx.currentTime + 0.4);
-                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+                    gain.gain.setValueAtTime(0.1, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
                     osc.start(); osc.stop(ctx.currentTime + 0.4);
                 }
             } catch(e) {}
@@ -809,30 +881,24 @@
         function toggleBGM() {
             bgmPlaying = !bgmPlaying;
             if(bgmPlaying) {
-                alert("🎵 Musik Latar Aktif!");
-                var notes = [261, 329, 392, 523, 392, 329];
-                var idx = 0;
+                notify("Musik", "Musik Latar Diaktifkan 🎵", "🎵");
+                var notes = [261, 329, 392, 523, 392, 329]; var idx = 0;
                 bgmInterval = setInterval(() => {
                     try {
                         var ctx = getAudioCtx();
-                        var osc = ctx.createOscillator();
-                        var gain = ctx.createGain();
-                        osc.type = "sine";
-                        osc.frequency.setValueAtTime(notes[idx % notes.length], ctx.currentTime);
-                        gain.gain.setValueAtTime(0.02, ctx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+                        var osc = ctx.createOscillator(); var gain = ctx.createGain();
+                        osc.type = "sine"; osc.frequency.setValueAtTime(notes[idx % notes.length], ctx.currentTime);
+                        gain.gain.setValueAtTime(0.02, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
                         osc.connect(gain); gain.connect(ctx.destination);
-                        osc.start(); osc.stop(ctx.currentTime + 0.25);
-                        idx++;
+                        osc.start(); osc.stop(ctx.currentTime + 0.25); idx++;
                     } catch(e) {}
                 }, 400);
             } else {
                 clearInterval(bgmInterval);
-                alert("🔇 Musik Dimatikan.");
+                notify("Musik", "Musik Latar Dimatikan 🔇", "🔇");
             }
         }
 
-        /* GAMEPLAY MECHANICS */
         function petDedeEon(e) {
             playSound('pet');
             var avatar = document.getElementById("petAvatar");
@@ -841,11 +907,11 @@
         }
 
         function healPet(cost, amount) {
-            if(petData.koin < cost) return alert("Koin tidak cukup!");
+            if(petData.koin < cost) return notify("Koin Kurang", "Koin kamu tidak cukup!", "🪙");
             petData.koin -= cost;
             petData.sehat = Math.min(100, (petData.sehat || 100) + amount);
-            addXP(10);
-            savePetState();
+            notify("Klinik", "Pet kembali sehat!", "💊");
+            addXP(10); savePetState();
         }
 
         function addXP(amount) {
@@ -854,7 +920,7 @@
             if(petData.xp >= needed) {
                 petData.level++;
                 petData.xp -= needed;
-                alert("🎉 SELAMAT! Level Naik ke " + petData.level + "! 🌟");
+                notify("🎉 NAIK LEVEL!", "Selamat! Level pet naik ke Lvl " + petData.level, "🌟");
             }
             updateStatsDisplay();
         }
@@ -866,10 +932,14 @@
             document.getElementById("earR").setAttribute("fill", hex);
         }
 
-        /* MINI GAME LOGIC */
-        var mgTimerInt = null, mgSpawnInt = null, mgScore = 0, mgTimeLeft = 15;
+        /* MULTI MINI-GAME SYSTEM */
+        function openMiniGameSelect() { document.getElementById("miniGameSelect").style.display = "flex"; }
+        function closeMiniGameSelect() { document.getElementById("miniGameSelect").style.display = "none"; }
 
-        function startMiniGame(mode) {
+        /* MINI-GAME 1: CATCH STAR */
+        var mgTimerInt = null, mgSpawnInt = null, mgScore = 0, mgTimeLeft = 15;
+        function startCatchGame() {
+            closeMiniGameSelect();
             mgScore = 0; mgTimeLeft = 15;
             document.getElementById("miniGameArea").style.display = "flex";
             document.getElementById("mgScore").innerText = "Koin Ditangkap: 0";
@@ -878,7 +948,7 @@
             mgTimerInt = setInterval(() => {
                 mgTimeLeft--;
                 document.getElementById("mgTimer").innerText = "Sisa Waktu: " + mgTimeLeft + "s";
-                if(mgTimeLeft <= 0) closeMiniGame();
+                if(mgTimeLeft <= 0) closeCatchGame();
             }, 1000);
 
             mgSpawnInt = setInterval(spawnMgItem, 550);
@@ -887,12 +957,10 @@
         function spawnMgItem() {
             var area = document.getElementById("miniGameArea");
             var item = document.createElement("div");
-            item.className = "mg-item";
-            item.innerText = "⭐";
+            item.className = "mg-item"; item.innerText = "⭐";
             item.style.left = Math.floor(Math.random() * 80 + 10) + "%";
             item.onclick = function() {
-                playSound('clean');
-                mgScore += 5;
+                playSound('clean'); mgScore += 5;
                 document.getElementById("mgScore").innerText = "Koin Ditangkap: " + mgScore;
                 item.remove();
             };
@@ -900,24 +968,77 @@
             setTimeout(() => { if(item) item.remove(); }, 2200);
         }
 
-        function closeMiniGame() {
+        function closeCatchGame() {
             clearInterval(mgTimerInt); clearInterval(mgSpawnInt);
             document.querySelectorAll(".mg-item").forEach(s => s.remove());
             document.getElementById("miniGameArea").style.display = "none";
             if(mgScore > 0) {
-                petData.koin += mgScore;
-                addXP(mgScore);
-                alert("🎮 Game Selesai! Kamu mendapatkan " + mgScore + " 🪙 Koin!");
+                petData.koin += mgScore; addXP(mgScore);
+                notify("Game Selesai", "Kamu mendapatkan +" + mgScore + " 🪙 Koin!", "🎮");
                 savePetState();
             }
         }
 
+        /* MINI-GAME 2: MEMORY CARD MATCH */
+        var memEmojis = ["🍎", "watermelon", "🐱", "🐶", "🚀", "⚽"];
+        var memCards = [], flippedCards = [], matchedPairs = 0;
+
+        function startMemoryGame() {
+            closeMiniGameSelect();
+            document.getElementById("memoryGameArea").style.display = "flex";
+            var grid = document.getElementById("cardGrid");
+            grid.innerHTML = "";
+            matchedPairs = 0; flippedCards = [];
+
+            memCards = [...memEmojis, ...memEmojis].sort(() => Math.random() - 0.5);
+            memCards.forEach((emoji, idx) => {
+                var card = document.createElement("div");
+                card.className = "mem-card";
+                card.dataset.emoji = emoji;
+                card.dataset.index = idx;
+                card.innerText = "❓";
+                card.onclick = function() { flipMemoryCard(card); };
+                grid.appendChild(card);
+            });
+        }
+
+        function flipMemoryCard(card) {
+            if(flippedCards.length >= 2 || card.classList.contains("flipped")) return;
+            card.classList.add("flipped");
+            card.innerText = card.dataset.emoji;
+            playSound('pet');
+            flippedCards.push(card);
+
+            if(flippedCards.length === 2) {
+                if(flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                    matchedPairs++;
+                    flippedCards = [];
+                    if(matchedPairs === memEmojis.length) {
+                        setTimeout(() => {
+                            petData.koin += 30; addXP(30);
+                            notify("Menang!", "Hebat! Dapat +30 🪙 koin!", "🎉");
+                            closeMemoryGame(); savePetState();
+                        }, 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        flippedCards[0].classList.remove("flipped"); flippedCards[0].innerText = "❓";
+                        flippedCards[1].classList.remove("flipped"); flippedCards[1].innerText = "❓";
+                        flippedCards = [];
+                    }, 700);
+                }
+            }
+        }
+
+        function closeMemoryGame() { document.getElementById("memoryGameArea").style.display = "none"; }
+
+        /* CURHAT CHAT ENGINE */
         function sendCurhat() {
             var input = document.getElementById("txtCurhatInput");
             var txt = input ? input.value.trim() : "";
-            if(!txt) return alert("Tuliskan curhatanmu!");
+            if(!txt) return notify("Peringatan", "Tuliskan curhatanmu!", "💬");
             apiPost({ action: "send_curhat", username: currentUser, pesanCurhat: txt }, function(res) {
-                alert(res.message);
+                notify("Curhat Terkirim", res.message, "🦁");
                 if(res.status === "success") {
                     if(input) input.value = "";
                     curhatHistory = res.curhatList || [];
