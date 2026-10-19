@@ -2,82 +2,39 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Virtual Pet Dede Eon & Leon ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
-        
-        /* FIT LAYAR FULL UNTUK BLOGGER / MOBILE */
-        html, body { 
-            width: 100%; 
-            height: 100%; 
-            height: 100dvh; 
-            overflow: hidden; 
-            font-family: "Quicksand", sans-serif; 
-            background: #1a0826; 
-            color: #2f3542; 
-        }
+        body, html { width: 100%; height: 100%; overflow: hidden; font-family: "Quicksand", sans-serif; background: #1a0826; color: #2f3542; }
 
         #bgCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-        .container { 
-            position: relative; 
-            z-index: 10; 
-            width: 100%; 
-            height: 100%; 
-            height: 100dvh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 6px; 
-        }
+        .container { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 4px; }
 
         /* AUTH CARD */
-        .auth-card { background: #ffffff; width: 92%; max-width: 380px; border-radius: 20px; padding: 18px; text-align: center; border: 4px solid #ff758c; box-shadow: 0 15px 35px rgba(255, 117, 140, 0.4); z-index: 20; }
-        .auth-title { font-family: "Fredoka One", cursive; color: #ff4757; font-size: 1.4rem; margin-bottom: 4px; }
-        .auth-desc { font-size: 0.78rem; color: #57606f; margin-bottom: 10px; font-weight: 700; }
-        .input-group { text-align: left; margin-bottom: 8px; }
-        .input-group label { font-size: 0.72rem; font-weight: 700; color: #ff4757; margin-left: 4px; margin-bottom: 2px; display: block; }
-        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 8px 10px; border: 2px solid #ff758c; border-radius: 12px; font-family: "Quicksand", sans-serif; font-size: 0.82rem; outline: none; background: #fff; }
-        .btn-auth { background: linear-gradient(135deg, #ff758c, #ff4757); color: #fff; border: none; padding: 9px; font-family: "Fredoka One", cursive; font-size: 0.95rem; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 4px; box-shadow: 0 3px 0 #d63031; transition: 0.15s; }
-        .btn-auth:active { transform: translateY(2px); box-shadow: 0 1px 0 #d63031; }
-        .auth-link { margin-top: 8px; font-size: 0.75rem; color: #ff4757; font-weight: 700; cursor: pointer; text-decoration: underline; display: inline-block; }
+        .auth-card { background: #ffffff; width: 92%; max-width: 380px; border-radius: 24px; padding: 20px; text-align: center; border: 4px solid #ff758c; box-shadow: 0 15px 35px rgba(255, 117, 140, 0.4); z-index: 20; }
+        .auth-title { font-family: "Fredoka One", cursive; color: #ff4757; font-size: 1.5rem; margin-bottom: 6px; }
+        .auth-desc { font-size: 0.8rem; color: #57606f; margin-bottom: 12px; font-weight: 700; }
+        .input-group { text-align: left; margin-bottom: 10px; }
+        .input-group label { font-size: 0.75rem; font-weight: 700; color: #ff4757; margin-left: 4px; margin-bottom: 2px; display: block; }
+        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 9px 12px; border: 2px solid #ff758c; border-radius: 14px; font-family: "Quicksand", sans-serif; font-size: 0.85rem; outline: none; background: #fff; }
+        .btn-auth { background: linear-gradient(135deg, #ff758c, #ff4757); color: #fff; border: none; padding: 10px; font-family: "Fredoka One", cursive; font-size: 1rem; border-radius: 25px; cursor: pointer; width: 100%; margin-top: 6px; box-shadow: 0 4px 0 #d63031; transition: 0.15s; }
+        .btn-auth:active { transform: translateY(2px); box-shadow: 0 2px 0 #d63031; }
+        .auth-link { margin-top: 10px; font-size: 0.78rem; color: #ff4757; font-weight: 700; cursor: pointer; text-decoration: underline; display: inline-block; }
 
-        /* BINGKAI FRAME PRESISI TANPA TERPOTONG */
-        .game-card { 
-            background: rgba(255, 255, 255, 0.98); 
-            backdrop-filter: blur(10px); 
-            width: 100%; 
-            max-width: 380px; 
-            height: 100%; 
-            max-height: calc(100dvh - 12px); 
-            border-radius: 22px; 
-            border: 4px solid #2c3e50; 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden; 
-            position: relative; 
-        }
+        /* POU GAME CARD LAYOUT */
+        .game-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); width: 100%; max-width: 420px; height: 98vh; max-height: 720px; border-radius: 28px; border: 4px solid #3d3d3d; box-shadow: 0 15px 30px rgba(0,0,0,0.4); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative; }
 
         /* TOP BAR */
-        .top-bar { display: flex; justify-content: space-between; align-items: center; background: #2c3e50; color: #fff; padding: 6px 10px; border-bottom: 3px solid #1a252f; font-family: "Fredoka One", cursive; font-size: 0.82rem; z-index: 15; flex-shrink: 0; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; background: #2c3e50; color: #fff; padding: 6px 12px; border-bottom: 3px solid #1a252f; font-family: "Fredoka One", cursive; font-size: 0.88rem; z-index: 15; }
         .top-info { display: flex; align-items: center; gap: 6px; }
         .pet-name-tag { cursor: pointer; text-decoration: underline; color: #ffeaa7; margin-right: 4px; display: flex; align-items: center; gap: 2px; }
-        .coin-pill { background: #f1c40f; color: #2c3e50; padding: 2px 8px; border-radius: 10px; border: 2px solid #f39c12; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; }
+        .coin-pill { background: #f1c40f; color: #2c3e50; padding: 2px 10px; border-radius: 12px; border: 2px solid #f39c12; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
 
-        /* MAIN PET ROOM STAGE - BEBAS MENCIUT DENGAN min-height: 0 */
-        .room-stage { 
-            flex: 1 1 0; 
-            min-height: 0; 
-            position: relative; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            overflow: hidden; 
-            transition: background 0.4s ease; 
-        }
+        /* MAIN PET ROOM STAGE */
+        .room-stage { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; transition: background 0.4s ease; }
         
         .room-dapur { background: radial-gradient(circle, #fff3e0 20%, #ffe0b2 100%); }
         .room-tidur { background: radial-gradient(circle, #81ecec 20%, #74b9ff 100%); }
@@ -87,132 +44,110 @@
         .room-curhat { background: radial-gradient(circle, #f3e5f5 20%, #e1bee7 100%); }
 
         /* ROOM FLOORS */
-        .room-floor { position: absolute; bottom: 0; left: 0; width: 100%; height: 28%; z-index: 3; transition: background 0.4s ease, border-color 0.4s ease; box-shadow: inset 0 8px 12px rgba(0,0,0,0.12); }
+        .room-floor { position: absolute; bottom: 0; left: 0; width: 100%; height: 38%; z-index: 3; transition: background 0.4s ease, border-color 0.4s ease; box-shadow: inset 0 10px 15px rgba(0,0,0,0.12); }
         
-        .room-dapur .room-floor { background: repeating-linear-gradient(90deg, #d35400, #d35400 35px, #e67e22 35px, #e67e22 70px); border-top: 4px solid #a04000; }
-        .room-tidur .room-floor { background: repeating-linear-gradient(90deg, #8e583c, #8e583c 45px, #a06646 45px, #a06646 90px); border-top: 4px solid #5c3826; }
-        .room-mandi .room-floor { background: repeating-linear-gradient(0deg, #bb2d3b, #bb2d3b 25px, #d63845 25px, #d63845 50px), repeating-linear-gradient(90deg, transparent, transparent 25px, rgba(0,0,0,0.1) 25px, rgba(0,0,0,0.1) 50px); border-top: 4px solid #842029; }
-        .room-klinik .room-floor { background: repeating-linear-gradient(90deg, #27ae60, #27ae60 35px, #2ecc71 35px, #2ecc71 70px); border-top: 4px solid #1e8449; }
-        .room-toko .room-floor { background: repeating-linear-gradient(90deg, #c2185b, #c2185b 35px, #e91e63 35px, #e91e63 70px); border-top: 4px solid #880e4f; }
-        .room-curhat .room-floor { background: repeating-linear-gradient(90deg, #6a1b9a, #6a1b9a 35px, #8e24aa 35px, #8e24aa 70px); border-top: 4px solid #4a148c; }
+        .room-dapur .room-floor { background: repeating-linear-gradient(90deg, #d35400, #d35400 40px, #e67e22 40px, #e67e22 80px); border-top: 5px solid #a04000; }
+        .room-tidur .room-floor { background: repeating-linear-gradient(90deg, #8e583c, #8e583c 50px, #a06646 50px, #a06646 100px); border-top: 5px solid #5c3826; }
+        .room-mandi .room-floor { background: repeating-linear-gradient(0deg, #bb2d3b, #bb2d3b 30px, #d63845 30px, #d63845 60px), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(0,0,0,0.1) 30px, rgba(0,0,0,0.1) 60px); border-top: 5px solid #842029; }
+        .room-klinik .room-floor { background: repeating-linear-gradient(90deg, #27ae60, #27ae60 40px, #2ecc71 40px, #2ecc71 80px); border-top: 5px solid #1e8449; }
+        .room-toko .room-floor { background: repeating-linear-gradient(90deg, #c2185b, #c2185b 40px, #e91e63 40px, #e91e63 80px); border-top: 5px solid #880e4f; }
+        .room-curhat .room-floor { background: repeating-linear-gradient(90deg, #6a1b9a, #6a1b9a 40px, #8e24aa 40px, #8e24aa 80px); border-top: 5px solid #4a148c; }
 
         /* LEFT SIDE STAT METERS */
-        .left-stats { position: absolute; top: 6px; left: 6px; display: flex; flex-direction: column; gap: 5px; z-index: 10; }
-        .stat-icon-btn { width: 32px; height: 32px; background: #fff; border: 2px solid #2f3542; border-radius: 9px; display: flex; justify-content: center; align-items: center; font-size: 0.9rem; position: relative; box-shadow: 0 2px 0 #2f3542; cursor: pointer; }
-        .stat-icon-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #2f3542; }
-        .stat-meter-fill { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(231, 76, 60, 0.4); border-radius: 0 0 7px 7px; z-index: 1; transition: height 0.3s; }
+        .left-stats { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 8px; z-index: 10; }
+        .stat-icon-btn { width: 42px; height: 42px; background: #fff; border: 3px solid #2f3542; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; position: relative; box-shadow: 0 4px 0 #2f3542; cursor: pointer; }
+        .stat-icon-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #2f3542; }
+        .stat-meter-fill { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(231, 76, 60, 0.4); border-radius: 0 0 11px 11px; z-index: 1; transition: height 0.3s; }
         .stat-icon-text { position: relative; z-index: 2; }
 
         /* RIGHT SIDE UTILITY BUTTONS */
-        .right-menu { position: absolute; top: 6px; right: 6px; display: flex; flex-direction: column; gap: 5px; z-index: 10; }
-        .util-btn { width: 32px; height: 32px; background: #fff; border: 2px solid #2f3542; border-radius: 9px; display: flex; justify-content: center; align-items: center; font-size: 0.88rem; box-shadow: 0 2px 0 #2f3542; cursor: pointer; transition: 0.1s; }
-        .util-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #2f3542; }
+        .right-menu { position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; gap: 8px; z-index: 10; }
+        .util-btn { width: 40px; height: 40px; background: #fff; border: 3px solid #2f3542; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; box-shadow: 0 4px 0 #2f3542; cursor: pointer; transition: 0.1s; }
+        .util-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #2f3542; }
 
-        /* PET AVATAR RESPONSIVE SIZE */
-        .pet-container { position: relative; z-index: 6; display: flex; flex-direction: column; align-items: center; cursor: pointer; margin-top: 5px; }
-        .pet-avatar { width: clamp(85px, 25vh, 105px); height: clamp(85px, 25vh, 105px); position: relative; transition: transform 0.15s ease; animation: petBobbing 3s ease-in-out infinite; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); }
-        @keyframes petBobbing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        /* PET AVATAR & PRECISION ACCESSORY POSITIONS */
+        .pet-container { position: relative; z-index: 6; display: flex; flex-direction: column; align-items: center; cursor: pointer; margin-top: 25px; }
+        .pet-avatar { width: 160px; height: 160px; position: relative; transition: transform 0.15s ease; animation: petBobbing 3s ease-in-out infinite; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
+        @keyframes petBobbing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         
         .pet-avatar.happy { animation: petJump 0.5s ease; }
-        @keyframes petJump { 0%, 100% { transform: scale(1); } 50% { transform: translateY(-12px) scale(1.1); } }
+        @keyframes petJump { 0%, 100% { transform: scale(1); } 50% { transform: translateY(-22px) scale(1.1); } }
 
         .pet-avatar.eating { animation: petMunch 0.4s ease 3; }
         @keyframes petMunch { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08, 0.92); } }
 
+        /* ACCURATE LAYER OVERLAYS */
         .acc-layer { position: absolute; pointer-events: none; transform: translateX(-50%); left: 50%; text-align: center; line-height: 1; }
-        .pet-hat { top: -10px; font-size: 2.1rem; z-index: 9; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.2)); }
-        .pet-glasses { top: 30px; font-size: 1.6rem; z-index: 8; }
-        .pet-earring { top: 20px; left: auto; right: 8px; transform: none; font-size: 0.85rem; z-index: 9; }
-        .pet-facial { top: 45px; font-size: 1.3rem; z-index: 8; }
+        .pet-hat { top: -14px; font-size: 2.8rem; z-index: 9; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.2)); }
+        .pet-glasses { top: 46px; font-size: 2.2rem; z-index: 8; }
+        .pet-clothes { top: 92px; font-size: 2.3rem; z-index: 7; }
+        .pet-earring { top: 32px; left: auto; right: 18px; transform: none; font-size: 1.2rem; z-index: 9; }
+        .pet-facial { top: 68px; font-size: 1.8rem; z-index: 8; }
 
-        .dirt-spot { position: absolute; font-size: 1.1rem; opacity: 0.85; pointer-events: none; z-index: 8; }
+        .dirt-spot { position: absolute; font-size: 1.3rem; opacity: 0.85; pointer-events: none; z-index: 8; }
 
-        .drag-sponge { position: absolute; font-size: 2.3rem; cursor: grab; z-index: 25; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.3)); touch-action: none; }
+        /* DRAGGABLE SPONGE */
+        .drag-sponge { position: absolute; font-size: 3.2rem; cursor: grab; z-index: 25; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); touch-action: none; }
         .drag-sponge:active { cursor: grabbing; scale: 1.15; }
 
-        .flying-item { position: absolute; font-size: 1.8rem; pointer-events: none; z-index: 20; transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .zzz-item { position: absolute; font-size: 1.2rem; pointer-events: none; z-index: 20; animation: floatZzz 1.5s linear infinite; }
-        @keyframes floatZzz { 0% { opacity: 1; transform: translateY(0) scale(0.8); } 100% { opacity: 0; transform: translateY(-35px) scale(1.2); } }
+        /* FLOATING ANIMATIONS */
+        .flying-item { position: absolute; font-size: 2.5rem; pointer-events: none; z-index: 20; transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .zzz-item { position: absolute; font-size: 1.6rem; pointer-events: none; z-index: 20; animation: floatZzz 1.5s linear infinite; }
+        @keyframes floatZzz { 0% { opacity: 1; transform: translateY(0) scale(0.8); } 100% { opacity: 0; transform: translateY(-50px) scale(1.3); } }
 
-        .soap-bubble { position: absolute; font-size: 1.2rem; pointer-events: none; z-index: 20; animation: floatBubble 1.2s ease-out forwards; }
-        @keyframes floatBubble { 0% { opacity: 1; transform: translateY(0) scale(0.6); } 100% { opacity: 0; transform: translateY(-45px) scale(1.3); } }
+        .soap-bubble { position: absolute; font-size: 1.6rem; pointer-events: none; z-index: 20; animation: floatBubble 1.2s ease-out forwards; }
+        @keyframes floatBubble { 0% { opacity: 1; transform: translateY(0) scale(0.6); } 100% { opacity: 0; transform: translateY(-60px) scale(1.4); } }
 
-        .poop-item { position: absolute; font-size: 1.7rem; cursor: pointer; z-index: 9; animation: poopPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 3px 4px rgba(0,0,0,0.25)); }
+        .poop-item { position: absolute; font-size: 2.4rem; cursor: pointer; z-index: 9; animation: poopPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 4px 5px rgba(0,0,0,0.3)); }
         @keyframes poopPop { from { transform: scale(0); } to { transform: scale(1); } }
 
-        /* AREA BOTTOM DENGAN DIKUNCI FLEX-SHRINK: 0 */
-        .bottom-control-area { 
-            background: #2c3e50; 
-            border-top: 3px solid #1a252f; 
-            padding: 5px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 4px; 
-            z-index: 15; 
-            flex-shrink: 0; 
-        }
+        /* BOTTOM ITEM SHELF & CONTROL PANEL */
+        .bottom-control-area { background: #2c3e50; border-top: 4px solid #1a252f; padding: 6px 8px; display: flex; flex-direction: column; gap: 5px; z-index: 15; }
         
-        .room-nav { display: flex; justify-content: space-between; align-items: center; background: #34495e; border-radius: 8px; padding: 3px 6px; border: 1.5px solid #1a252f; }
-        .nav-arrow { background: #f1c40f; border: 1.5px solid #f39c12; color: #2c3e50; width: 26px; height: 26px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .room-title { font-family: "Fredoka One", cursive; color: #fff; font-size: 0.82rem; display: flex; align-items: center; gap: 4px; }
+        .room-nav { display: flex; justify-content: space-between; align-items: center; background: #34495e; border-radius: 14px; padding: 3px 6px; border: 2px solid #1a252f; }
+        .nav-arrow { background: #f1c40f; border: 2px solid #f39c12; color: #2c3e50; width: 34px; height: 34px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .room-title { font-family: "Fredoka One", cursive; color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
 
-        .item-shelf { 
-            background: #ecf0f1; 
-            border-radius: 9px; 
-            padding: 3px; 
-            height: 68px; 
-            max-height: 68px; 
-            overflow-y: auto; 
-            border: 1.5px solid #bdc3c7; 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 3px; 
-            align-items: center; 
-        }
+        .item-shelf { background: #ecf0f1; border-radius: 14px; padding: 6px; min-height: 95px; max-height: 125px; overflow-y: auto; border: 2px solid #bdc3c7; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; align-items: center; }
         
-        .shelf-item { background: #fff; border: 1.5px solid #2f3542; border-radius: 7px; padding: 2px 1px; text-align: center; cursor: pointer; box-shadow: 0 1.5px 0 #2f3542; transition: 0.1s; font-size: 0.58rem; font-weight: 700; color: #2f3542; display: flex; flex-direction: column; align-items: center; gap: 1px; }
-        .shelf-item:active { transform: translateY(1px); box-shadow: 0 1px 0 #2f3542; background: #ffeaa7; }
-        .shelf-icon { font-size: 0.95rem; }
+        .shelf-item { background: #fff; border: 2px solid #2f3542; border-radius: 12px; padding: 5px 3px; text-align: center; cursor: pointer; box-shadow: 0 3px 0 #2f3542; transition: 0.1s; font-size: 0.68rem; font-weight: 700; color: #2f3542; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .shelf-item:active { transform: translateY(2px); box-shadow: 0 1px 0 #2f3542; background: #ffeaa7; }
+        .shelf-icon { font-size: 1.3rem; }
 
-        .shop-nav-bar { grid-column: span 4; display: flex; gap: 3px; overflow-x: auto; padding-bottom: 2px; border-bottom: 1px solid #ccc; margin-bottom: 2px; }
-        .shop-cat-btn { background: #fff; border: 1px solid #2f3542; border-radius: 5px; padding: 2px 4px; font-size: 0.55rem; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        .shop-nav-bar { grid-column: span 4; display: flex; gap: 4px; overflow-x: auto; padding-bottom: 3px; border-bottom: 1px solid #ccc; margin-bottom: 4px; }
+        .shop-cat-btn { background: #fff; border: 1.5px solid #2f3542; border-radius: 8px; padding: 2px 6px; font-size: 0.65rem; font-weight: bold; cursor: pointer; white-space: nowrap; }
         .shop-cat-btn.active { background: #ff758c; color: #fff; }
 
-        /* CURHAT CHAT UI */
-        .curhat-shelf-box { grid-column: span 4; display: flex; flex-direction: column; gap: 2px; text-align: left; height: 58px; width: 100%; }
-        .curhat-admin-layout { display: flex; gap: 3px; height: 100%; }
-        .admin-contact-list { width: 38%; background: #fff; border: 1.5px solid #2f3542; border-radius: 6px; overflow-y: auto; padding: 2px; }
-        .contact-item { padding: 2px 3px; font-size: 0.55rem; font-weight: bold; border-bottom: 1px solid #eee; cursor: pointer; border-radius: 4px; word-break: break-all; }
+        /* CURHAT CHAT UI (USER & ADMIN CONTACT VIEW) */
+        .curhat-shelf-box { grid-column: span 4; display: flex; flex-direction: column; gap: 4px; text-align: left; height: 100px; }
+        .curhat-admin-layout { display: flex; gap: 6px; height: 100%; }
+        .admin-contact-list { width: 38%; background: #fff; border: 1.5px solid #2f3542; border-radius: 10px; overflow-y: auto; padding: 2px; }
+        .contact-item { padding: 4px 6px; font-size: 0.65rem; font-weight: bold; border-bottom: 1px solid #eee; cursor: pointer; border-radius: 6px; word-break: break-all; }
         .contact-item:hover, .contact-item.active { background: #ff758c; color: #fff; }
-        .admin-chat-area { flex: 1; display: flex; flex-direction: column; gap: 2px; height: 100%; }
-        .curhat-history-box { flex: 1; background: #fff; border: 1.5px solid #2f3542; border-radius: 6px; padding: 3px; overflow-y: auto; font-size: 0.6rem; display: flex; flex-direction: column; gap: 2px; }
-        .chat-bubble { padding: 2px 5px; border-radius: 5px; max-width: 92%; font-size: 0.58rem; line-height: 1.15; word-break: break-word; }
+        .admin-chat-area { flex: 1; display: flex; flex-direction: column; gap: 4px; height: 100%; }
+        .curhat-history-box { flex: 1; background: #fff; border: 1.5px solid #2f3542; border-radius: 10px; padding: 4px; overflow-y: auto; font-size: 0.7rem; }
+        .chat-bubble { margin-bottom: 4px; padding: 4px 6px; border-radius: 8px; max-width: 90%; font-size: 0.68rem; line-height: 1.2; }
         .chat-bubble.user { background: #ffeaa7; align-self: flex-end; margin-left: auto; border: 1px solid #f39c12; }
         .chat-bubble.admin { background: #d4edda; align-self: flex-start; border: 1px solid #28a745; }
 
         /* TOAST NOTIFICATION */
-        .toast-container { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 4px; width: 88%; max-width: 280px; pointer-events: none; }
-        .toast-box { background: rgba(44, 62, 80, 0.95); backdrop-filter: blur(8px); border: 2px solid #ffeaa7; color: #fff; padding: 6px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 6px 16px rgba(0,0,0,0.3); animation: slideDown 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: auto; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-15px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .toast-icon { font-size: 1rem; }
-        .toast-title { font-family: "Fredoka One", cursive; color: #ffeaa7; font-size: 0.78rem; margin-bottom: 1px; }
+        .toast-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 6px; width: 88%; max-width: 320px; pointer-events: none; }
+        .toast-box { background: rgba(44, 62, 80, 0.95); backdrop-filter: blur(8px); border: 2.5px solid #ffeaa7; color: #fff; padding: 10px 14px; border-radius: 18px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.35); animation: slideDown 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: auto; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .toast-icon { font-size: 1.5rem; }
+        .toast-title { font-family: "Fredoka One", cursive; color: #ffeaa7; font-size: 0.9rem; margin-bottom: 1px; }
 
-        /* OVERLAYS & MINI GAMES */
-        .minigame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(4px); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; padding: 12px; text-align: center; }
-        .mg-item { position: absolute; font-size: 1.8rem; cursor: pointer; animation: fall 2.2s linear forwards; }
+        /* OVERLAYS */
+        .minigame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(4px); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; padding: 16px; text-align: center; }
+        .mg-item { position: absolute; font-size: 2.2rem; cursor: pointer; animation: fall 2.2s linear forwards; }
         @keyframes fall { from { top: 0; } to { top: 85%; } }
 
-        .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 6px 0; width: 100%; max-width: 230px; }
-        .mem-card { width: 100%; height: 44px; background: #34495e; border: 2px solid #f1c40f; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; }
+        .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; width: 100%; max-width: 280px; }
+        .mem-card { width: 100%; height: 58px; background: #34495e; border: 2px solid #f1c40f; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; }
         .mem-card.flipped { background: #fff; transform: rotateY(180deg); }
 
-        .whack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 8px 0; width: 100%; max-width: 210px; }
-        .whack-hole { width: 100%; height: 50px; background: #5d4037; border: 2px solid #3e2723; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.7rem; cursor: pointer; overflow: hidden; position: relative; box-shadow: inset 0 5px 6px rgba(0,0,0,0.6); }
-        .mole-target { transition: transform 0.1s ease-out; animation: molePop 0.2s ease-out; }
-        @keyframes molePop { from { transform: translateY(30px); } to { transform: translateY(0); } }
-
-        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 0.9rem; flex-direction: column; gap: 8px; }
-        .spinner { width: 30px; height: 30px; border: 3px solid #fff; border-top-color: #ff758c; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 1rem; flex-direction: column; gap: 8px; }
+        .spinner { width: 36px; height: 36px; border: 4px solid #fff; border-top-color: #ff758c; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -343,18 +278,19 @@
                 <div class="room-floor" id="roomFloor"></div>
 
                 <!-- DRAGGABLE SPONGE -->
-                <div class="drag-sponge" id="dragSponge" style="display:none; bottom:50px; right:20px;">🧽</div>
+                <div class="drag-sponge" id="dragSponge" style="display:none; bottom:60px; right:30px;">🧽</div>
 
-                <!-- PET CHARACTER AREA WITH PRECISE ACCESSORIES -->
+                <!-- PET CHARACTER AREA WITH PRECISE OVERLAY ACCESSORIES -->
                 <div class="pet-container" id="petContainer">
                     <div class="pet-avatar" id="petAvatar" onclick="petDedeEon(event)">
                         <!-- ACCESSORY OVERLAYS -->
                         <div class="acc-layer pet-hat" id="accHat">👑</div>
                         <div class="acc-layer pet-glasses" id="accGlasses"></div>
                         <div class="acc-layer pet-facial" id="accFacial"></div>
+                        <div class="acc-layer pet-clothes" id="accClothes"></div>
                         <div class="acc-layer pet-earring" id="accEarring"></div>
 
-                        <div class="dirt-spot" id="dirtSpot" style="display:none; top:35px; left:18px;">🟤</div>
+                        <div class="dirt-spot" id="dirtSpot" style="display:none; top:40px; left:20px;">🟤</div>
                         <svg viewBox="0 0 120 120" width="100%" height="100%">
                             <defs>
                                 <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1">
@@ -407,7 +343,6 @@
                 <div style="display:flex; flex-direction:column; gap:8px; width:100%; max-width:240px;">
                     <button class="btn-auth" onclick="startCatchGame()">⭐ Tangkap Bintang</button>
                     <button class="btn-auth" style="background:linear-gradient(135deg, #00b894, #00bec4);" onclick="startMemoryGame()">🃏 Kartu Memori</button>
-                    <button class="btn-auth" style="background:linear-gradient(135deg, #e67e22, #d35400);" onclick="startWhackGame()">🔨 Pukul Tikus Hama</button>
                     <button class="btn-auth" style="background:#6c5ce7;" onclick="closeMiniGameSelect()">Batal</button>
                 </div>
             </div>
@@ -425,14 +360,6 @@
                 <div class="card-grid" id="cardGrid"></div>
                 <button class="btn-auth" style="width:120px; padding:6px; font-size:0.85rem;" onclick="closeMemoryGame()">Keluar</button>
             </div>
-
-            <div class="minigame-overlay" id="whackGameArea" style="display:none;">
-                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:4px;">🔨 Pukul Tikus Hama 🔨</h3>
-                <div style="font-weight:700; font-size:1rem;" id="whackScore">Koin Ditangkap: 0</div>
-                <div style="font-size:0.75rem; color:#ff758c; margin-bottom:8px;" id="whackTimer">Sisa Waktu: 15s</div>
-                <div class="whack-grid" id="whackGrid"></div>
-                <button class="btn-auth" style="width:120px; padding:6px; font-size:0.85rem;" onclick="closeWhackGame()">Keluar</button>
-            </div>
         </div>
     </div>
 
@@ -442,7 +369,7 @@
         var currentUser = null;
         var petData = { 
             nama: "Dede Eon", level: 1, xp: 0, lapar: 100, haus: 100, energi: 100, bersih: 100, sehat: 100, 
-            hat: "👑", glasses: "", earring: "", facial: "", 
+            hat: "👑", glasses: "", clothes: "", earring: "", facial: "", 
             koin: 100, tema: "dark", warnaPet: "#ff758c" 
         };
         var curhatHistory = [];
@@ -612,6 +539,7 @@
         function applyAccessories() {
             document.getElementById("accHat").innerText = petData.hat || "";
             document.getElementById("accGlasses").innerText = petData.glasses || "";
+            document.getElementById("accClothes").innerText = petData.clothes || "";
             document.getElementById("accEarring").innerText = petData.earring || "";
             document.getElementById("accFacial").innerText = petData.facial || "";
         }
@@ -643,6 +571,7 @@
                     energi: petData.energi,
                     hat: petData.hat,
                     glasses: petData.glasses,
+                    clothes: petData.clothes,
                     earring: petData.earring,
                     facial: petData.facial,
                     koin: petData.koin,
@@ -690,7 +619,6 @@
             } else if(r.key === 'toko') {
                 renderShopShelf();
             } else if(r.key === 'curhat') {
-                renderCurhatUI();
                 fetchCurhatLive();
                 autoRefreshTimer = setInterval(fetchCurhatLive, 5000);
             }
@@ -705,11 +633,13 @@
             }, true);
         }
 
+        /* EXPANDED SHOP & ACCESSORIES */
         function renderShopShelf() {
             var shelf = document.getElementById("itemShelf");
             shelf.innerHTML = `
                 <div class="shop-nav-bar">
                     <button class="shop-cat-btn ${shopCatIndex==='hats'?'active':''}" onclick="switchShopCat('hats')">👒 Topi</button>
+                    <button class="shop-cat-btn ${shopCatIndex==='clothes'?'active':''}" onclick="switchShopCat('clothes')">👕 Baju</button>
                     <button class="shop-cat-btn ${shopCatIndex==='glasses'?'active':''}" onclick="switchShopCat('glasses')">👓 Kacamata</button>
                     <button class="shop-cat-btn ${shopCatIndex==='earrings'?'active':''}" onclick="switchShopCat('earrings')">💎 Anting</button>
                     <button class="shop-cat-btn ${shopCatIndex==='facial'?'active':''}" onclick="switchShopCat('facial')">🧔 Alis/Jenggot</button>
@@ -723,6 +653,13 @@
                     <div class="shelf-item" onclick="buyAcc('hat', '🎀', 15)"><span class="shelf-icon">🎀</span>Pita Pink (15🪙)</div>
                     <div class="shelf-item" onclick="buyAcc('hat', '🎩', 25)"><span class="shelf-icon">🎩</span>Topi Pesulap (25🪙)</div>
                     <div class="shelf-item" onclick="buyAcc('hat', '🍄', 20)"><span class="shelf-icon">🍄</span>Topi Jamur (20🪙)</div>
+                `;
+            } else if(shopCatIndex === 'clothes') {
+                shelf.innerHTML += `
+                    <div class="shelf-item" onclick="buyAcc('clothes', '👕', 25)"><span class="shelf-icon">👕</span>Kaos (25🪙)</div>
+                    <div class="shelf-item" onclick="buyAcc('clothes', '👗', 30)"><span class="shelf-icon">👗</span>Gaun Cantik (30🪙)</div>
+                    <div class="shelf-item" onclick="buyAcc('clothes', '🥋', 35)"><span class="shelf-icon">🥋</span>Baju Karate (35🪙)</div>
+                    <div class="shelf-item" onclick="buyAcc('clothes', '🤿', 40)"><span class="shelf-icon">🤿</span>Baju Selam (40🪙)</div>
                 `;
             } else if(shopCatIndex === 'glasses') {
                 shelf.innerHTML += `
@@ -775,11 +712,12 @@
             updateStatsDisplay(); savePetState();
         }
 
+        /* CURHAT CHAT WITH ADMIN PANEL & CONTACTS */
         function renderCurhatUI() {
             var shelf = document.getElementById("itemShelf");
-            if(!shelf) return;
 
             if(checkIsAdmin(currentUser)) {
+                // ADMIN VIEW: CONTACT LIST + DIRECT CHAT THREAD
                 var contacts = [...new Set(curhatHistory.map(c => c.username || c.user || 'User1'))];
                 if(!selectedContact && contacts.length > 0) selectedContact = contacts[0];
 
@@ -797,22 +735,23 @@
                     <div class="curhat-shelf-box">
                         <div class="curhat-admin-layout">
                             <div class="admin-contact-list">
-                                <div style="font-size:0.55rem; font-weight:bold; color:#7f8c8d; margin-bottom:2px;">KONTAK CURHAT</div>
-                                ${contactHtml || '<div style="font-size:0.55rem; color:#999;">Belum ada kontak</div>'}
+                                <div style="font-size:0.6rem; font-weight:bold; color:#7f8c8d; margin-bottom:2px;">KONTAK CURHAT</div>
+                                ${contactHtml || '<div style="font-size:0.6rem; color:#999;">Belum ada kontak</div>'}
                             </div>
                             <div class="admin-chat-area">
                                 <div class="curhat-history-box" id="chatBox">
-                                    ${chatHtml || '<div style="font-size:0.6rem; color:#888;">Pilih kontak untuk melihat percakapan</div>'}
+                                    ${chatHtml || '<div style="font-size:0.65rem; color:#888;">Pilih kontak untuk melihat percakapan</div>'}
                                 </div>
-                                <div style="display:flex; gap:3px;">
-                                    <input type="text" id="txtAdminReply" placeholder="Balas ke ${selectedContact || 'User'}..." style="flex:1; padding:2px 4px; font-size:0.6rem; border-radius:4px; border:1px solid #2f3542;" />
-                                    <button onclick="sendAdminReply()" style="padding:2px 5px; font-size:0.6rem; font-weight:bold; background:#2ecc71; color:#fff; border:none; border-radius:4px;">Balas</button>
+                                <div style="display:flex; gap:4px;">
+                                    <input type="text" id="txtAdminReply" placeholder="Balas ke ${selectedContact || 'User'}..." style="flex:1; padding:3px 6px; font-size:0.68rem; border-radius:6px; border:1px solid #2f3542;" />
+                                    <button onclick="sendAdminReply()" style="padding:3px 8px; font-size:0.68rem; font-weight:bold; background:#2ecc71; color:#fff; border:none; border-radius:6px;">Balas</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 `;
             } else {
+                // REGULAR USER VIEW: DIRECT CHAT WITH LEON/ADMIN
                 var myMessages = curhatHistory.filter(c => (c.username || c.user) === currentUser);
                 var chatHtml = myMessages.map(c => `
                     <div class="chat-bubble user"><b>Kamu:</b> ${c.pesan}</div>
@@ -822,11 +761,11 @@
                 shelf.innerHTML = `
                     <div class="curhat-shelf-box">
                         <div class="curhat-history-box" id="chatBox">
-                            ${chatHtml || '<div style="font-size:0.6rem; color:#888; text-align:center;">Belum ada riwayat curhat. Tuliskan pesanmu di bawah!</div>'}
+                            ${chatHtml || '<div style="font-size:0.65rem; color:#888; text-align:center;">Belum ada riwayat curhat. Tuliskan pesanmu dibawah!</div>'}
                         </div>
-                        <div style="display:flex; gap:3px; margin-top:1px;">
-                            <input type="text" id="txtCurhatInput" placeholder="Curhat ke Leon..." style="flex:1; padding:2px 5px; font-size:0.62rem; border-radius:5px; border:1px solid #2f3542;" />
-                            <button onclick="sendCurhat()" style="padding:2px 6px; font-size:0.62rem; font-weight:bold; background:#ff758c; color:#fff; border:none; border-radius:5px;">Kirim</button>
+                        <div style="display:flex; gap:4px; margin-top:3px;">
+                            <input type="text" id="txtCurhatInput" placeholder="Curhat ke Leon..." style="flex:1; padding:3px 6px; font-size:0.7rem; border-radius:8px; border:1px solid #2f3542;" />
+                            <button onclick="sendCurhat()" style="padding:3px 8px; font-size:0.7rem; font-weight:bold; background:#ff758c; color:#fff; border:none; border-radius:8px;">Kirim</button>
                         </div>
                     </div>
                 `;
@@ -848,7 +787,6 @@
 
             var newEntry = { username: currentUser, pesan: txt, balasan: "", tanggal: new Date().toLocaleDateString() };
             curhatHistory.push(newEntry);
-            renderCurhatUI();
 
             apiPost({ action: "send_curhat", username: currentUser, pesanCurhat: txt }, function(res) {
                 notify("Curhat Terkirim", "Pesan dikirim ke Admin Leon!", "🦁");
@@ -868,7 +806,6 @@
                     break;
                 }
             }
-            renderCurhatUI();
 
             apiPost({ action: "reply_curhat", targetUser: selectedContact, balasanAdmin: txt }, function(res) {
                 notify("Dibalas", "Balasan berhasil dikirim ke " + selectedContact, "💬");
@@ -877,6 +814,7 @@
             });
         }
 
+        /* ANIMATIONS & SOUNDS */
         function animateFeed(foodIcon, cost, fill) {
             if(petData.koin < cost) return notify("Koin Kurang", "Koin kamu tidak cukup!", "🪙");
             petData.koin -= cost;
@@ -1114,46 +1052,6 @@
         }
 
         function closeMemoryGame() { document.getElementById("memoryGameArea").style.display = "none"; }
-
-        var whackTimerInt = null, whackSpawnInt = null, whackScore = 0, whackTimeLeft = 15;
-        function startWhackGame() {
-            closeMiniGameSelect(); whackScore = 0; whackTimeLeft = 15;
-            document.getElementById("whackGameArea").style.display = "flex";
-            document.getElementById("whackScore").innerText = "Koin Ditangkap: 0";
-            document.getElementById("whackTimer").innerText = "Sisa Waktu: 15s";
-
-            var grid = document.getElementById("whackGrid"); grid.innerHTML = "";
-            for(var i=0; i<9; i++) {
-                var hole = document.createElement("div"); hole.className = "whack-hole"; hole.id = "hole_" + i;
-                grid.appendChild(hole);
-            }
-
-            whackTimerInt = setInterval(() => {
-                whackTimeLeft--; document.getElementById("whackTimer").innerText = "Sisa Waktu: " + whackTimeLeft + "s";
-                if(whackTimeLeft <= 0) closeWhackGame();
-            }, 1000);
-
-            whackSpawnInt = setInterval(spawnMole, 600);
-        }
-
-        function spawnMole() {
-            var holes = document.querySelectorAll(".whack-hole");
-            holes.forEach(h => h.innerHTML = "");
-            var randomHole = holes[Math.floor(Math.random() * holes.length)];
-            var mole = document.createElement("span"); mole.className = "mole-target"; mole.innerText = "🐭";
-            mole.onclick = function() {
-                playSound('munch'); whackScore += 5;
-                document.getElementById("whackScore").innerText = "Koin Ditangkap: " + whackScore;
-                mole.innerText = "💥"; setTimeout(() => mole.remove(), 150);
-            };
-            randomHole.appendChild(mole);
-        }
-
-        function closeWhackGame() {
-            clearInterval(whackTimerInt); clearInterval(whackSpawnInt);
-            document.getElementById("whackGameArea").style.display = "none";
-            if(whackScore > 0) { petData.koin += whackScore; addXP(whackScore); notify("Game Selesai", "Dapat +" + whackScore + " 🪙 Koin!", "🎮"); savePetState(); }
-        }
 
         var canvas = document.getElementById("bgCanvas"); var ctx = canvas.getContext("2d");
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
