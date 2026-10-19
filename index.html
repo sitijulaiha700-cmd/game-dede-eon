@@ -10,7 +10,8 @@
         body, html { width: 100%; height: 100%; overflow: hidden; font-family: "Quicksand", sans-serif; background: #1a0826; color: #2f3542; }
 
         #bgCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .container { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 12px; }
+
+        .container { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 10px; }
 
         /* AUTH CARD */
         .auth-card { background: #ffffff; width: 100%; max-width: 400px; border-radius: 28px; padding: 24px; text-align: center; border: 4px solid #ff758c; box-shadow: 0 15px 35px rgba(255, 117, 140, 0.4); }
@@ -19,62 +20,85 @@
         .input-group { text-align: left; margin-bottom: 12px; }
         .input-group label { font-size: 0.8rem; font-weight: 700; color: #ff4757; margin-left: 4px; margin-bottom: 4px; display: block; }
         .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 11px 14px; border: 2.5px solid #ff758c; border-radius: 16px; font-family: "Quicksand", sans-serif; font-size: 0.9rem; outline: none; background: #fff; }
-        .btn-auth { background: linear-gradient(135deg, #ff758c, #ff4757); color: #fff; border: none; padding: 12px; font-family: "Fredoka One", cursive; font-size: 1.05rem; border-radius: 30px; cursor: pointer; width: 100%; margin-top: 8px; box-shadow: 0 5px 0 #d63031; }
+        .btn-auth { background: linear-gradient(135deg, #ff758c, #ff4757); color: #fff; border: none; padding: 12px; font-family: "Fredoka One", cursive; font-size: 1.05rem; border-radius: 30px; cursor: pointer; width: 100%; margin-top: 8px; box-shadow: 0 5px 0 #d63031; transition: 0.15s; }
+        .btn-auth:active { transform: translateY(3px); box-shadow: 0 2px 0 #d63031; }
         .auth-link { margin-top: 12px; font-size: 0.82rem; color: #ff4757; font-weight: 700; cursor: pointer; text-decoration: underline; display: inline-block; }
 
         /* MAIN GAME CARD */
-        .game-card { background: rgba(255, 255, 255, 0.93); backdrop-filter: blur(10px); width: 100%; max-width: 440px; height: 95vh; max-height: 730px; border-radius: 32px; border: 4px solid #ff758c; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between; padding: 14px; overflow: hidden; position: relative; }
+        .game-card { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); width: 100%; max-width: 440px; height: 96vh; max-height: 740px; border-radius: 32px; border: 4px solid #ff758c; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between; padding: 12px; overflow: hidden; position: relative; }
 
         /* TOP USER BAR */
-        .user-header { display: flex; justify-content: space-between; align-items: center; background: #fff0f5; padding: 8px 12px; border-radius: 20px; border: 2px solid #ff758c; }
-        .user-info { font-weight: 700; font-size: 0.85rem; color: #ff4757; display: flex; align-items: center; gap: 6px; }
+        .user-header { display: flex; justify-content: space-between; align-items: center; background: #fff0f5; padding: 6px 12px; border-radius: 20px; border: 2px solid #ff758c; }
+        .user-info { font-weight: 700; font-size: 0.82rem; color: #ff4757; display: flex; align-items: center; gap: 6px; }
         .lvl-badge { background: #ff758c; color: white; padding: 2px 8px; border-radius: 10px; font-family: "Fredoka One", cursive; font-size: 0.75rem; }
         .coin-badge { background: #ffeaa7; color: #d63031; border: 1.5px solid #fdcb6e; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 0.75rem; }
-        .btn-logout { background: #ffeaa7; border: 2px solid #fdcb6e; color: #d63031; padding: 4px 10px; border-radius: 12px; font-weight: 700; font-size: 0.72rem; cursor: pointer; }
+        .btn-icon { background: #fff; border: 2px solid #ff758c; padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; cursor: pointer; }
 
         /* STATS BARS */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin: 8px 0; }
-        .stat-box { background: #fff; border: 2px solid #ff758c; border-radius: 12px; padding: 5px; text-align: center; }
-        .stat-label { font-size: 0.68rem; font-weight: 700; color: #ff4757; margin-bottom: 2px; }
-        .stat-bar { height: 8px; background: #ffeaa7; border-radius: 6px; overflow: hidden; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; margin: 6px 0; }
+        .stat-box { background: #fff; border: 2px solid #ff758c; border-radius: 12px; padding: 4px; text-align: center; }
+        .stat-label { font-size: 0.65rem; font-weight: 700; color: #ff4757; margin-bottom: 2px; }
+        .stat-bar { height: 7px; background: #ffeaa7; border-radius: 6px; overflow: hidden; }
         .stat-fill { height: 100%; background: linear-gradient(90deg, #ff758c, #ff4757); width: 100%; transition: width 0.3s; }
 
-        /* PET CANVAS / STAGE */
+        /* PET CANVAS / ANIMATION STAGE */
         .pet-stage { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
-        .pet-avatar { width: 145px; height: 145px; position: relative; cursor: pointer; transition: transform 0.15s ease; }
-        .pet-avatar:active { transform: scale(0.92) rotate(-3deg); }
-        .pet-acc { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 2.2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); pointer-events: none; }
+        
+        .pet-avatar { width: 150px; height: 150px; position: relative; cursor: pointer; animation: petIdle 3.5s ease-in-out infinite; }
+        
+        /* CUTE IDLE ANIMATION */
+        @keyframes petIdle {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.02, 0.98); }
+        }
 
-        /* HEART POPUP */
-        .heart-pop { position: absolute; font-size: 1.5rem; pointer-events: none; animation: floatUp 0.8s ease-out forwards; }
+        .pet-avatar.happy { animation: petBounce 0.6s ease; }
+        @keyframes petBounce {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.18, 0.85) translateY(-15px); }
+            60% { transform: scale(0.9, 1.1) translateY(5px); }
+        }
+
+        .pet-acc { position: absolute; top: 2px; left: 50%; transform: translateX(-50%); font-size: 2.3rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); pointer-events: none; z-index: 5; }
+        
+        /* BUBBLE / SOAP EFFECT FOR BATH */
+        .soap-bubble { position: absolute; font-size: 1.4rem; pointer-events: none; animation: floatBubble 1.2s ease-out forwards; }
+        @keyframes floatBubble { 0% { opacity: 1; transform: translateY(0) scale(0.6); } 100% { opacity: 0; transform: translateY(-60px) scale(1.4); } }
+
+        .heart-pop { position: absolute; font-size: 1.5rem; pointer-events: none; animation: floatUp 0.8s ease-out forwards; z-index: 20; }
         @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(0.8); } 100% { opacity: 0; transform: translateY(-50px) scale(1.3); } }
 
-        .xp-container { width: 80%; background: #fff; border: 2px solid #a29bfe; border-radius: 12px; padding: 3px 6px; margin-top: 8px; text-align: center; }
+        .xp-container { width: 80%; background: #fff; border: 2px solid #a29bfe; border-radius: 12px; padding: 3px 6px; margin-top: 6px; text-align: center; }
         .xp-bar { height: 7px; background: #dfe6e9; border-radius: 5px; overflow: hidden; }
         .xp-fill { height: 100%; background: linear-gradient(90deg, #a29bfe, #6c5ce7); width: 0%; transition: width 0.3s; }
-        .xp-text { font-size: 0.68rem; font-weight: 700; color: #6c5ce7; margin-top: 2px; }
+        .xp-text { font-size: 0.65rem; font-weight: 700; color: #6c5ce7; margin-top: 2px; }
 
         /* NAV TABS */
-        .nav-tabs { display: flex; justify-content: space-around; background: #fff; border: 2.5px solid #ff758c; border-radius: 18px; padding: 4px; margin-top: 6px; }
-        .tab-btn { background: transparent; border: none; font-size: 1.2rem; padding: 5px 10px; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+        .nav-tabs { display: flex; justify-content: space-around; background: #fff; border: 2.5px solid #ff758c; border-radius: 18px; padding: 3px; margin-top: 4px; }
+        .tab-btn { background: transparent; border: none; font-size: 1.15rem; padding: 4px 8px; border-radius: 12px; cursor: pointer; transition: 0.2s; }
         .tab-btn.active { background: #ff758c; transform: scale(1.08); }
 
         /* ACTION PANELS */
-        .panel-area { background: #fff0f5; border: 2px solid #ff758c; border-radius: 18px; padding: 10px; margin-top: 6px; min-height: 125px; }
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .btn-act { background: #ffffff; border: 2px solid #ff758c; padding: 8px; border-radius: 12px; font-weight: 700; font-size: 0.75rem; color: #ff4757; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .panel-area { background: rgba(255, 240, 245, 0.95); border: 2px solid #ff758c; border-radius: 18px; padding: 8px; margin-top: 4px; min-height: 130px; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+        .btn-act { background: #ffffff; border: 2px solid #ff758c; padding: 7px; border-radius: 12px; font-weight: 700; font-size: 0.72rem; color: #ff4757; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .btn-act:active { transform: scale(0.95); background: #ff758c; color: #fff; }
 
+        /* SHOP SUB CATEGORIES */
+        .shop-subtabs { display: flex; gap: 4px; margin-bottom: 6px; overflow-x: auto; padding-bottom: 2px; }
+        .subtab-btn { background: #fff; border: 1.5px solid #ff758c; border-radius: 10px; padding: 3px 8px; font-size: 0.68rem; font-weight: 700; color: #ff4757; cursor: pointer; white-space: nowrap; }
+        .subtab-btn.active { background: #ff758c; color: #fff; }
+
         /* CURHAT JOURNAL LIST */
-        .curhat-box { max-height: 100px; overflow-y: auto; text-align: left; font-size: 0.78rem; }
-        .curhat-item { background: #fff; border: 1.5px solid #ff758c; border-radius: 10px; padding: 6px; margin-bottom: 5px; }
-        .curhat-date { font-size: 0.65rem; color: #a4b0be; font-weight: 700; }
+        .curhat-box { max-height: 90px; overflow-y: auto; text-align: left; font-size: 0.75rem; }
+        .curhat-item { background: #fff; border: 1.5px solid #ff758c; border-radius: 10px; padding: 5px; margin-bottom: 4px; }
+        .curhat-date { font-size: 0.62rem; color: #a4b0be; font-weight: 700; }
         .curhat-msg { color: #2f3542; margin: 2px 0; font-weight: 700; }
-        .curhat-reply { background: #e8f8f5; border: 1px dashed #2ecc71; color: #27ae60; padding: 4px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; }
+        .curhat-reply { background: #e8f8f5; border: 1px dashed #2ecc71; color: #27ae60; padding: 4px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
 
         /* MINI GAME OVERLAY */
-        .minigame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; border-radius: 28px; padding: 16px; }
-        .star-target { position: absolute; font-size: 2rem; cursor: pointer; animation: fall 2.5s linear forwards; }
+        .minigame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(4px); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; border-radius: 28px; padding: 16px; }
+        .mg-item { position: absolute; font-size: 2.2rem; cursor: pointer; animation: fall 2.2s linear forwards; }
         @keyframes fall { from { top: 0; } to { top: 85%; } }
 
         .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 1rem; flex-direction: column; gap: 8px; }
@@ -161,13 +185,13 @@
 
         <!-- MAIN GAME PANEL -->
         <div class="game-card" id="cardGame" style="display:none;">
-            <!-- MINI GAME SCREEN -->
+            <!-- MINI GAME OVERLAY -->
             <div class="minigame-overlay" id="miniGameArea" style="display:none;">
-                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:4px;">⭐ Tangkap Bintang ⭐</h3>
-                <p style="font-size:0.8rem; margin-bottom:10px;">Klik bintang yang jatuh untuk dapat Koin!</p>
-                <div style="font-weight:700; font-size:1.1rem;" id="mgScore">Koin Ditangkap: 0</div>
-                <div style="font-size:0.8rem; color:#ff758c; margin-bottom:15px;" id="mgTimer">Sisa Waktu: 15s</div>
-                <button class="btn-auth" style="width:140px; padding:6px;" onclick="closeMiniGame()">Keluar</button>
+                <h3 style="font-family:'Fredoka One'; color:#ffeaa7; margin-bottom:4px;" id="mgTitle">🎮 Mini-Game 🎮</h3>
+                <p style="font-size:0.78rem; margin-bottom:8px;" id="mgDesc">Tangkap item untuk dapat koin!</p>
+                <div style="font-weight:700; font-size:1rem;" id="mgScore">Koin Ditangkap: 0</div>
+                <div style="font-size:0.78rem; color:#ff758c; margin-bottom:12px;" id="mgTimer">Sisa Waktu: 15s</div>
+                <button class="btn-auth" style="width:130px; padding:5px; font-size:0.9rem;" onclick="closeMiniGame()">Keluar</button>
             </div>
 
             <!-- HEADER USER -->
@@ -177,7 +201,10 @@
                     <span class="lvl-badge" id="txtLvl">Lvl 1</span>
                     <span class="coin-badge" id="txtCoin">🪙 100</span>
                 </div>
-                <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
+                <div style="display:flex; gap:4px;">
+                    <button class="btn-icon" onclick="toggleBGM()">🎵</button>
+                    <button class="btn-icon" onclick="doLogout()">🚪</button>
+                </div>
             </div>
 
             <!-- STATS BARS -->
@@ -194,11 +221,18 @@
                     <div class="stat-label">😴 Energi</div>
                     <div class="stat-bar"><div class="stat-fill" id="barEnergi"></div></div>
                 </div>
+                <div class="stat-box">
+                    <div class="stat-label">🧼 Bersih</div>
+                    <div class="stat-bar"><div class="stat-fill" id="barBersih"></div></div>
+                </div>
             </div>
 
             <!-- PET STAGE -->
             <div class="pet-stage" id="petStage">
-                <div class="pet-avatar" onclick="petDedeEon(event)">
+                <!-- ROOM DECOR ELEMENTS -->
+                <div id="roomDecorIcon" style="position:absolute; top:8px; right:12px; font-size:2rem; opacity:0.8;">🍲</div>
+
+                <div class="pet-avatar" id="petAvatar" onclick="petDedeEon(event)">
                     <div class="pet-acc" id="petAcc">👑</div>
                     <svg viewBox="0 0 120 120" width="100%" height="100%">
                         <defs>
@@ -207,18 +241,26 @@
                                 <stop offset="100%" id="gradColor2" stop-color="#ff758c"/>
                             </linearGradient>
                         </defs>
+                        <!-- EARS WITH CUTE TWITCH -->
                         <ellipse cx="40" cy="25" rx="12" ry="25" id="earL" fill="#ff758c" transform="rotate(-15 40 25)"/>
                         <ellipse cx="40" cy="25" rx="6" ry="16" fill="#ffd1dc" transform="rotate(-15 40 25)"/>
                         <ellipse cx="80" cy="25" rx="12" ry="25" id="earR" fill="#ff758c" transform="rotate(15 80 25)"/>
                         <ellipse cx="80" cy="25" rx="6" ry="16" fill="#ffd1dc" transform="rotate(15 80 25)"/>
+                        <!-- BODY -->
                         <circle cx="60" cy="65" r="42" fill="url(#bodyG)"/>
+                        <!-- CHEEKS -->
                         <circle cx="35" cy="70" r="8" fill="#ff4757" opacity="0.35"/>
                         <circle cx="85" cy="70" r="8" fill="#ff4757" opacity="0.35"/>
-                        <circle cx="45" cy="60" r="6" fill="#2f3542"/>
-                        <circle cx="75" cy="60" r="6" fill="#2f3542"/>
-                        <circle cx="43" cy="58" r="2.5" fill="#ffffff"/>
-                        <circle cx="73" cy="58" r="2.5" fill="#ffffff"/>
-                        <path d="M 52 70 Q 56 75 60 70 Q 64 75 68 70" fill="none" stroke="#2f3542" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- EYES WITH BLINK -->
+                        <g id="petEyes">
+                            <circle cx="45" cy="60" r="6" fill="#2f3542"/>
+                            <circle cx="75" cy="60" r="6" fill="#2f3542"/>
+                            <circle cx="43" cy="58" r="2.5" fill="#ffffff"/>
+                            <circle cx="73" cy="58" r="2.5" fill="#ffffff"/>
+                        </g>
+                        <!-- MOUTH -->
+                        <path id="petMouth" d="M 52 70 Q 56 75 60 70 Q 64 75 68 70" fill="none" stroke="#2f3542" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- FEET -->
                         <circle cx="42" cy="98" r="9" id="footL" fill="#ff4757"/>
                         <circle cx="78" cy="98" r="9" id="footR" fill="#ff4757"/>
                     </svg>
@@ -232,7 +274,7 @@
 
             <!-- ACTION PANEL -->
             <div class="panel-area" id="panelArea">
-                <!-- DAPUR (BELI MAKANAN/MINUMAN) -->
+                <!-- DAPUR (DAPUR DEKORASI) -->
                 <div id="panelDapur" class="action-grid">
                     <button class="btn-act" onclick="buyFood('makanan', 10, 25)">🍕 Pizza (10 🪙)</button>
                     <button class="btn-act" onclick="buyFood('minuman', 10, 25)">🥤 Boba (10 🪙)</button>
@@ -243,27 +285,59 @@
                 <!-- KAMAR TIDUR & MINI GAME -->
                 <div id="panelTidur" class="action-grid" style="display:none;">
                     <button class="btn-act" onclick="sleepPet()">🛌 Tidur Siang (+50 Energi)</button>
-                    <button class="btn-act" style="background:#a29bfe; color:#fff;" onclick="startMiniGame()">🎮 Play Mini-Game</button>
+                    <button class="btn-act" style="background:#a29bfe; color:#fff;" onclick="openGameSelect()">🎮 Pilihan Mini-Game</button>
+                    <button class="btn-act" id="btnGame1" style="display:none; background:#fd79a8; color:#fff;" onclick="startMiniGame('stars')">⭐ Catch Stars</button>
+                    <button class="btn-act" id="btnGame2" style="display:none; background:#74b9ff; color:#fff;" onclick="startMiniGame('fruits')">🍎 Catch Fruits</button>
                 </div>
 
-                <!-- TOKO / DRESS UP & WARNA -->
-                <div id="panelBaju" class="action-grid" style="display:none;">
-                    <button class="btn-act" onclick="setAcc('👑')">👑 Mahkota</button>
-                    <button class="btn-act" onclick="setAcc('🎀')">🎀 Pita Pink</button>
-                    <button class="btn-act" onclick="setAcc('👓')">👓 Kacamata</button>
-                    <button class="btn-act" onclick="setAcc('🍄')">🍄 Topi Jamur</button>
-                    <button class="btn-act" onclick="changePetColor('#ff758c')">🎨 Warna Pink</button>
-                    <button class="btn-act" onclick="changePetColor('#70a1ff')">🎨 Warna Biru</button>
-                    <button class="btn-act" onclick="changePetColor('#a29bfe')">🎨 Warna Ungu</button>
-                    <button class="btn-act" onclick="changeTheme('dark')">🌌 Tema Malam</button>
-                    <button class="btn-act" onclick="changeTheme('forest')">🌲 Tema Hutan</button>
-                    <button class="btn-act" onclick="changeTheme('pink')">🌸 Tema Pink</button>
+                <!-- KAMAR MANDI (BARU) -->
+                <div id="panelMandi" class="action-grid" style="display:none;">
+                    <button class="btn-act" style="grid-column: span 2;" onclick="washPet()">🧼 Mandi Busa (+40 Kebersihan)</button>
+                    <button class="btn-act" style="grid-column: span 2;" onclick="shampooPet()">🧴 Keramas Wangi (+60 Kebersihan)</button>
+                </div>
+
+                <!-- TOKO TERKATEGORI (RAPI & LENGKAP) -->
+                <div id="panelBaju" style="display:none;">
+                    <div class="shop-subtabs">
+                        <button class="subtab-btn active" onclick="switchShopCat('catHat', this)">👒 Topi & Pita</button>
+                        <button class="subtab-btn" onclick="switchShopCat('catGlasses', this)">👓 Aksesoris</button>
+                        <button class="subtab-btn" onclick="switchShopCat('catColor', this)">🎨 Warna Pet</button>
+                        <button class="subtab-btn" onclick="switchShopCat('catTheme', this)">🖼️ Tema Kamar</button>
+                    </div>
+
+                    <div id="catHat" class="action-grid">
+                        <button class="btn-act" onclick="setAcc('👑')">👑 Mahkota Emas</button>
+                        <button class="btn-act" onclick="setAcc('🎀')">🎀 Pita Pink Cute</button>
+                        <button class="btn-act" onclick="setAcc('🎩')">🎩 Topi Pesulap</button>
+                        <button class="btn-act" onclick="setAcc('🍄')">🍄 Topi Jamur</button>
+                    </div>
+
+                    <div id="catGlasses" class="action-grid" style="display:none;">
+                        <button class="btn-act" onclick="setAcc('👓')">👓 Kacamata Baca</button>
+                        <button class="btn-act" onclick="setAcc('🕶️')">🕶️ Kacamata Hitam</button>
+                        <button class="btn-act" onclick="setAcc('🌸')">🌸 Bunga Cantik</button>
+                        <button class="btn-act" onclick="setAcc('🎓')">🎓 Toga Wisuda</button>
+                    </div>
+
+                    <div id="catColor" class="action-grid" style="display:none;">
+                        <button class="btn-act" onclick="changePetColor('#ff758c')">🌸 Pink Coral</button>
+                        <button class="btn-act" onclick="changePetColor('#70a1ff')">🌊 Sky Blue</button>
+                        <button class="btn-act" onclick="changePetColor('#a29bfe')">💜 Soft Purple</button>
+                        <button class="btn-act" onclick="changePetColor('#ffbe76')">🍊 Sweet Peach</button>
+                    </div>
+
+                    <div id="catTheme" class="action-grid" style="display:none;">
+                        <button class="btn-act" onclick="changeTheme('dark')">🌌 Malam Bintang</button>
+                        <button class="btn-act" onclick="changeTheme('forest')">🌲 Hutan Ajaib</button>
+                        <button class="btn-act" onclick="changeTheme('pink')">🌸 Istana Pink</button>
+                        <button class="btn-act" onclick="changeTheme('cozy')">☕ Cozy Cafe</button>
+                    </div>
                 </div>
 
                 <!-- RUANG CURHAT -->
                 <div id="panelCurhat" style="display:none;">
                     <div class="input-group" style="margin-bottom:6px;">
-                        <textarea id="txtCurhatInput" style="height:50px;" placeholder="Tulis curhatan rahasiamu ke Leon di sini..."></textarea>
+                        <textarea id="txtCurhatInput" style="height:45px;" placeholder="Tulis curhatan rahasiamu ke Leon di sini..."></textarea>
                     </div>
                     <button class="btn-act" style="width:100%; margin-bottom:6px;" onclick="sendCurhat()">💌 Kirim Curhat ke Leon</button>
                     <div class="curhat-box" id="curhatListDisplay"></div>
@@ -272,10 +346,11 @@
 
             <!-- NAV TABS -->
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab('panelDapur', this)">🍲</button>
-                <button class="tab-btn" onclick="switchTab('panelTidur', this)">🛌</button>
-                <button class="tab-btn" onclick="switchTab('panelBaju', this)">🛍️</button>
-                <button class="tab-btn" onclick="switchTab('panelCurhat', this)">📜</button>
+                <button class="tab-btn active" onclick="switchTab('panelDapur', '🍲', this)">🍲</button>
+                <button class="tab-btn" onclick="switchTab('panelTidur', '🛌', this)">🛌</button>
+                <button class="tab-btn" onclick="switchTab('panelMandi', '🧼', this)">🧼</button>
+                <button class="tab-btn" onclick="switchTab('panelBaju', '🛍️', this)">🛍️</button>
+                <button class="tab-btn" onclick="switchTab('panelCurhat', '📜', this)">📜</button>
             </div>
         </div>
     </div>
@@ -284,8 +359,10 @@
         var API_URL = "https://script.google.com/macros/s/AKfycbw5EABqMVGGhQkwUP9qco5YZToBZCkeKyjouKMFkRJSlD_X0dcXiVl8c_QkcgeJUJnsBQ/exec";
 
         var currentUser = null;
-        var petData = { level: 1, xp: 0, lapar: 100, haus: 100, energi: 100, pakaian: "👑", koin: 100, tema: "dark", warnaPet: "#ff758c" };
+        var petData = { level: 1, xp: 0, lapar: 100, haus: 100, energi: 100, bersih: 100, pakaian: "👑", koin: 100, tema: "dark", warnaPet: "#ff758c" };
         var curhatHistory = [];
+        var bgmPlaying = false;
+        var audioCtx = null;
 
         function showLoading(msg) {
             document.getElementById("loadingText").innerText = msg || "Loading...";
@@ -334,6 +411,7 @@
                 if(res.status === "success") {
                     currentUser = u;
                     petData = res.petData;
+                    if(petData.bersih === undefined) petData.bersih = 100;
                     curhatHistory = res.curhatList || [];
                     initGameUI();
                 } else alert(res.message);
@@ -368,6 +446,26 @@
             applyPetColor(petData.warnaPet || "#ff758c");
             updateStatsDisplay();
             renderCurhatList();
+
+            // REALTIME STAT DECAY (Setiap 25 detik status berkurang sedikit)
+            setInterval(() => {
+                if(currentUser) {
+                    petData.lapar = Math.max(0, petData.lapar - 2);
+                    petData.haus = Math.max(0, petData.haus - 2);
+                    petData.energi = Math.max(0, petData.energi - 1);
+                    petData.bersih = Math.max(0, petData.bersih - 1);
+                    updateStatsDisplay();
+                }
+            }, 25000);
+
+            // RANDOM BLINKING ANIMATION
+            setInterval(() => {
+                var eyes = document.getElementById("petEyes");
+                if(eyes) {
+                    eyes.style.display = "none";
+                    setTimeout(() => { eyes.style.display = "block"; }, 150);
+                }
+            }, 4000);
         }
 
         function updateStatsDisplay() {
@@ -376,6 +474,7 @@
             document.getElementById("barLapar").style.width = petData.lapar + "%";
             document.getElementById("barHaus").style.width = petData.haus + "%";
             document.getElementById("barEnergi").style.width = petData.energi + "%";
+            document.getElementById("barBersih").style.width = (petData.bersih || 100) + "%";
 
             var xpPct = Math.min(100, (petData.xp / (petData.level * 100)) * 100);
             document.getElementById("barXP").style.width = xpPct + "%";
@@ -403,24 +502,78 @@
             });
         }
 
-        /* EFEK SUARA & TAP PET */
-        function playPetSound() {
+        /* SYNTH AUDIO & SFX ENGINE */
+        function getAudioCtx() {
+            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            return audioCtx;
+        }
+
+        function playSound(type) {
             try {
-                var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                var ctx = getAudioCtx();
                 var osc = ctx.createOscillator();
                 var gain = ctx.createGain();
-                osc.type = "sine";
-                osc.frequency.setValueAtTime(500, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
                 osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(); osc.stop(ctx.currentTime + 0.15);
+
+                if(type === 'pet') {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(450, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(950, ctx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                    osc.start(); osc.stop(ctx.currentTime + 0.12);
+                } else if(type === 'catch') {
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(600, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                    osc.start(); osc.stop(ctx.currentTime + 0.1);
+                } else if(type === 'wash') {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(300, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+                    osc.start(); osc.stop(ctx.currentTime + 0.2);
+                }
             } catch(e) {}
         }
 
+        var bgmInterval = null;
+        function toggleBGM() {
+            bgmPlaying = !bgmPlaying;
+            if(bgmPlaying) {
+                alert("🎵 Musik Latar Aktif!");
+                var notes = [261, 329, 392, 523, 392, 329];
+                var idx = 0;
+                bgmInterval = setInterval(() => {
+                    try {
+                        var ctx = getAudioCtx();
+                        var osc = ctx.createOscillator();
+                        var gain = ctx.createGain();
+                        osc.type = "sine";
+                        osc.frequency.setValueAtTime(notes[idx % notes.length], ctx.currentTime);
+                        gain.gain.setValueAtTime(0.03, ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+                        osc.connect(gain); gain.connect(ctx.destination);
+                        osc.start(); osc.stop(ctx.currentTime + 0.3);
+                        idx++;
+                    } catch(e) {}
+                }, 400);
+            } else {
+                clearInterval(bgmInterval);
+                alert("🔇 Musik Dimatikan.");
+            }
+        }
+
+        /* PET INTERACTION & ANIMATIONS */
         function petDedeEon(e) {
-            playPetSound();
+            playSound('pet');
+            var avatar = document.getElementById("petAvatar");
+            avatar.classList.add("happy");
+            setTimeout(() => avatar.classList.remove("happy"), 600);
+
             var stage = document.getElementById("petStage");
             var heart = document.createElement("div");
             heart.className = "heart-pop";
@@ -429,6 +582,36 @@
             heart.style.top = (e.clientY - stage.getBoundingClientRect().top - 20) + "px";
             stage.appendChild(heart);
             setTimeout(() => heart.remove(), 800);
+        }
+
+        /* MANDI MECHANICS */
+        function washPet() {
+            playSound('wash');
+            petData.bersih = Math.min(100, (petData.bersih || 100) + 40);
+            addXP(10);
+            createSoapBubbles();
+            savePetState();
+        }
+
+        function shampooPet() {
+            playSound('wash');
+            petData.bersih = Math.min(100, (petData.bersih || 100) + 60);
+            addXP(15);
+            createSoapBubbles();
+            savePetState();
+        }
+
+        function createSoapBubbles() {
+            var stage = document.getElementById("petStage");
+            for(var i=0; i<6; i++) {
+                var b = document.createElement("div");
+                b.className = "soap-bubble";
+                b.innerText = "🫧";
+                b.style.left = (Math.random() * 60 + 20) + "%";
+                b.style.top = (Math.random() * 40 + 30) + "%";
+                stage.appendChild(b);
+                setTimeout((el) => el.remove(), 1200, b);
+            }
         }
 
         /* PERAWATAN & TOKO */
@@ -483,11 +666,31 @@
             savePetState();
         }
 
-        /* MINI GAME LOGIC */
-        var mgTimerInt = null, mgSpawnInt = null, mgScore = 0, mgTimeLeft = 15;
-        function startMiniGame() {
+        function switchShopCat(catId, btn) {
+            document.getElementById("catHat").style.display = "none";
+            document.getElementById("catGlasses").style.display = "none";
+            document.getElementById("catColor").style.display = "none";
+            document.getElementById("catTheme").style.display = "none";
+
+            document.querySelectorAll(".subtab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById(catId).style.display = "grid";
+        }
+
+        /* MULTIPLE MINI-GAMES */
+        var mgTimerInt = null, mgSpawnInt = null, mgScore = 0, mgTimeLeft = 15, currentMode = 'stars';
+
+        function openGameSelect() {
+            document.getElementById("btnGame1").style.display = "block";
+            document.getElementById("btnGame2").style.display = "block";
+        }
+
+        function startMiniGame(mode) {
+            currentMode = mode;
             mgScore = 0; mgTimeLeft = 15;
             document.getElementById("miniGameArea").style.display = "flex";
+            document.getElementById("mgTitle").innerText = (mode === 'stars') ? "⭐ Tangkap Bintang ⭐" : "🍎 Tangkap Buah 🍎";
+            document.getElementById("mgDesc").innerText = (mode === 'stars') ? "Klik bintang jatuh!" : "Klik buah segar & hindari bom!";
             document.getElementById("mgScore").innerText = "Koin Ditangkap: 0";
             document.getElementById("mgTimer").innerText = "Sisa Waktu: 15s";
 
@@ -497,27 +700,40 @@
                 if(mgTimeLeft <= 0) closeMiniGame();
             }, 1000);
 
-            mgSpawnInt = setInterval(spawnStar, 600);
+            mgSpawnInt = setInterval(spawnMgItem, 550);
         }
 
-        function spawnStar() {
+        function spawnMgItem() {
             var area = document.getElementById("miniGameArea");
-            var star = document.createElement("div");
-            star.className = "star-target";
-            star.innerText = "⭐";
-            star.style.left = Math.floor(Math.random() * 80 + 10) + "%";
-            star.onclick = function() {
-                mgScore += 5;
+            var item = document.createElement("div");
+            item.className = "mg-item";
+            
+            if(currentMode === 'stars') {
+                item.innerText = "⭐";
+            } else {
+                var rand = Math.random();
+                item.innerText = (rand > 0.2) ? "🍎" : "💣";
+            }
+
+            item.style.left = Math.floor(Math.random() * 80 + 10) + "%";
+            item.onclick = function() {
+                if(item.innerText === "💣") {
+                    mgScore = Math.max(0, mgScore - 10);
+                    alert("💥 Kena Bom! Koin berkurang 10!");
+                } else {
+                    playSound('catch');
+                    mgScore += 5;
+                }
                 document.getElementById("mgScore").innerText = "Koin Ditangkap: " + mgScore;
-                star.remove();
+                item.remove();
             };
-            area.appendChild(star);
-            setTimeout(() => { if(star) star.remove(); }, 2500);
+            area.appendChild(item);
+            setTimeout(() => { if(item) item.remove(); }, 2200);
         }
 
         function closeMiniGame() {
             clearInterval(mgTimerInt); clearInterval(mgSpawnInt);
-            document.querySelectorAll(".star-target").forEach(s => s.remove());
+            document.querySelectorAll(".mg-item").forEach(s => s.remove());
             document.getElementById("miniGameArea").style.display = "none";
             if(mgScore > 0) {
                 petData.koin += mgScore;
@@ -527,14 +743,19 @@
             }
         }
 
-        function switchTab(panelId, btn) {
+        /* NAVIGATION & DYNAMIC ROOM DECORATION */
+        function switchTab(panelId, icon, btn) {
             document.getElementById("panelDapur").style.display = "none";
             document.getElementById("panelTidur").style.display = "none";
+            document.getElementById("panelMandi").style.display = "none";
             document.getElementById("panelBaju").style.display = "none";
             document.getElementById("panelCurhat").style.display = "none";
+
             document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            document.getElementById(panelId).style.display = (panelId === 'panelCurhat') ? "block" : "grid";
+
+            document.getElementById("roomDecorIcon").innerText = icon;
+            document.getElementById(panelId).style.display = (panelId === 'panelCurhat' || panelId === 'panelBaju') ? "block" : "grid";
         }
 
         function sendCurhat() {
@@ -581,6 +802,8 @@
                 grad.addColorStop(0, "#11998e"); grad.addColorStop(1, "#38ef7d");
             } else if(petData.tema === 'pink') {
                 grad.addColorStop(0, "#ff758c"); grad.addColorStop(1, "#ff7eb3");
+            } else if(petData.tema === 'cozy') {
+                grad.addColorStop(0, "#e67e22"); grad.addColorStop(1, "#f1c40f");
             } else {
                 grad.addColorStop(0, "#1a0826"); grad.addColorStop(1, "#4a1942");
             }
